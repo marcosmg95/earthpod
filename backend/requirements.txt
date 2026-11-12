@@ -1,0 +1,6 @@
+numpy>=1.24
+pandas>=2.0
+matplotlib>=3.7
+opencv-python>=4.8
+# PoC 4 only (Barcelona from the gridded file):
+netCDF4>=1.6

@@ -1,0 +1,5933 @@
+{
+ "source": "NASA GISTEMP v4 (GISTEMP Team, 2026); frames: NASA SVS 5450",
+ "tracks": {
+  "planet": {
+   "mapping": "One year is one note. Each 0.1 °C of global warming raises the melody one step of a D minor pentatonic scale; the low drone is 0 °C, the 1951–1980 average. Strings are latitude bands, with the Arctic highest. Tempo speeds up when warming speeds up, a clashing note sounds above +1 °C, and a bell marks each new record year.",
+   "duration_s": 87.82,
+   "voices": [
+    {
+     "name": "Global",
+     "column": "global",
+     "step_c": 0.1,
+     "tonic_midi": 50,
+     "pan": 0.0,
+     "timbre": "pluck",
+     "gain": 0.9,
+     "smooth": 0.0
+    },
+    {
+     "name": "Arctic",
+     "column": "64N-90N",
+     "step_c": 0.35,
+     "tonic_midi": 74,
+     "pan": -0.6,
+     "timbre": "string",
+     "gain": 0.35,
+     "smooth": 0.3
+    },
+    {
+     "name": "Northern mid-latitudes",
+     "column": "44N-64N",
+     "step_c": 0.2,
+     "tonic_midi": 62,
+     "pan": -0.25,
+     "timbre": "string",
+     "gain": 0.25,
+     "smooth": 0.3
+    },
+    {
+     "name": "Tropics",
+     "column": "24S-24N",
+     "step_c": 0.15,
+     "tonic_midi": 50,
+     "pan": 0.25,
+     "timbre": "string",
+     "gain": 0.25,
+     "smooth": 0.3
+    },
+    {
+     "name": "Southern extratropics",
+     "column": "90S-24S",
+     "step_c": 0.15,
+     "tonic_midi": 50,
+     "pan": 0.6,
+     "timbre": "string",
+     "gain": 0.25,
+     "smooth": 0.3
+    }
+   ],
+   "years": [
+    {
+     "year": 1880,
+     "start": 0.0,
+     "dur": 0.8333333333333334,
+     "values": {
+      "Global": -0.17,
+      "Arctic": -0.76,
+      "Northern mid-latitudes": -0.5,
+      "Tropics": -0.12,
+      "Southern extratropics": -0.02
+     },
+     "midi": {
+      "Global": 45,
+      "Arctic": 69,
+      "Northern mid-latitudes": 57,
+      "Tropics": 48,
+      "Southern extratropics": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1880: planet -0.17 °C, Arctic -0.8 °C",
+     "frame": null
+    },
+    {
+     "year": 1881,
+     "start": 0.8333333333333334,
+     "dur": 0.8333333333333334,
+     "values": {
+      "Global": -0.09,
+      "Arctic": -0.88,
+      "Northern mid-latitudes": -0.47,
+      "Tropics": 0.11,
+      "Southern extratropics": -0.07
+     },
+     "midi": {
+      "Global": 48,
+      "Arctic": 69,
+      "Northern mid-latitudes": 57,
+      "Tropics": 50,
+      "Southern extratropics": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1881: planet -0.09 °C, Arctic -0.9 °C",
+     "frame": 3
+    },
+    {
+     "year": 1882,
+     "start": 1.6666666666666667,
+     "dur": 0.8333333333333334,
+     "values": {
+      "Global": -0.11,
+      "Arctic": -1.37,
+      "Northern mid-latitudes": -0.28,
+      "Tropics": -0.04,
+      "Southern extratropics": 0.01
+     },
+     "midi": {
+      "Global": 48,
+      "Arctic": 67,
+      "Northern mid-latitudes": 57,
+      "Tropics": 50,
+      "Southern extratropics": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1882: planet -0.11 °C, Arctic -1.4 °C",
+     "frame": 9
+    },
+    {
+     "year": 1883,
+     "start": 2.5,
+     "dur": 0.8333333333333334,
+     "values": {
+      "Global": -0.18,
+      "Arctic": -0.15,
+      "Northern mid-latitudes": -0.57,
+      "Tropics": -0.16,
+      "Southern extratropics": -0.01
+     },
+     "midi": {
+      "Global": 45,
+      "Arctic": 69,
+      "Northern mid-latitudes": 57,
+      "Tropics": 48,
+      "Southern extratropics": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1883: planet -0.18 °C, Arctic -0.1 °C",
+     "frame": 15
+    },
+    {
+     "year": 1884,
+     "start": 3.3333333333333335,
+     "dur": 0.8333333333333334,
+     "values": {
+      "Global": -0.28,
+      "Arctic": -1.28,
+      "Northern mid-latitudes": -0.65,
+      "Tropics": -0.14,
+      "Southern extratropics": -0.14
+     },
+     "midi": {
+      "Global": 43,
+      "Arctic": 67,
+      "Northern mid-latitudes": 55,
+      "Tropics": 48,
+      "Southern extratropics": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1884: planet -0.28 °C, Arctic -1.3 °C",
+     "frame": 21
+    },
+    {
+     "year": 1885,
+     "start": 4.166666666666667,
+     "dur": 0.8333333333333334,
+     "values": {
+      "Global": -0.33,
+      "Arctic": -1.48,
+      "Northern mid-latitudes": -0.7,
+      "Tropics": -0.13,
+      "Southern extratropics": -0.27
+     },
+     "midi": {
+      "Global": 43,
+      "Arctic": 67,
+      "Northern mid-latitudes": 55,
+      "Tropics": 48,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1885: planet -0.33 °C, Arctic -1.5 °C",
+     "frame": 27
+    },
+    {
+     "year": 1886,
+     "start": 5.0,
+     "dur": 0.8333333333333334,
+     "values": {
+      "Global": -0.31,
+      "Arctic": -1.56,
+      "Northern mid-latitudes": -0.51,
+      "Tropics": -0.19,
+      "Southern extratropics": -0.21
+     },
+     "midi": {
+      "Global": 43,
+      "Arctic": 67,
+      "Northern mid-latitudes": 55,
+      "Tropics": 48,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1886: planet -0.31 °C, Arctic -1.6 °C",
+     "frame": 33
+    },
+    {
+     "year": 1887,
+     "start": 5.833333333333333,
+     "dur": 0.8333333333333334,
+     "values": {
+      "Global": -0.36,
+      "Arctic": -1.73,
+      "Northern mid-latitudes": -0.51,
+      "Tropics": -0.29,
+      "Southern extratropics": -0.28
+     },
+     "midi": {
+      "Global": 41,
+      "Arctic": 65,
+      "Northern mid-latitudes": 55,
+      "Tropics": 48,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1887: planet -0.36 °C, Arctic -1.7 °C",
+     "frame": 39
+    },
+    {
+     "year": 1888,
+     "start": 6.666666666666666,
+     "dur": 0.8333333333333334,
+     "values": {
+      "Global": -0.18,
+      "Arctic": -1.27,
+      "Northern mid-latitudes": -0.45,
+      "Tropics": 0.1,
+      "Southern extratropics": -0.29
+     },
+     "midi": {
+      "Global": 45,
+      "Arctic": 65,
+      "Northern mid-latitudes": 55,
+      "Tropics": 48,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1888: planet -0.18 °C, Arctic -1.3 °C",
+     "frame": 45
+    },
+    {
+     "year": 1889,
+     "start": 7.499999999999999,
+     "dur": 0.8333333333333334,
+     "values": {
+      "Global": -0.11,
+      "Arctic": -0.65,
+      "Northern mid-latitudes": -0.24,
+      "Tropics": 0.08,
+      "Southern extratropics": -0.16
+     },
+     "midi": {
+      "Global": 48,
+      "Arctic": 67,
+      "Northern mid-latitudes": 57,
+      "Tropics": 50,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1889: planet -0.11 °C, Arctic -0.7 °C",
+     "frame": 51
+    },
+    {
+     "year": 1890,
+     "start": 8.333333333333332,
+     "dur": 0.7537688442211056,
+     "values": {
+      "Global": -0.36,
+      "Arctic": -1.11,
+      "Northern mid-latitudes": -0.59,
+      "Tropics": -0.37,
+      "Southern extratropics": -0.23
+     },
+     "midi": {
+      "Global": 41,
+      "Arctic": 67,
+      "Northern mid-latitudes": 57,
+      "Tropics": 48,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1890: planet -0.36 °C, Arctic -1.1 °C",
+     "frame": 57
+    },
+    {
+     "year": 1891,
+     "start": 9.087102177554438,
+     "dur": 0.7204610951008645,
+     "values": {
+      "Global": -0.22,
+      "Arctic": -1.08,
+      "Northern mid-latitudes": -0.35,
+      "Tropics": -0.07,
+      "Southern extratropics": -0.22
+     },
+     "midi": {
+      "Global": 45,
+      "Arctic": 67,
+      "Northern mid-latitudes": 57,
+      "Tropics": 48,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1891: planet -0.22 °C, Arctic -1.1 °C",
+     "frame": 63
+    },
+    {
+     "year": 1892,
+     "start": 9.807563272655303,
+     "dur": 0.6863103953147877,
+     "values": {
+      "Global": -0.27,
+      "Arctic": -1.07,
+      "Northern mid-latitudes": -0.67,
+      "Tropics": -0.29,
+      "Southern extratropics": -0.08
+     },
+     "midi": {
+      "Global": 43,
+      "Arctic": 67,
+      "Northern mid-latitudes": 55,
+      "Tropics": 48,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1892: planet -0.27 °C, Arctic -1.1 °C",
+     "frame": 69
+    },
+    {
+     "year": 1893,
+     "start": 10.49387366797009,
+     "dur": 0.6700975662056395,
+     "values": {
+      "Global": -0.31,
+      "Arctic": -0.59,
+      "Northern mid-latitudes": -0.55,
+      "Tropics": -0.36,
+      "Southern extratropics": -0.05
+     },
+     "midi": {
+      "Global": 43,
+      "Arctic": 67,
+      "Northern mid-latitudes": 55,
+      "Tropics": 45,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1893: planet -0.31 °C, Arctic -0.6 °C",
+     "frame": 75
+    },
+    {
+     "year": 1894,
+     "start": 11.16397123417573,
+     "dur": 0.6909945899730235,
+     "values": {
+      "Global": -0.3,
+      "Arctic": -0.88,
+      "Northern mid-latitudes": -0.34,
+      "Tropics": -0.34,
+      "Southern extratropics": -0.24
+     },
+     "midi": {
+      "Global": 43,
+      "Arctic": 67,
+      "Northern mid-latitudes": 57,
+      "Tropics": 45,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1894: planet -0.30 °C, Arctic -0.9 °C",
+     "frame": 81
+    },
+    {
+     "year": 1895,
+     "start": 11.854965824148753,
+     "dur": 0.6828650760584226,
+     "values": {
+      "Global": -0.23,
+      "Arctic": -0.63,
+      "Northern mid-latitudes": -0.53,
+      "Tropics": -0.07,
+      "Southern extratropics": -0.26
+     },
+     "midi": {
+      "Global": 45,
+      "Arctic": 69,
+      "Northern mid-latitudes": 57,
+      "Tropics": 48,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1895: planet -0.23 °C, Arctic -0.6 °C",
+     "frame": 87
+    },
+    {
+     "year": 1896,
+     "start": 12.537830900207176,
+     "dur": 0.6473045616639932,
+     "values": {
+      "Global": -0.11,
+      "Arctic": -0.81,
+      "Northern mid-latitudes": -0.38,
+      "Tropics": 0.09,
+      "Southern extratropics": -0.16
+     },
+     "midi": {
+      "Global": 48,
+      "Arctic": 69,
+      "Northern mid-latitudes": 57,
+      "Tropics": 48,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1896: planet -0.11 °C, Arctic -0.8 °C",
+     "frame": 93
+    },
+    {
+     "year": 1897,
+     "start": 13.18513546187117,
+     "dur": 0.6088054186968189,
+     "values": {
+      "Global": -0.11,
+      "Arctic": -0.5,
+      "Northern mid-latitudes": -0.48,
+      "Tropics": 0.17,
+      "Southern extratropics": -0.24
+     },
+     "midi": {
+      "Global": 48,
+      "Arctic": 69,
+      "Northern mid-latitudes": 57,
+      "Tropics": 50,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1897: planet -0.11 °C, Arctic -0.5 °C",
+     "frame": 99
+    },
+    {
+     "year": 1898,
+     "start": 13.79394088056799,
+     "dur": 0.6170114686024444,
+     "values": {
+      "Global": -0.28,
+      "Arctic": -1.12,
+      "Northern mid-latitudes": -0.25,
+      "Tropics": -0.22,
+      "Southern extratropics": -0.27
+     },
+     "midi": {
+      "Global": 43,
+      "Arctic": 69,
+      "Northern mid-latitudes": 57,
+      "Tropics": 48,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1898: planet -0.28 °C, Arctic -1.1 °C",
+     "frame": 105
+    },
+    {
+     "year": 1899,
+     "start": 14.410952349170433,
+     "dur": 0.6316165781214288,
+     "values": {
+      "Global": -0.18,
+      "Arctic": -0.99,
+      "Northern mid-latitudes": -0.12,
+      "Tropics": -0.12,
+      "Southern extratropics": -0.19
+     },
+     "midi": {
+      "Global": 45,
+      "Arctic": 67,
+      "Northern mid-latitudes": 57,
+      "Tropics": 48,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1899: planet -0.18 °C, Arctic -1.0 °C",
+     "frame": 111
+    },
+    {
+     "year": 1900,
+     "start": 15.042568927291862,
+     "dur": 0.5905775011196729,
+     "values": {
+      "Global": -0.08,
+      "Arctic": -0.5,
+      "Northern mid-latitudes": -0.17,
+      "Tropics": 0.17,
+      "Southern extratropics": -0.3
+     },
+     "midi": {
+      "Global": 48,
+      "Arctic": 69,
+      "Northern mid-latitudes": 60,
+      "Tropics": 50,
+      "Southern extratropics": 45
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "1900: planet -0.08 °C, Arctic -0.5 °C, warmest year so far",
+     "frame": 117
+    },
+    {
+     "year": 1901,
+     "start": 15.633146428411536,
+     "dur": 0.6117681081897888,
+     "values": {
+      "Global": -0.16,
+      "Arctic": -0.32,
+      "Northern mid-latitudes": -0.11,
+      "Tropics": -0.04,
+      "Southern extratropics": -0.3
+     },
+     "midi": {
+      "Global": 45,
+      "Arctic": 69,
+      "Northern mid-latitudes": 60,
+      "Tropics": 50,
+      "Southern extratropics": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1901: planet -0.16 °C, Arctic -0.3 °C",
+     "frame": 123
+    },
+    {
+     "year": 1902,
+     "start": 16.244914536601325,
+     "dur": 0.6433550392078208,
+     "values": {
+      "Global": -0.28,
+      "Arctic": -1.48,
+      "Northern mid-latitudes": -0.51,
+      "Tropics": -0.04,
+      "Southern extratropics": -0.35
+     },
+     "midi": {
+      "Global": 43,
+      "Arctic": 67,
+      "Northern mid-latitudes": 57,
+      "Tropics": 50,
+      "Southern extratropics": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1902: planet -0.28 °C, Arctic -1.5 °C",
+     "frame": 129
+    },
+    {
+     "year": 1903,
+     "start": 16.888269575809147,
+     "dur": 0.6563913582107115,
+     "values": {
+      "Global": -0.37,
+      "Arctic": -0.18,
+      "Northern mid-latitudes": -0.43,
+      "Tropics": -0.29,
+      "Southern extratropics": -0.39
+     },
+     "midi": {
+      "Global": 41,
+      "Arctic": 69,
+      "Northern mid-latitudes": 57,
+      "Tropics": 48,
+      "Southern extratropics": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1903: planet -0.37 °C, Arctic -0.2 °C",
+     "frame": 135
+    },
+    {
+     "year": 1904,
+     "start": 17.54466093401986,
+     "dur": 0.6360843977983962,
+     "values": {
+      "Global": -0.47,
+      "Arctic": -0.17,
+      "Northern mid-latitudes": -0.61,
+      "Tropics": -0.46,
+      "Southern extratropics": -0.44
+     },
+     "midi": {
+      "Global": 38,
+      "Arctic": 72,
+      "Northern mid-latitudes": 57,
+      "Tropics": 48,
+      "Southern extratropics": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1904: planet -0.47 °C, Arctic -0.2 °C",
+     "frame": 141
+    },
+    {
+     "year": 1905,
+     "start": 18.180745331818255,
+     "dur": 0.6588940285541101,
+     "values": {
+      "Global": -0.26,
+      "Arctic": 0.01,
+      "Northern mid-latitudes": -0.24,
+      "Tropics": -0.07,
+      "Southern extratropics": -0.36
+     },
+     "midi": {
+      "Global": 43,
+      "Arctic": 72,
+      "Northern mid-latitudes": 57,
+      "Tropics": 48,
+      "Southern extratropics": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1905: planet -0.26 °C, Arctic +0.0 °C",
+     "frame": 147
+    },
+    {
+     "year": 1906,
+     "start": 18.839639360372363,
+     "dur": 0.6546691459148801,
+     "values": {
+      "Global": -0.22,
+      "Arctic": -0.22,
+      "Northern mid-latitudes": -0.07,
+      "Tropics": -0.18,
+      "Southern extratropics": -0.23
+     },
+     "midi": {
+      "Global": 45,
+      "Arctic": 72,
+      "Northern mid-latitudes": 60,
+      "Tropics": 48,
+      "Southern extratropics": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1906: planet -0.22 °C, Arctic -0.2 °C",
+     "frame": 153
+    },
+    {
+     "year": 1907,
+     "start": 19.494308506287243,
+     "dur": 0.6090166255074237,
+     "values": {
+      "Global": -0.38,
+      "Arctic": -0.51,
+      "Northern mid-latitudes": -0.72,
+      "Tropics": -0.29,
+      "Southern extratropics": -0.29
+     },
+     "midi": {
+      "Global": 41,
+      "Arctic": 72,
+      "Northern mid-latitudes": 57,
+      "Tropics": 48,
+      "Southern extratropics": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1907: planet -0.38 °C, Arctic -0.5 °C",
+     "frame": 159
+    },
+    {
+     "year": 1908,
+     "start": 20.103325131794666,
+     "dur": 0.6071916854943158,
+     "values": {
+      "Global": -0.42,
+      "Arctic": -0.17,
+      "Northern mid-latitudes": -0.55,
+      "Tropics": -0.43,
+      "Southern extratropics": -0.36
+     },
+     "midi": {
+      "Global": 41,
+      "Arctic": 72,
+      "Northern mid-latitudes": 57,
+      "Tropics": 45,
+      "Southern extratropics": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1908: planet -0.42 °C, Arctic -0.2 °C",
+     "frame": 165
+    },
+    {
+     "year": 1909,
+     "start": 20.710516817288983,
+     "dur": 0.5689767375229167,
+     "values": {
+      "Global": -0.48,
+      "Arctic": -0.68,
+      "Northern mid-latitudes": -0.63,
+      "Tropics": -0.47,
+      "Southern extratropics": -0.44
+     },
+     "midi": {
+      "Global": 38,
+      "Arctic": 72,
+      "Northern mid-latitudes": 55,
+      "Tropics": 45,
+      "Southern extratropics": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1909: planet -0.48 °C, Arctic -0.7 °C",
+     "frame": 171
+    },
+    {
+     "year": 1910,
+     "start": 21.2794935548119,
+     "dur": 0.5302134503880939,
+     "values": {
+      "Global": -0.44,
+      "Arctic": -0.55,
+      "Northern mid-latitudes": -0.25,
+      "Tropics": -0.49,
+      "Southern extratropics": -0.38
+     },
+     "midi": {
+      "Global": 41,
+      "Arctic": 72,
+      "Northern mid-latitudes": 57,
+      "Tropics": 43,
+      "Southern extratropics": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1910: planet -0.44 °C, Arctic -0.6 °C",
+     "frame": 177
+    },
+    {
+     "year": 1911,
+     "start": 21.809707005199993,
+     "dur": 0.5166642379064448,
+     "values": {
+      "Global": -0.44,
+      "Arctic": -0.22,
+      "Northern mid-latitudes": -0.43,
+      "Tropics": -0.43,
+      "Southern extratropics": -0.48
+     },
+     "midi": {
+      "Global": 41,
+      "Arctic": 72,
+      "Northern mid-latitudes": 57,
+      "Tropics": 43,
+      "Southern extratropics": 43
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1911: planet -0.44 °C, Arctic -0.2 °C",
+     "frame": 183
+    },
+    {
+     "year": 1912,
+     "start": 22.326371243106436,
+     "dur": 0.5410100859702385,
+     "values": {
+      "Global": -0.37,
+      "Arctic": -0.46,
+      "Northern mid-latitudes": -0.8,
+      "Tropics": -0.19,
+      "Southern extratropics": -0.37
+     },
+     "midi": {
+      "Global": 41,
+      "Arctic": 72,
+      "Northern mid-latitudes": 55,
+      "Tropics": 45,
+      "Southern extratropics": 43
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1912: planet -0.37 °C, Arctic -0.5 °C",
+     "frame": 189
+    },
+    {
+     "year": 1913,
+     "start": 22.867381329076675,
+     "dur": 0.5751372204174171,
+     "values": {
+      "Global": -0.34,
+      "Arctic": -0.44,
+      "Northern mid-latitudes": -0.34,
+      "Tropics": -0.27,
+      "Southern extratropics": -0.35
+     },
+     "midi": {
+      "Global": 43,
+      "Arctic": 72,
+      "Northern mid-latitudes": 57,
+      "Tropics": 45,
+      "Southern extratropics": 43
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1913: planet -0.34 °C, Arctic -0.4 °C",
+     "frame": 195
+    },
+    {
+     "year": 1914,
+     "start": 23.442518549494093,
+     "dur": 0.5422094513671901,
+     "values": {
+      "Global": -0.15,
+      "Arctic": -0.3,
+      "Northern mid-latitudes": -0.18,
+      "Tropics": -0.06,
+      "Southern extratropics": -0.18
+     },
+     "midi": {
+      "Global": 48,
+      "Arctic": 72,
+      "Northern mid-latitudes": 57,
+      "Tropics": 45,
+      "Southern extratropics": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1914: planet -0.15 °C, Arctic -0.3 °C",
+     "frame": 201
+    },
+    {
+     "year": 1915,
+     "start": 23.98472800086128,
+     "dur": 0.5569651145357504,
+     "values": {
+      "Global": -0.14,
+      "Arctic": -0.54,
+      "Northern mid-latitudes": -0.18,
+      "Tropics": -0.01,
+      "Southern extratropics": -0.22
+     },
+     "midi": {
+      "Global": 48,
+      "Arctic": 72,
+      "Northern mid-latitudes": 57,
+      "Tropics": 48,
+      "Southern extratropics": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1915: planet -0.14 °C, Arctic -0.5 °C",
+     "frame": 207
+    },
+    {
+     "year": 1916,
+     "start": 24.54169311539703,
+     "dur": 0.5650710369877275,
+     "values": {
+      "Global": -0.36,
+      "Arctic": -0.45,
+      "Northern mid-latitudes": -0.55,
+      "Tropics": -0.45,
+      "Southern extratropics": -0.23
+     },
+     "midi": {
+      "Global": 41,
+      "Arctic": 72,
+      "Northern mid-latitudes": 57,
+      "Tropics": 45,
+      "Southern extratropics": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1916: planet -0.36 °C, Arctic -0.5 °C",
+     "frame": 213
+    },
+    {
+     "year": 1917,
+     "start": 25.10676415238476,
+     "dur": 0.5851085649369148,
+     "values": {
+      "Global": -0.46,
+      "Arctic": -0.75,
+      "Northern mid-latitudes": -0.51,
+      "Tropics": -0.63,
+      "Southern extratropics": -0.19
+     },
+     "midi": {
+      "Global": 38,
+      "Arctic": 69,
+      "Northern mid-latitudes": 57,
+      "Tropics": 45,
+      "Southern extratropics": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1917: planet -0.46 °C, Arctic -0.8 °C",
+     "frame": 219
+    },
+    {
+     "year": 1918,
+     "start": 25.691872717321672,
+     "dur": 0.5926742047942315,
+     "values": {
+      "Global": -0.3,
+      "Arctic": -0.96,
+      "Northern mid-latitudes": -0.28,
+      "Tropics": -0.34,
+      "Southern extratropics": -0.14
+     },
+     "midi": {
+      "Global": 43,
+      "Arctic": 69,
+      "Northern mid-latitudes": 57,
+      "Tropics": 45,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1918: planet -0.30 °C, Arctic -1.0 °C",
+     "frame": 225
+    },
+    {
+     "year": 1919,
+     "start": 26.284546922115904,
+     "dur": 0.5780968014877615,
+     "values": {
+      "Global": -0.27,
+      "Arctic": -0.63,
+      "Northern mid-latitudes": -0.56,
+      "Tropics": -0.2,
+      "Southern extratropics": -0.22
+     },
+     "midi": {
+      "Global": 43,
+      "Arctic": 69,
+      "Northern mid-latitudes": 57,
+      "Tropics": 45,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1919: planet -0.27 °C, Arctic -0.6 °C",
+     "frame": 231
+    },
+    {
+     "year": 1920,
+     "start": 26.862643723603664,
+     "dur": 0.5756440570754512,
+     "values": {
+      "Global": -0.27,
+      "Arctic": 0.08,
+      "Northern mid-latitudes": -0.21,
+      "Tropics": -0.25,
+      "Southern extratropics": -0.32
+     },
+     "midi": {
+      "Global": 43,
+      "Arctic": 72,
+      "Northern mid-latitudes": 57,
+      "Tropics": 45,
+      "Southern extratropics": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1920: planet -0.27 °C, Arctic +0.1 °C",
+     "frame": 237
+    },
+    {
+     "year": 1921,
+     "start": 27.438287780679115,
+     "dur": 0.5546062465822759,
+     "values": {
+      "Global": -0.18,
+      "Arctic": 0.05,
+      "Northern mid-latitudes": 0.16,
+      "Tropics": -0.24,
+      "Southern extratropics": -0.31
+     },
+     "midi": {
+      "Global": 45,
+      "Arctic": 72,
+      "Northern mid-latitudes": 60,
+      "Tropics": 45,
+      "Southern extratropics": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1921: planet -0.18 °C, Arctic +0.1 °C",
+     "frame": 243
+    },
+    {
+     "year": 1922,
+     "start": 27.99289402726139,
+     "dur": 0.5738996782930195,
+     "values": {
+      "Global": -0.28,
+      "Arctic": -0.24,
+      "Northern mid-latitudes": -0.41,
+      "Tropics": -0.32,
+      "Southern extratropics": -0.27
+     },
+     "midi": {
+      "Global": 43,
+      "Arctic": 72,
+      "Northern mid-latitudes": 60,
+      "Tropics": 45,
+      "Southern extratropics": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1922: planet -0.28 °C, Arctic -0.2 °C",
+     "frame": 249
+    },
+    {
+     "year": 1923,
+     "start": 28.56679370555441,
+     "dur": 0.5926610111911541,
+     "values": {
+      "Global": -0.26,
+      "Arctic": 0.24,
+      "Northern mid-latitudes": -0.16,
+      "Tropics": -0.3,
+      "Southern extratropics": -0.34
+     },
+     "midi": {
+      "Global": 43,
+      "Arctic": 74,
+      "Northern mid-latitudes": 60,
+      "Tropics": 45,
+      "Southern extratropics": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1923: planet -0.26 °C, Arctic +0.2 °C",
+     "frame": 255
+    },
+    {
+     "year": 1924,
+     "start": 29.159454716745564,
+     "dur": 0.5988582820006594,
+     "values": {
+      "Global": -0.27,
+      "Arctic": 0.57,
+      "Northern mid-latitudes": -0.26,
+      "Tropics": -0.25,
+      "Southern extratropics": -0.43
+     },
+     "midi": {
+      "Global": 43,
+      "Arctic": 74,
+      "Northern mid-latitudes": 60,
+      "Tropics": 45,
+      "Southern extratropics": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1924: planet -0.27 °C, Arctic +0.6 °C",
+     "frame": 261
+    },
+    {
+     "year": 1925,
+     "start": 29.758312998746224,
+     "dur": 0.6137949224820941,
+     "values": {
+      "Global": -0.22,
+      "Arctic": -0.01,
+      "Northern mid-latitudes": 0.17,
+      "Tropics": -0.24,
+      "Southern extratropics": -0.37
+     },
+     "midi": {
+      "Global": 45,
+      "Arctic": 74,
+      "Northern mid-latitudes": 60,
+      "Tropics": 45,
+      "Southern extratropics": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1925: planet -0.22 °C, Arctic -0.0 °C",
+     "frame": 267
+    },
+    {
+     "year": 1926,
+     "start": 30.372107921228316,
+     "dur": 0.5847838343857089,
+     "values": {
+      "Global": -0.11,
+      "Arctic": 0.59,
+      "Northern mid-latitudes": 0.15,
+      "Tropics": 0.02,
+      "Southern extratropics": -0.4
+     },
+     "midi": {
+      "Global": 48,
+      "Arctic": 77,
+      "Northern mid-latitudes": 62,
+      "Tropics": 48,
+      "Southern extratropics": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1926: planet -0.11 °C, Arctic +0.6 °C",
+     "frame": 273
+    },
+    {
+     "year": 1927,
+     "start": 30.956891755614027,
+     "dur": 0.5656022629496663,
+     "values": {
+      "Global": -0.22,
+      "Arctic": 0.05,
+      "Northern mid-latitudes": -0.22,
+      "Tropics": -0.15,
+      "Southern extratropics": -0.38
+     },
+     "midi": {
+      "Global": 45,
+      "Arctic": 74,
+      "Northern mid-latitudes": 62,
+      "Tropics": 48,
+      "Southern extratropics": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1927: planet -0.22 °C, Arctic +0.1 °C",
+     "frame": 279
+    },
+    {
+     "year": 1928,
+     "start": 31.522494018563695,
+     "dur": 0.5810277593931658,
+     "values": {
+      "Global": -0.2,
+      "Arctic": 0.68,
+      "Northern mid-latitudes": -0.18,
+      "Tropics": -0.15,
+      "Southern extratropics": -0.39
+     },
+     "midi": {
+      "Global": 45,
+      "Arctic": 77,
+      "Northern mid-latitudes": 60,
+      "Tropics": 48,
+      "Southern extratropics": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1928: planet -0.20 °C, Arctic +0.7 °C",
+     "frame": 285
+    },
+    {
+     "year": 1929,
+     "start": 32.10352177795686,
+     "dur": 0.596348961415971,
+     "values": {
+      "Global": -0.36,
+      "Arctic": 0.14,
+      "Northern mid-latitudes": -0.62,
+      "Tropics": -0.27,
+      "Southern extratropics": -0.45
+     },
+     "midi": {
+      "Global": 41,
+      "Arctic": 77,
+      "Northern mid-latitudes": 60,
+      "Tropics": 48,
+      "Southern extratropics": 43
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1929: planet -0.36 °C, Arctic +0.1 °C",
+     "frame": 291
+    },
+    {
+     "year": 1930,
+     "start": 32.69987073937283,
+     "dur": 0.6018670788232742,
+     "values": {
+      "Global": -0.15,
+      "Arctic": 0.52,
+      "Northern mid-latitudes": 0.04,
+      "Tropics": -0.1,
+      "Southern extratropics": -0.42
+     },
+     "midi": {
+      "Global": 48,
+      "Arctic": 77,
+      "Northern mid-latitudes": 60,
+      "Tropics": 48,
+      "Southern extratropics": 43
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1930: planet -0.15 °C, Arctic +0.5 °C",
+     "frame": 297
+    },
+    {
+     "year": 1931,
+     "start": 33.3017378181961,
+     "dur": 0.613799260554018,
+     "values": {
+      "Global": -0.09,
+      "Arctic": 0.58,
+      "Northern mid-latitudes": -0.04,
+      "Tropics": 0.09,
+      "Southern extratropics": -0.42
+     },
+     "midi": {
+      "Global": 48,
+      "Arctic": 77,
+      "Northern mid-latitudes": 60,
+      "Tropics": 48,
+      "Southern extratropics": 43
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1931: planet -0.09 °C, Arctic +0.6 °C",
+     "frame": 303
+    },
+    {
+     "year": 1932,
+     "start": 33.91553707875012,
+     "dur": 0.6160071760342146,
+     "values": {
+      "Global": -0.16,
+      "Arctic": 0.47,
+      "Northern mid-latitudes": 0.19,
+      "Tropics": -0.16,
+      "Southern extratropics": -0.34
+     },
+     "midi": {
+      "Global": 45,
+      "Arctic": 77,
+      "Northern mid-latitudes": 62,
+      "Tropics": 48,
+      "Southern extratropics": 43
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1932: planet -0.16 °C, Arctic +0.5 °C",
+     "frame": 309
+    },
+    {
+     "year": 1933,
+     "start": 34.531544254784336,
+     "dur": 0.6443218000772025,
+     "values": {
+      "Global": -0.28,
+      "Arctic": -0.14,
+      "Northern mid-latitudes": -0.47,
+      "Tropics": -0.28,
+      "Southern extratropics": -0.34
+     },
+     "midi": {
+      "Global": 43,
+      "Arctic": 77,
+      "Northern mid-latitudes": 60,
+      "Tropics": 48,
+      "Southern extratropics": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1933: planet -0.28 °C, Arctic -0.1 °C",
+     "frame": 315
+    },
+    {
+     "year": 1934,
+     "start": 35.17586605486154,
+     "dur": 0.634941220794263,
+     "values": {
+      "Global": -0.13,
+      "Arctic": 0.9,
+      "Northern mid-latitudes": 0.31,
+      "Tropics": -0.25,
+      "Southern extratropics": -0.26
+     },
+     "midi": {
+      "Global": 48,
+      "Arctic": 77,
+      "Northern mid-latitudes": 62,
+      "Tropics": 48,
+      "Southern extratropics": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1934: planet -0.13 °C, Arctic +0.9 °C",
+     "frame": 321
+    },
+    {
+     "year": 1935,
+     "start": 35.8108072756558,
+     "dur": 0.6608107896524462,
+     "values": {
+      "Global": -0.2,
+      "Arctic": 0.34,
+      "Northern mid-latitudes": -0.05,
+      "Tropics": -0.18,
+      "Southern extratropics": -0.37
+     },
+     "midi": {
+      "Global": 45,
+      "Arctic": 77,
+      "Northern mid-latitudes": 62,
+      "Tropics": 48,
+      "Southern extratropics": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1935: planet -0.20 °C, Arctic +0.3 °C",
+     "frame": 327
+    },
+    {
+     "year": 1936,
+     "start": 36.47161806530824,
+     "dur": 0.6769102812418055,
+     "values": {
+      "Global": -0.15,
+      "Arctic": 0.41,
+      "Northern mid-latitudes": 0.11,
+      "Tropics": -0.13,
+      "Southern extratropics": -0.29
+     },
+     "midi": {
+      "Global": 48,
+      "Arctic": 77,
+      "Northern mid-latitudes": 62,
+      "Tropics": 48,
+      "Southern extratropics": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1936: planet -0.15 °C, Arctic +0.4 °C",
+     "frame": 333
+    },
+    {
+     "year": 1937,
+     "start": 37.148528346550044,
+     "dur": 0.6457832468863443,
+     "values": {
+      "Global": -0.03,
+      "Arctic": 1.23,
+      "Northern mid-latitudes": 0.03,
+      "Tropics": -0.05,
+      "Southern extratropics": -0.22
+     },
+     "midi": {
+      "Global": 50,
+      "Arctic": 79,
+      "Northern mid-latitudes": 62,
+      "Tropics": 48,
+      "Southern extratropics": 45
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "1937: planet -0.03 °C, Arctic +1.2 °C, warmest year so far",
+     "frame": 339
+    },
+    {
+     "year": 1938,
+     "start": 37.79431159343639,
+     "dur": 0.6202938752956111,
+     "values": {
+      "Global": 0.0,
+      "Arctic": 1.52,
+      "Northern mid-latitudes": 0.39,
+      "Tropics": -0.23,
+      "Southern extratropics": -0.09
+     },
+     "midi": {
+      "Global": 50,
+      "Arctic": 81,
+      "Northern mid-latitudes": 65,
+      "Tropics": 48,
+      "Southern extratropics": 45
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "1938: planet +0.00 °C, Arctic +1.5 °C, warmest year so far",
+     "frame": 345
+    },
+    {
+     "year": 1939,
+     "start": 38.414605468732,
+     "dur": 0.5693535432587723,
+     "values": {
+      "Global": -0.02,
+      "Arctic": 0.55,
+      "Northern mid-latitudes": 0.28,
+      "Tropics": -0.13,
+      "Southern extratropics": -0.12
+     },
+     "midi": {
+      "Global": 50,
+      "Arctic": 79,
+      "Northern mid-latitudes": 65,
+      "Tropics": 48,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1939: planet -0.02 °C, Arctic +0.6 °C",
+     "frame": 351
+    },
+    {
+     "year": 1940,
+     "start": 38.98395901199077,
+     "dur": 0.5479144780855509,
+     "values": {
+      "Global": 0.12,
+      "Arctic": 0.99,
+      "Northern mid-latitudes": -0.02,
+      "Tropics": 0.27,
+      "Southern extratropics": -0.06
+     },
+     "midi": {
+      "Global": 53,
+      "Arctic": 79,
+      "Northern mid-latitudes": 65,
+      "Tropics": 50,
+      "Southern extratropics": 48
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "1940: planet +0.12 °C, Arctic +1.0 °C, warmest year so far",
+     "frame": 357
+    },
+    {
+     "year": 1941,
+     "start": 39.53187349007632,
+     "dur": 0.5318917286762207,
+     "values": {
+      "Global": 0.18,
+      "Arctic": 0.01,
+      "Northern mid-latitudes": -0.1,
+      "Tropics": 0.48,
+      "Southern extratropics": -0.05
+     },
+     "midi": {
+      "Global": 55,
+      "Arctic": 79,
+      "Northern mid-latitudes": 62,
+      "Tropics": 53,
+      "Southern extratropics": 48
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "1941: planet +0.18 °C, Arctic +0.0 °C, warmest year so far",
+     "frame": 363
+    },
+    {
+     "year": 1942,
+     "start": 40.06376521875254,
+     "dur": 0.5288956397281797,
+     "values": {
+      "Global": 0.06,
+      "Arctic": 0.72,
+      "Northern mid-latitudes": -0.07,
+      "Tropics": 0.07,
+      "Southern extratropics": -0.01
+     },
+     "midi": {
+      "Global": 53,
+      "Arctic": 79,
+      "Northern mid-latitudes": 62,
+      "Tropics": 53,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1942: planet +0.06 °C, Arctic +0.7 °C",
+     "frame": 369
+    },
+    {
+     "year": 1943,
+     "start": 40.59266085848072,
+     "dur": 0.50018696945181,
+     "values": {
+      "Global": 0.09,
+      "Arctic": 1.43,
+      "Northern mid-latitudes": 0.28,
+      "Tropics": -0.09,
+      "Southern extratropics": 0.04
+     },
+     "midi": {
+      "Global": 53,
+      "Arctic": 81,
+      "Northern mid-latitudes": 62,
+      "Tropics": 50,
+      "Southern extratropics": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1943: planet +0.09 °C, Arctic +1.4 °C",
+     "frame": 375
+    },
+    {
+     "year": 1944,
+     "start": 41.09284782793253,
+     "dur": 0.48557787074445635,
+     "values": {
+      "Global": 0.2,
+      "Arctic": 1.18,
+      "Northern mid-latitudes": 0.47,
+      "Tropics": 0.18,
+      "Southern extratropics": 0.05
+     },
+     "midi": {
+      "Global": 55,
+      "Arctic": 81,
+      "Northern mid-latitudes": 65,
+      "Tropics": 53,
+      "Southern extratropics": 50
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "1944: planet +0.20 °C, Arctic +1.2 °C, warmest year so far",
+     "frame": 381
+    },
+    {
+     "year": 1945,
+     "start": 41.57842569867699,
+     "dur": 0.48057171799900705,
+     "values": {
+      "Global": 0.09,
+      "Arctic": 0.65,
+      "Northern mid-latitudes": -0.02,
+      "Tropics": 0.17,
+      "Southern extratropics": -0.03
+     },
+     "midi": {
+      "Global": 53,
+      "Arctic": 79,
+      "Northern mid-latitudes": 65,
+      "Tropics": 53,
+      "Southern extratropics": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1945: planet +0.09 °C, Arctic +0.7 °C",
+     "frame": 387
+    },
+    {
+     "year": 1946,
+     "start": 42.05899741667599,
+     "dur": 0.5107207356676656,
+     "values": {
+      "Global": -0.07,
+      "Arctic": -0.03,
+      "Northern mid-latitudes": -0.05,
+      "Tropics": -0.05,
+      "Southern extratropics": -0.24
+     },
+     "midi": {
+      "Global": 48,
+      "Arctic": 79,
+      "Northern mid-latitudes": 62,
+      "Tropics": 50,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1946: planet -0.07 °C, Arctic -0.0 °C",
+     "frame": 393
+    },
+    {
+     "year": 1947,
+     "start": 42.56971815234366,
+     "dur": 0.553583021228151,
+     "values": {
+      "Global": -0.03,
+      "Arctic": 1.06,
+      "Northern mid-latitudes": -0.13,
+      "Tropics": -0.06,
+      "Southern extratropics": -0.16
+     },
+     "midi": {
+      "Global": 50,
+      "Arctic": 79,
+      "Northern mid-latitudes": 62,
+      "Tropics": 50,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1947: planet -0.03 °C, Arctic +1.1 °C",
+     "frame": 399
+    },
+    {
+     "year": 1948,
+     "start": 43.12330117357181,
+     "dur": 0.5686780025542088,
+     "values": {
+      "Global": -0.11,
+      "Arctic": 0.12,
+      "Northern mid-latitudes": 0.31,
+      "Tropics": -0.18,
+      "Southern extratropics": -0.24
+     },
+     "midi": {
+      "Global": 48,
+      "Arctic": 79,
+      "Northern mid-latitudes": 65,
+      "Tropics": 50,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1948: planet -0.11 °C, Arctic +0.1 °C",
+     "frame": 405
+    },
+    {
+     "year": 1949,
+     "start": 43.69197917612602,
+     "dur": 0.5859015145684161,
+     "values": {
+      "Global": -0.11,
+      "Arctic": 0.2,
+      "Northern mid-latitudes": 0.17,
+      "Tropics": -0.19,
+      "Southern extratropics": -0.23
+     },
+     "midi": {
+      "Global": 48,
+      "Arctic": 77,
+      "Northern mid-latitudes": 65,
+      "Tropics": 48,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1949: planet -0.11 °C, Arctic +0.2 °C",
+     "frame": 411
+    },
+    {
+     "year": 1950,
+     "start": 44.27788069069443,
+     "dur": 0.5559414641915351,
+     "values": {
+      "Global": -0.17,
+      "Arctic": 0.18,
+      "Northern mid-latitudes": -0.31,
+      "Tropics": -0.29,
+      "Southern extratropics": -0.14
+     },
+     "midi": {
+      "Global": 45,
+      "Arctic": 77,
+      "Northern mid-latitudes": 62,
+      "Tropics": 48,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1950: planet -0.17 °C, Arctic +0.2 °C",
+     "frame": 417
+    },
+    {
+     "year": 1951,
+     "start": 44.833822154885965,
+     "dur": 0.5418095211640761,
+     "values": {
+      "Global": -0.07,
+      "Arctic": 0.07,
+      "Northern mid-latitudes": 0.01,
+      "Tropics": -0.06,
+      "Southern extratropics": -0.23
+     },
+     "midi": {
+      "Global": 48,
+      "Arctic": 77,
+      "Northern mid-latitudes": 62,
+      "Tropics": 48,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1951: planet -0.07 °C, Arctic +0.1 °C",
+     "frame": 423
+    },
+    {
+     "year": 1952,
+     "start": 45.37563167605004,
+     "dur": 0.5714720026494238,
+     "values": {
+      "Global": 0.01,
+      "Arctic": 0.27,
+      "Northern mid-latitudes": -0.1,
+      "Tropics": 0.02,
+      "Southern extratropics": -0.09
+     },
+     "midi": {
+      "Global": 50,
+      "Arctic": 77,
+      "Northern mid-latitudes": 62,
+      "Tropics": 48,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1952: planet +0.01 °C, Arctic +0.3 °C",
+     "frame": 429
+    },
+    {
+     "year": 1953,
+     "start": 45.94710367869946,
+     "dur": 0.6073266914519448,
+     "values": {
+      "Global": 0.08,
+      "Arctic": 1.03,
+      "Northern mid-latitudes": 0.35,
+      "Tropics": 0.07,
+      "Southern extratropics": -0.18
+     },
+     "midi": {
+      "Global": 53,
+      "Arctic": 77,
+      "Northern mid-latitudes": 62,
+      "Tropics": 50,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1953: planet +0.08 °C, Arctic +1.0 °C",
+     "frame": 435
+    },
+    {
+     "year": 1954,
+     "start": 46.55443037015141,
+     "dur": 0.5626676070227521,
+     "values": {
+      "Global": -0.13,
+      "Arctic": 0.8,
+      "Northern mid-latitudes": -0.21,
+      "Tropics": -0.21,
+      "Southern extratropics": -0.22
+     },
+     "midi": {
+      "Global": 48,
+      "Arctic": 79,
+      "Northern mid-latitudes": 62,
+      "Tropics": 48,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1954: planet -0.13 °C, Arctic +0.8 °C",
+     "frame": 441
+    },
+    {
+     "year": 1955,
+     "start": 47.11709797717416,
+     "dur": 0.550924148946795,
+     "values": {
+      "Global": -0.14,
+      "Arctic": -0.23,
+      "Northern mid-latitudes": -0.11,
+      "Tropics": -0.34,
+      "Southern extratropics": -0.06
+     },
+     "midi": {
+      "Global": 48,
+      "Arctic": 77,
+      "Northern mid-latitudes": 62,
+      "Tropics": 48,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1955: planet -0.14 °C, Arctic -0.2 °C",
+     "frame": 447
+    },
+    {
+     "year": 1956,
+     "start": 47.66802212612096,
+     "dur": 0.5643004812338773,
+     "values": {
+      "Global": -0.19,
+      "Arctic": 0.01,
+      "Northern mid-latitudes": -0.48,
+      "Tropics": -0.33,
+      "Southern extratropics": 0.0
+     },
+     "midi": {
+      "Global": 45,
+      "Arctic": 77,
+      "Northern mid-latitudes": 60,
+      "Tropics": 48,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1956: planet -0.19 °C, Arctic +0.0 °C",
+     "frame": 453
+    },
+    {
+     "year": 1957,
+     "start": 48.23232260735484,
+     "dur": 0.5844474719864571,
+     "values": {
+      "Global": 0.05,
+      "Arctic": 0.09,
+      "Northern mid-latitudes": 0.22,
+      "Tropics": 0.08,
+      "Southern extratropics": 0.02
+     },
+     "midi": {
+      "Global": 50,
+      "Arctic": 77,
+      "Northern mid-latitudes": 62,
+      "Tropics": 48,
+      "Southern extratropics": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1957: planet +0.05 °C, Arctic +0.1 °C",
+     "frame": 459
+    },
+    {
+     "year": 1958,
+     "start": 48.816770079341296,
+     "dur": 0.5806703429649218,
+     "values": {
+      "Global": 0.06,
+      "Arctic": -0.18,
+      "Northern mid-latitudes": 0.14,
+      "Tropics": 0.21,
+      "Southern extratropics": -0.16
+     },
+     "midi": {
+      "Global": 53,
+      "Arctic": 74,
+      "Northern mid-latitudes": 62,
+      "Tropics": 50,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1958: planet +0.06 °C, Arctic -0.2 °C",
+     "frame": 465
+    },
+    {
+     "year": 1959,
+     "start": 49.39744042230622,
+     "dur": 0.5844359920600808,
+     "values": {
+      "Global": 0.03,
+      "Arctic": 0.49,
+      "Northern mid-latitudes": 0.18,
+      "Tropics": 0.07,
+      "Southern extratropics": -0.16
+     },
+     "midi": {
+      "Global": 50,
+      "Arctic": 77,
+      "Northern mid-latitudes": 62,
+      "Tropics": 50,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1959: planet +0.03 °C, Arctic +0.5 °C",
+     "frame": 471
+    },
+    {
+     "year": 1960,
+     "start": 49.9818764143663,
+     "dur": 0.5851919211559212,
+     "values": {
+      "Global": -0.02,
+      "Arctic": 0.34,
+      "Northern mid-latitudes": -0.07,
+      "Tropics": 0.02,
+      "Southern extratropics": -0.2
+     },
+     "midi": {
+      "Global": 50,
+      "Arctic": 77,
+      "Northern mid-latitudes": 62,
+      "Tropics": 50,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1960: planet -0.02 °C, Arctic +0.3 °C",
+     "frame": 477
+    },
+    {
+     "year": 1961,
+     "start": 50.567068335522215,
+     "dur": 0.590409550878136,
+     "values": {
+      "Global": 0.06,
+      "Arctic": -0.16,
+      "Northern mid-latitudes": 0.38,
+      "Tropics": -0.03,
+      "Southern extratropics": 0.05
+     },
+     "midi": {
+      "Global": 53,
+      "Arctic": 74,
+      "Northern mid-latitudes": 65,
+      "Tropics": 50,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1961: planet +0.06 °C, Arctic -0.2 °C",
+     "frame": 483
+    },
+    {
+     "year": 1962,
+     "start": 51.15747788640035,
+     "dur": 0.6217648935971778,
+     "values": {
+      "Global": 0.03,
+      "Arctic": 0.44,
+      "Northern mid-latitudes": 0.3,
+      "Tropics": -0.05,
+      "Southern extratropics": -0.08
+     },
+     "midi": {
+      "Global": 50,
+      "Arctic": 77,
+      "Northern mid-latitudes": 65,
+      "Tropics": 50,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1962: planet +0.03 °C, Arctic +0.4 °C",
+     "frame": 489
+    },
+    {
+     "year": 1963,
+     "start": 51.77924277999753,
+     "dur": 0.6465545231099472,
+     "values": {
+      "Global": 0.05,
+      "Arctic": -0.16,
+      "Northern mid-latitudes": 0.31,
+      "Tropics": 0.12,
+      "Southern extratropics": -0.12
+     },
+     "midi": {
+      "Global": 50,
+      "Arctic": 74,
+      "Northern mid-latitudes": 65,
+      "Tropics": 50,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1963: planet +0.05 °C, Arctic -0.2 °C",
+     "frame": 495
+    },
+    {
+     "year": 1964,
+     "start": 52.42579730310748,
+     "dur": 0.6561702852808969,
+     "values": {
+      "Global": -0.2,
+      "Arctic": -0.66,
+      "Northern mid-latitudes": -0.2,
+      "Tropics": -0.14,
+      "Southern extratropics": -0.24
+     },
+     "midi": {
+      "Global": 45,
+      "Arctic": 74,
+      "Northern mid-latitudes": 62,
+      "Tropics": 50,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1964: planet -0.20 °C, Arctic -0.7 °C",
+     "frame": 501
+    },
+    {
+     "year": 1965,
+     "start": 53.08196758838837,
+     "dur": 0.6760430617719689,
+     "values": {
+      "Global": -0.11,
+      "Arctic": -0.28,
+      "Northern mid-latitudes": -0.24,
+      "Tropics": -0.03,
+      "Southern extratropics": -0.13
+     },
+     "midi": {
+      "Global": 48,
+      "Arctic": 74,
+      "Northern mid-latitudes": 62,
+      "Tropics": 50,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1965: planet -0.11 °C, Arctic -0.3 °C",
+     "frame": 507
+    },
+    {
+     "year": 1966,
+     "start": 53.758010650160344,
+     "dur": 0.6622414639020722,
+     "values": {
+      "Global": -0.06,
+      "Arctic": -0.76,
+      "Northern mid-latitudes": -0.19,
+      "Tropics": 0.08,
+      "Southern extratropics": -0.15
+     },
+     "midi": {
+      "Global": 48,
+      "Arctic": 72,
+      "Northern mid-latitudes": 62,
+      "Tropics": 50,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1966: planet -0.06 °C, Arctic -0.8 °C",
+     "frame": 513
+    },
+    {
+     "year": 1967,
+     "start": 54.420252114062414,
+     "dur": 0.6690371735432284,
+     "values": {
+      "Global": -0.02,
+      "Arctic": 0.36,
+      "Northern mid-latitudes": 0.26,
+      "Tropics": -0.14,
+      "Southern extratropics": -0.01
+     },
+     "midi": {
+      "Global": 50,
+      "Arctic": 74,
+      "Northern mid-latitudes": 62,
+      "Tropics": 50,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1967: planet -0.02 °C, Arctic +0.4 °C",
+     "frame": 519
+    },
+    {
+     "year": 1968,
+     "start": 55.089289287605645,
+     "dur": 0.6539873605742151,
+     "values": {
+      "Global": -0.08,
+      "Arctic": -0.33,
+      "Northern mid-latitudes": -0.02,
+      "Tropics": -0.07,
+      "Southern extratropics": -0.08
+     },
+     "midi": {
+      "Global": 48,
+      "Arctic": 72,
+      "Northern mid-latitudes": 62,
+      "Tropics": 50,
+      "Southern extratropics": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1968: planet -0.08 °C, Arctic -0.3 °C",
+     "frame": 525
+    },
+    {
+     "year": 1969,
+     "start": 55.74327664817986,
+     "dur": 0.6772321359697794,
+     "values": {
+      "Global": 0.05,
+      "Arctic": -0.03,
+      "Northern mid-latitudes": -0.61,
+      "Tropics": 0.33,
+      "Southern extratropics": 0.02
+     },
+     "midi": {
+      "Global": 50,
+      "Arctic": 74,
+      "Northern mid-latitudes": 60,
+      "Tropics": 50,
+      "Southern extratropics": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1969: planet +0.05 °C, Arctic -0.0 °C",
+     "frame": 531
+    },
+    {
+     "year": 1970,
+     "start": 56.42050878414964,
+     "dur": 0.6874684608038564,
+     "values": {
+      "Global": 0.03,
+      "Arctic": -0.2,
+      "Northern mid-latitudes": -0.13,
+      "Tropics": 0.07,
+      "Southern extratropics": 0.12
+     },
+     "midi": {
+      "Global": 50,
+      "Arctic": 74,
+      "Northern mid-latitudes": 60,
+      "Tropics": 50,
+      "Southern extratropics": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1970: planet +0.03 °C, Arctic -0.2 °C",
+     "frame": 537
+    },
+    {
+     "year": 1971,
+     "start": 57.107977244953496,
+     "dur": 0.6679923725843014,
+     "values": {
+      "Global": -0.08,
+      "Arctic": -0.08,
+      "Northern mid-latitudes": 0.02,
+      "Tropics": -0.26,
+      "Southern extratropics": 0.13
+     },
+     "midi": {
+      "Global": 48,
+      "Arctic": 74,
+      "Northern mid-latitudes": 60,
+      "Tropics": 50,
+      "Southern extratropics": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1971: planet -0.08 °C, Arctic -0.1 °C",
+     "frame": 543
+    },
+    {
+     "year": 1972,
+     "start": 57.7759696175378,
+     "dur": 0.6892027709198709,
+     "values": {
+      "Global": 0.01,
+      "Arctic": -0.37,
+      "Northern mid-latitudes": -0.47,
+      "Tropics": 0.16,
+      "Southern extratropics": 0.15
+     },
+     "midi": {
+      "Global": 50,
+      "Arctic": 72,
+      "Northern mid-latitudes": 60,
+      "Tropics": 50,
+      "Southern extratropics": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1972: planet +0.01 °C, Arctic -0.4 °C",
+     "frame": 549
+    },
+    {
+     "year": 1973,
+     "start": 58.46517238845767,
+     "dur": 0.6783824343605217,
+     "values": {
+      "Global": 0.16,
+      "Arctic": 0.06,
+      "Northern mid-latitudes": 0.27,
+      "Tropics": 0.18,
+      "Southern extratropics": 0.18
+     },
+     "midi": {
+      "Global": 55,
+      "Arctic": 74,
+      "Northern mid-latitudes": 62,
+      "Tropics": 50,
+      "Southern extratropics": 53
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1973: planet +0.16 °C, Arctic +0.1 °C",
+     "frame": 555
+    },
+    {
+     "year": 1974,
+     "start": 59.14355482281819,
+     "dur": 0.6640359843586641,
+     "values": {
+      "Global": -0.07,
+      "Arctic": -0.19,
+      "Northern mid-latitudes": -0.07,
+      "Tropics": -0.2,
+      "Southern extratropics": 0.18
+     },
+     "midi": {
+      "Global": 48,
+      "Arctic": 74,
+      "Northern mid-latitudes": 62,
+      "Tropics": 50,
+      "Southern extratropics": 53
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1974: planet -0.07 °C, Arctic -0.2 °C",
+     "frame": 561
+    },
+    {
+     "year": 1975,
+     "start": 59.80759080717685,
+     "dur": 0.6616291746727169,
+     "values": {
+      "Global": -0.01,
+      "Arctic": 0.1,
+      "Northern mid-latitudes": 0.39,
+      "Tropics": -0.24,
+      "Southern extratropics": 0.16
+     },
+     "midi": {
+      "Global": 50,
+      "Arctic": 74,
+      "Northern mid-latitudes": 62,
+      "Tropics": 48,
+      "Southern extratropics": 53
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1975: planet -0.01 °C, Arctic +0.1 °C",
+     "frame": 567
+    },
+    {
+     "year": 1976,
+     "start": 60.46921998184957,
+     "dur": 0.6775971259417481,
+     "values": {
+      "Global": -0.1,
+      "Arctic": -0.07,
+      "Northern mid-latitudes": -0.32,
+      "Tropics": -0.12,
+      "Southern extratropics": 0.09
+     },
+     "midi": {
+      "Global": 48,
+      "Arctic": 74,
+      "Northern mid-latitudes": 62,
+      "Tropics": 48,
+      "Southern extratropics": 53
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1976: planet -0.10 °C, Arctic -0.1 °C",
+     "frame": 573
+    },
+    {
+     "year": 1977,
+     "start": 61.14681710779132,
+     "dur": 0.6435106293719873,
+     "values": {
+      "Global": 0.18,
+      "Arctic": 0.16,
+      "Northern mid-latitudes": 0.24,
+      "Tropics": 0.16,
+      "Southern extratropics": 0.25
+     },
+     "midi": {
+      "Global": 55,
+      "Arctic": 74,
+      "Northern mid-latitudes": 62,
+      "Tropics": 50,
+      "Southern extratropics": 53
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1977: planet +0.18 °C, Arctic +0.2 °C",
+     "frame": 579
+    },
+    {
+     "year": 1978,
+     "start": 61.79032773716331,
+     "dur": 0.6316398341504815,
+     "values": {
+      "Global": 0.07,
+      "Arctic": -0.16,
+      "Northern mid-latitudes": 0.04,
+      "Tropics": 0.08,
+      "Southern extratropics": 0.16
+     },
+     "midi": {
+      "Global": 53,
+      "Arctic": 74,
+      "Northern mid-latitudes": 62,
+      "Tropics": 50,
+      "Southern extratropics": 53
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1978: planet +0.07 °C, Arctic -0.2 °C",
+     "frame": 585
+    },
+    {
+     "year": 1979,
+     "start": 62.42196757131379,
+     "dur": 0.6329603066373655,
+     "values": {
+      "Global": 0.16,
+      "Arctic": -0.61,
+      "Northern mid-latitudes": 0.07,
+      "Tropics": 0.26,
+      "Southern extratropics": 0.23
+     },
+     "midi": {
+      "Global": 55,
+      "Arctic": 72,
+      "Northern mid-latitudes": 62,
+      "Tropics": 53,
+      "Southern extratropics": 53
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1979: planet +0.16 °C, Arctic -0.6 °C",
+     "frame": 591
+    },
+    {
+     "year": 1980,
+     "start": 63.05492787795116,
+     "dur": 0.6034144860534719,
+     "values": {
+      "Global": 0.26,
+      "Arctic": 0.26,
+      "Northern mid-latitudes": 0.02,
+      "Tropics": 0.31,
+      "Southern extratropics": 0.39
+     },
+     "midi": {
+      "Global": 57,
+      "Arctic": 74,
+      "Northern mid-latitudes": 62,
+      "Tropics": 53,
+      "Southern extratropics": 55
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "1980: planet +0.26 °C, Arctic +0.3 °C, warmest year so far",
+     "frame": 597
+    },
+    {
+     "year": 1981,
+     "start": 63.65834236400463,
+     "dur": 0.5457159366512797,
+     "values": {
+      "Global": 0.32,
+      "Arctic": 1.09,
+      "Northern mid-latitudes": 0.78,
+      "Tropics": 0.18,
+      "Southern extratropics": 0.36
+     },
+     "midi": {
+      "Global": 57,
+      "Arctic": 77,
+      "Northern mid-latitudes": 65,
+      "Tropics": 53,
+      "Southern extratropics": 55
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "1981: planet +0.32 °C, Arctic +1.1 °C, warmest year so far",
+     "frame": 603
+    },
+    {
+     "year": 1982,
+     "start": 64.20405830065592,
+     "dur": 0.5578393442194975,
+     "values": {
+      "Global": 0.14,
+      "Arctic": -0.4,
+      "Northern mid-latitudes": 0.09,
+      "Tropics": 0.27,
+      "Southern extratropics": 0.18
+     },
+     "midi": {
+      "Global": 53,
+      "Arctic": 74,
+      "Northern mid-latitudes": 65,
+      "Tropics": 53,
+      "Southern extratropics": 55
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1982: planet +0.14 °C, Arctic -0.4 °C",
+     "frame": 609
+    },
+    {
+     "year": 1983,
+     "start": 64.76189764487542,
+     "dur": 0.5636646053951814,
+     "values": {
+      "Global": 0.31,
+      "Arctic": 0.19,
+      "Northern mid-latitudes": 0.69,
+      "Tropics": 0.43,
+      "Southern extratropics": 0.25
+     },
+     "midi": {
+      "Global": 57,
+      "Arctic": 74,
+      "Northern mid-latitudes": 67,
+      "Tropics": 55,
+      "Southern extratropics": 55
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1983: planet +0.31 °C, Arctic +0.2 °C",
+     "frame": 615
+    },
+    {
+     "year": 1984,
+     "start": 65.3255622502706,
+     "dur": 0.5516885081609559,
+     "values": {
+      "Global": 0.16,
+      "Arctic": 0.36,
+      "Northern mid-latitudes": 0.08,
+      "Tropics": 0.18,
+      "Southern extratropics": 0.26
+     },
+     "midi": {
+      "Global": 55,
+      "Arctic": 77,
+      "Northern mid-latitudes": 65,
+      "Tropics": 55,
+      "Southern extratropics": 55
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1984: planet +0.16 °C, Arctic +0.4 °C",
+     "frame": 621
+    },
+    {
+     "year": 1985,
+     "start": 65.87725075843154,
+     "dur": 0.5628221168221149,
+     "values": {
+      "Global": 0.12,
+      "Arctic": 0.39,
+      "Northern mid-latitudes": -0.27,
+      "Tropics": 0.09,
+      "Southern extratropics": 0.31
+     },
+     "midi": {
+      "Global": 53,
+      "Arctic": 77,
+      "Northern mid-latitudes": 65,
+      "Tropics": 53,
+      "Southern extratropics": 55
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1985: planet +0.12 °C, Arctic +0.4 °C",
+     "frame": 627
+    },
+    {
+     "year": 1986,
+     "start": 66.44007287525366,
+     "dur": 0.5411036052217776,
+     "values": {
+      "Global": 0.18,
+      "Arctic": 0.01,
+      "Northern mid-latitudes": 0.27,
+      "Tropics": 0.22,
+      "Southern extratropics": 0.2
+     },
+     "midi": {
+      "Global": 55,
+      "Arctic": 74,
+      "Northern mid-latitudes": 65,
+      "Tropics": 53,
+      "Southern extratropics": 55
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1986: planet +0.18 °C, Arctic +0.0 °C",
+     "frame": 633
+    },
+    {
+     "year": 1987,
+     "start": 66.98117648047544,
+     "dur": 0.5519393511956627,
+     "values": {
+      "Global": 0.32,
+      "Arctic": -0.36,
+      "Northern mid-latitudes": 0.13,
+      "Tropics": 0.58,
+      "Southern extratropics": 0.25
+     },
+     "midi": {
+      "Global": 57,
+      "Arctic": 74,
+      "Northern mid-latitudes": 65,
+      "Tropics": 55,
+      "Southern extratropics": 55
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1987: planet +0.32 °C, Arctic -0.4 °C",
+     "frame": 639
+    },
+    {
+     "year": 1988,
+     "start": 67.5331158316711,
+     "dur": 0.5255501606654487,
+     "values": {
+      "Global": 0.39,
+      "Arctic": 0.59,
+      "Northern mid-latitudes": 0.57,
+      "Tropics": 0.37,
+      "Southern extratropics": 0.4
+     },
+     "midi": {
+      "Global": 60,
+      "Arctic": 77,
+      "Northern mid-latitudes": 65,
+      "Tropics": 55,
+      "Southern extratropics": 55
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "1988: planet +0.39 °C, Arctic +0.6 °C, warmest year so far",
+     "frame": 645
+    },
+    {
+     "year": 1989,
+     "start": 68.05866599233654,
+     "dur": 0.5447965232126027,
+     "values": {
+      "Global": 0.27,
+      "Arctic": 0.32,
+      "Northern mid-latitudes": 0.69,
+      "Tropics": 0.12,
+      "Southern extratropics": 0.34
+     },
+     "midi": {
+      "Global": 57,
+      "Arctic": 77,
+      "Northern mid-latitudes": 67,
+      "Tropics": 55,
+      "Southern extratropics": 55
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1989: planet +0.27 °C, Arctic +0.3 °C",
+     "frame": 651
+    },
+    {
+     "year": 1990,
+     "start": 68.60346251554914,
+     "dur": 0.5449280006189798,
+     "values": {
+      "Global": 0.45,
+      "Arctic": 0.58,
+      "Northern mid-latitudes": 0.88,
+      "Tropics": 0.37,
+      "Southern extratropics": 0.37
+     },
+     "midi": {
+      "Global": 60,
+      "Arctic": 77,
+      "Northern mid-latitudes": 69,
+      "Tropics": 55,
+      "Southern extratropics": 55
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "1990: planet +0.45 °C, Arctic +0.6 °C, warmest year so far",
+     "frame": 657
+    },
+    {
+     "year": 1991,
+     "start": 69.14839051616812,
+     "dur": 0.5655840343841172,
+     "values": {
+      "Global": 0.41,
+      "Arctic": 0.75,
+      "Northern mid-latitudes": 0.66,
+      "Tropics": 0.36,
+      "Southern extratropics": 0.4
+     },
+     "midi": {
+      "Global": 60,
+      "Arctic": 77,
+      "Northern mid-latitudes": 69,
+      "Tropics": 55,
+      "Southern extratropics": 55
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1991: planet +0.41 °C, Arctic +0.8 °C",
+     "frame": 663
+    },
+    {
+     "year": 1992,
+     "start": 69.71397455055224,
+     "dur": 0.5855485159262412,
+     "values": {
+      "Global": 0.22,
+      "Arctic": -0.17,
+      "Northern mid-latitudes": 0.44,
+      "Tropics": 0.28,
+      "Southern extratropics": 0.27
+     },
+     "midi": {
+      "Global": 55,
+      "Arctic": 77,
+      "Northern mid-latitudes": 69,
+      "Tropics": 55,
+      "Southern extratropics": 55
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1992: planet +0.22 °C, Arctic -0.2 °C",
+     "frame": 669
+    },
+    {
+     "year": 1993,
+     "start": 70.29952306647847,
+     "dur": 0.6025643932868041,
+     "values": {
+      "Global": 0.23,
+      "Arctic": 0.54,
+      "Northern mid-latitudes": 0.29,
+      "Tropics": 0.32,
+      "Southern extratropics": 0.22
+     },
+     "midi": {
+      "Global": 55,
+      "Arctic": 77,
+      "Northern mid-latitudes": 67,
+      "Tropics": 55,
+      "Southern extratropics": 55
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1993: planet +0.23 °C, Arctic +0.5 °C",
+     "frame": 675
+    },
+    {
+     "year": 1994,
+     "start": 70.90208745976527,
+     "dur": 0.5996429963401835,
+     "values": {
+      "Global": 0.31,
+      "Arctic": 0.34,
+      "Northern mid-latitudes": 0.5,
+      "Tropics": 0.31,
+      "Southern extratropics": 0.21
+     },
+     "midi": {
+      "Global": 57,
+      "Arctic": 77,
+      "Northern mid-latitudes": 67,
+      "Tropics": 55,
+      "Southern extratropics": 55
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1994: planet +0.31 °C, Arctic +0.3 °C",
+     "frame": 681
+    },
+    {
+     "year": 1995,
+     "start": 71.50173045610545,
+     "dur": 0.5573740978186573,
+     "values": {
+      "Global": 0.45,
+      "Arctic": 1.31,
+      "Northern mid-latitudes": 0.98,
+      "Tropics": 0.42,
+      "Southern extratropics": 0.22
+     },
+     "midi": {
+      "Global": 60,
+      "Arctic": 79,
+      "Northern mid-latitudes": 69,
+      "Tropics": 55,
+      "Southern extratropics": 55
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1995: planet +0.45 °C, Arctic +1.3 °C",
+     "frame": 687
+    },
+    {
+     "year": 1996,
+     "start": 72.0591045539241,
+     "dur": 0.5632845335699711,
+     "values": {
+      "Global": 0.33,
+      "Arctic": 0.77,
+      "Northern mid-latitudes": 0.17,
+      "Tropics": 0.31,
+      "Southern extratropics": 0.46
+     },
+     "midi": {
+      "Global": 57,
+      "Arctic": 79,
+      "Northern mid-latitudes": 67,
+      "Tropics": 55,
+      "Southern extratropics": 55
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1996: planet +0.33 °C, Arctic +0.8 °C",
+     "frame": 693
+    },
+    {
+     "year": 1997,
+     "start": 72.62238908749407,
+     "dur": 0.5681039059076214,
+     "values": {
+      "Global": 0.47,
+      "Arctic": 0.77,
+      "Northern mid-latitudes": 0.9,
+      "Tropics": 0.51,
+      "Southern extratropics": 0.34
+     },
+     "midi": {
+      "Global": 62,
+      "Arctic": 79,
+      "Northern mid-latitudes": 69,
+      "Tropics": 57,
+      "Southern extratropics": 55
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "1997: planet +0.47 °C, Arctic +0.8 °C, warmest year so far",
+     "frame": 699
+    },
+    {
+     "year": 1998,
+     "start": 73.19049299340169,
+     "dur": 0.5571465910297526,
+     "values": {
+      "Global": 0.61,
+      "Arctic": 0.88,
+      "Northern mid-latitudes": 0.94,
+      "Tropics": 0.69,
+      "Southern extratropics": 0.32
+     },
+     "midi": {
+      "Global": 65,
+      "Arctic": 79,
+      "Northern mid-latitudes": 72,
+      "Tropics": 57,
+      "Southern extratropics": 55
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "1998: planet +0.61 °C, Arctic +0.9 °C, warmest year so far",
+     "frame": 705
+    },
+    {
+     "year": 1999,
+     "start": 73.74763958443144,
+     "dur": 0.5716830042978073,
+     "values": {
+      "Global": 0.38,
+      "Arctic": 0.42,
+      "Northern mid-latitudes": 0.8,
+      "Tropics": 0.2,
+      "Southern extratropics": 0.3
+     },
+     "midi": {
+      "Global": 60,
+      "Arctic": 79,
+      "Northern mid-latitudes": 72,
+      "Tropics": 57,
+      "Southern extratropics": 55
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1999: planet +0.38 °C, Arctic +0.4 °C",
+     "frame": 711
+    },
+    {
+     "year": 2000,
+     "start": 74.31932258872925,
+     "dur": 0.5954589407148997,
+     "values": {
+      "Global": 0.39,
+      "Arctic": 0.98,
+      "Northern mid-latitudes": 0.8,
+      "Tropics": 0.24,
+      "Southern extratropics": 0.29
+     },
+     "midi": {
+      "Global": 60,
+      "Arctic": 79,
+      "Northern mid-latitudes": 72,
+      "Tropics": 55,
+      "Southern extratropics": 55
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2000: planet +0.39 °C, Arctic +1.0 °C",
+     "frame": 717
+    },
+    {
+     "year": 2001,
+     "start": 74.91478152944416,
+     "dur": 0.6011416159518839,
+     "values": {
+      "Global": 0.53,
+      "Arctic": 1.08,
+      "Northern mid-latitudes": 0.86,
+      "Tropics": 0.42,
+      "Southern extratropics": 0.42
+     },
+     "midi": {
+      "Global": 62,
+      "Arctic": 79,
+      "Northern mid-latitudes": 72,
+      "Tropics": 55,
+      "Southern extratropics": 55
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2001: planet +0.53 °C, Arctic +1.1 °C",
+     "frame": 723
+    },
+    {
+     "year": 2002,
+     "start": 75.51592314539604,
+     "dur": 0.5422597795239238,
+     "values": {
+      "Global": 0.63,
+      "Arctic": 1.27,
+      "Northern mid-latitudes": 1.0,
+      "Tropics": 0.59,
+      "Southern extratropics": 0.48
+     },
+     "midi": {
+      "Global": 65,
+      "Arctic": 81,
+      "Northern mid-latitudes": 72,
+      "Tropics": 57,
+      "Southern extratropics": 57
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "2002: planet +0.63 °C, Arctic +1.3 °C, warmest year so far",
+     "frame": 729
+    },
+    {
+     "year": 2003,
+     "start": 76.05818292491996,
+     "dur": 0.5062502547141418,
+     "values": {
+      "Global": 0.62,
+      "Arctic": 1.51,
+      "Northern mid-latitudes": 0.98,
+      "Tropics": 0.64,
+      "Southern extratropics": 0.36
+     },
+     "midi": {
+      "Global": 65,
+      "Arctic": 81,
+      "Northern mid-latitudes": 72,
+      "Tropics": 57,
+      "Southern extratropics": 57
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2003: planet +0.62 °C, Arctic +1.5 °C",
+     "frame": 735
+    },
+    {
+     "year": 2004,
+     "start": 76.56443317963411,
+     "dur": 0.5084109511835476,
+     "values": {
+      "Global": 0.53,
+      "Arctic": 0.48,
+      "Northern mid-latitudes": 0.95,
+      "Tropics": 0.55,
+      "Southern extratropics": 0.32
+     },
+     "midi": {
+      "Global": 62,
+      "Arctic": 81,
+      "Northern mid-latitudes": 74,
+      "Tropics": 57,
+      "Southern extratropics": 55
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2004: planet +0.53 °C, Arctic +0.5 °C",
+     "frame": 741
+    },
+    {
+     "year": 2005,
+     "start": 77.07284413081766,
+     "dur": 0.5084236749272251,
+     "values": {
+      "Global": 0.68,
+      "Arctic": 2.0,
+      "Northern mid-latitudes": 1.22,
+      "Tropics": 0.62,
+      "Southern extratropics": 0.42
+     },
+     "midi": {
+      "Global": 67,
+      "Arctic": 84,
+      "Northern mid-latitudes": 74,
+      "Tropics": 60,
+      "Southern extratropics": 57
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "2005: planet +0.68 °C, Arctic +2.0 °C, warmest year so far",
+     "frame": 747
+    },
+    {
+     "year": 2006,
+     "start": 77.58126780574489,
+     "dur": 0.4950109049220495,
+     "values": {
+      "Global": 0.64,
+      "Arctic": 1.77,
+      "Northern mid-latitudes": 1.06,
+      "Tropics": 0.55,
+      "Southern extratropics": 0.41
+     },
+     "midi": {
+      "Global": 65,
+      "Arctic": 84,
+      "Northern mid-latitudes": 74,
+      "Tropics": 60,
+      "Southern extratropics": 57
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2006: planet +0.64 °C, Arctic +1.8 °C",
+     "frame": 753
+    },
+    {
+     "year": 2007,
+     "start": 78.07627871066694,
+     "dur": 0.5043391628490288,
+     "values": {
+      "Global": 0.66,
+      "Arctic": 2.1,
+      "Northern mid-latitudes": 1.31,
+      "Tropics": 0.46,
+      "Southern extratropics": 0.48
+     },
+     "midi": {
+      "Global": 67,
+      "Arctic": 86,
+      "Northern mid-latitudes": 77,
+      "Tropics": 57,
+      "Southern extratropics": 57
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2007: planet +0.66 °C, Arctic +2.1 °C",
+     "frame": 759
+    },
+    {
+     "year": 2008,
+     "start": 78.58061787351598,
+     "dur": 0.5339311054744258,
+     "values": {
+      "Global": 0.54,
+      "Arctic": 1.55,
+      "Northern mid-latitudes": 1.07,
+      "Tropics": 0.37,
+      "Southern extratropics": 0.4
+     },
+     "midi": {
+      "Global": 62,
+      "Arctic": 86,
+      "Northern mid-latitudes": 74,
+      "Tropics": 57,
+      "Southern extratropics": 57
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2008: planet +0.54 °C, Arctic +1.6 °C",
+     "frame": 765
+    },
+    {
+     "year": 2009,
+     "start": 79.1145489789904,
+     "dur": 0.519483942737843,
+     "values": {
+      "Global": 0.66,
+      "Arctic": 1.44,
+      "Northern mid-latitudes": 0.6,
+      "Tropics": 0.67,
+      "Southern extratropics": 0.51
+     },
+     "midi": {
+      "Global": 67,
+      "Arctic": 84,
+      "Northern mid-latitudes": 74,
+      "Tropics": 60,
+      "Southern extratropics": 57
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2009: planet +0.66 °C, Arctic +1.4 °C",
+     "frame": 771
+    },
+    {
+     "year": 2010,
+     "start": 79.63403292172825,
+     "dur": 0.5000025370577387,
+     "values": {
+      "Global": 0.72,
+      "Arctic": 2.25,
+      "Northern mid-latitudes": 0.87,
+      "Tropics": 0.68,
+      "Southern extratropics": 0.48
+     },
+     "midi": {
+      "Global": 67,
+      "Arctic": 86,
+      "Northern mid-latitudes": 74,
+      "Tropics": 60,
+      "Southern extratropics": 57
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "2010: planet +0.72 °C, Arctic +2.2 °C, warmest year so far",
+     "frame": 777
+    },
+    {
+     "year": 2011,
+     "start": 80.13403545878599,
+     "dur": 0.5281712788634891,
+     "values": {
+      "Global": 0.61,
+      "Arctic": 2.34,
+      "Northern mid-latitudes": 0.93,
+      "Tropics": 0.36,
+      "Southern extratropics": 0.56
+     },
+     "midi": {
+      "Global": 65,
+      "Arctic": 89,
+      "Northern mid-latitudes": 74,
+      "Tropics": 57,
+      "Southern extratropics": 57
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2011: planet +0.61 °C, Arctic +2.3 °C",
+     "frame": 783
+    },
+    {
+     "year": 2012,
+     "start": 80.66220673764948,
+     "dur": 0.5656129375354193,
+     "values": {
+      "Global": 0.65,
+      "Arctic": 2.13,
+      "Northern mid-latitudes": 0.92,
+      "Tropics": 0.52,
+      "Southern extratropics": 0.43
+     },
+     "midi": {
+      "Global": 65,
+      "Arctic": 89,
+      "Northern mid-latitudes": 74,
+      "Tropics": 57,
+      "Southern extratropics": 57
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2012: planet +0.65 °C, Arctic +2.1 °C",
+     "frame": 789
+    },
+    {
+     "year": 2013,
+     "start": 81.2278196751849,
+     "dur": 0.5925124893051513,
+     "values": {
+      "Global": 0.67,
+      "Arctic": 1.52,
+      "Northern mid-latitudes": 1.04,
+      "Tropics": 0.58,
+      "Southern extratropics": 0.54
+     },
+     "midi": {
+      "Global": 67,
+      "Arctic": 86,
+      "Northern mid-latitudes": 74,
+      "Tropics": 60,
+      "Southern extratropics": 57
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2013: planet +0.67 °C, Arctic +1.5 °C",
+     "frame": 795
+    },
+    {
+     "year": 2014,
+     "start": 81.82033216449005,
+     "dur": 0.5757552316287465,
+     "values": {
+      "Global": 0.75,
+      "Arctic": 2.05,
+      "Northern mid-latitudes": 1.13,
+      "Tropics": 0.67,
+      "Southern extratropics": 0.53
+     },
+     "midi": {
+      "Global": 69,
+      "Arctic": 86,
+      "Northern mid-latitudes": 74,
+      "Tropics": 60,
+      "Southern extratropics": 57
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "2014: planet +0.75 °C, Arctic +2.0 °C, warmest year so far",
+     "frame": 801
+    },
+    {
+     "year": 2015,
+     "start": 82.3960873961188,
+     "dur": 0.565137990963477,
+     "values": {
+      "Global": 0.89,
+      "Arctic": 1.99,
+      "Northern mid-latitudes": 1.47,
+      "Tropics": 0.95,
+      "Southern extratropics": 0.4
+     },
+     "midi": {
+      "Global": 72,
+      "Arctic": 89,
+      "Northern mid-latitudes": 77,
+      "Tropics": 62,
+      "Southern extratropics": 57
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "2015: planet +0.89 °C, Arctic +2.0 °C, warmest year so far",
+     "frame": 807
+    },
+    {
+     "year": 2016,
+     "start": 82.96122538708228,
+     "dur": 0.5256932193730759,
+     "values": {
+      "Global": 1.01,
+      "Arctic": 3.24,
+      "Northern mid-latitudes": 1.42,
+      "Tropics": 1.0,
+      "Southern extratropics": 0.49
+     },
+     "midi": {
+      "Global": 74,
+      "Arctic": 91,
+      "Northern mid-latitudes": 77,
+      "Tropics": 62,
+      "Southern extratropics": 57
+     },
+     "record": true,
+     "dissonant": true,
+     "description": "2016: planet +1.01 °C, Arctic +3.2 °C, warmest year so far",
+     "frame": 813
+    },
+    {
+     "year": 2017,
+     "start": 83.48691860645536,
+     "dur": 0.5185466564320892,
+     "values": {
+      "Global": 0.91,
+      "Arctic": 2.47,
+      "Northern mid-latitudes": 1.37,
+      "Tropics": 0.8,
+      "Southern extratropics": 0.6
+     },
+     "midi": {
+      "Global": 72,
+      "Arctic": 91,
+      "Northern mid-latitudes": 77,
+      "Tropics": 62,
+      "Southern extratropics": 57
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2017: planet +0.91 °C, Arctic +2.5 °C",
+     "frame": 819
+    },
+    {
+     "year": 2018,
+     "start": 84.00546526288745,
+     "dur": 0.502653990597193,
+     "values": {
+      "Global": 0.85,
+      "Arctic": 2.14,
+      "Northern mid-latitudes": 1.09,
+      "Tropics": 0.67,
+      "Southern extratropics": 0.69
+     },
+     "midi": {
+      "Global": 69,
+      "Arctic": 91,
+      "Northern mid-latitudes": 77,
+      "Tropics": 62,
+      "Southern extratropics": 60
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2018: planet +0.85 °C, Arctic +2.1 °C",
+     "frame": 825
+    },
+    {
+     "year": 2019,
+     "start": 84.50811925348465,
+     "dur": 0.4890249583764216,
+     "values": {
+      "Global": 0.98,
+      "Arctic": 2.76,
+      "Northern mid-latitudes": 1.43,
+      "Tropics": 0.89,
+      "Southern extratropics": 0.65
+     },
+     "midi": {
+      "Global": 74,
+      "Arctic": 91,
+      "Northern mid-latitudes": 77,
+      "Tropics": 62,
+      "Southern extratropics": 60
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2019: planet +0.98 °C, Arctic +2.8 °C",
+     "frame": 831
+    },
+    {
+     "year": 2020,
+     "start": 84.99714421186107,
+     "dur": 0.48326883257311254,
+     "values": {
+      "Global": 1.01,
+      "Arctic": 2.85,
+      "Northern mid-latitudes": 1.8,
+      "Tropics": 0.84,
+      "Southern extratropics": 0.57
+     },
+     "midi": {
+      "Global": 74,
+      "Arctic": 91,
+      "Northern mid-latitudes": 79,
+      "Tropics": 62,
+      "Southern extratropics": 60
+     },
+     "record": false,
+     "dissonant": true,
+     "description": "2020: planet +1.01 °C, Arctic +2.9 °C",
+     "frame": 837
+    },
+    {
+     "year": 2021,
+     "start": 85.48041304443419,
+     "dur": 0.48652488429168506,
+     "values": {
+      "Global": 0.85,
+      "Arctic": 2.05,
+      "Northern mid-latitudes": 1.35,
+      "Tropics": 0.65,
+      "Southern extratropics": 0.53
+     },
+     "midi": {
+      "Global": 69,
+      "Arctic": 91,
+      "Northern mid-latitudes": 79,
+      "Tropics": 62,
+      "Southern extratropics": 60
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2021: planet +0.85 °C, Arctic +2.0 °C",
+     "frame": 843
+    },
+    {
+     "year": 2022,
+     "start": 85.96693792872587,
+     "dur": 0.48916148734851406,
+     "values": {
+      "Global": 0.89,
+      "Arctic": 2.34,
+      "Northern mid-latitudes": 1.49,
+      "Tropics": 0.56,
+      "Southern extratropics": 0.7
+     },
+     "midi": {
+      "Global": 72,
+      "Arctic": 91,
+      "Northern mid-latitudes": 79,
+      "Tropics": 62,
+      "Southern extratropics": 60
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2022: planet +0.89 °C, Arctic +2.3 °C",
+     "frame": 849
+    },
+    {
+     "year": 2023,
+     "start": 86.45609941607438,
+     "dur": 0.45454545454545453,
+     "values": {
+      "Global": 1.17,
+      "Arctic": 2.55,
+      "Northern mid-latitudes": 1.86,
+      "Tropics": 1.06,
+      "Southern extratropics": 0.71
+     },
+     "midi": {
+      "Global": 79,
+      "Arctic": 91,
+      "Northern mid-latitudes": 81,
+      "Tropics": 62,
+      "Southern extratropics": 60
+     },
+     "record": true,
+     "dissonant": true,
+     "description": "2023: planet +1.17 °C, Arctic +2.5 °C, warmest year so far",
+     "frame": 855
+    },
+    {
+     "year": 2024,
+     "start": 86.91064487061983,
+     "dur": 0.45454545454545453,
+     "values": {
+      "Global": 1.28,
+      "Arctic": 2.88,
+      "Northern mid-latitudes": 1.95,
+      "Tropics": 1.19,
+      "Southern extratropics": 0.75
+     },
+     "midi": {
+      "Global": 81,
+      "Arctic": 91,
+      "Northern mid-latitudes": 81,
+      "Tropics": 65,
+      "Southern extratropics": 60
+     },
+     "record": true,
+     "dissonant": true,
+     "description": "2024: planet +1.28 °C, Arctic +2.9 °C, warmest year so far",
+     "frame": 879
+    },
+    {
+     "year": 2025,
+     "start": 87.36519032516529,
+     "dur": 0.45454545454545453,
+     "values": {
+      "Global": 1.18,
+      "Arctic": 2.93,
+      "Northern mid-latitudes": 1.94,
+      "Tropics": 0.85,
+      "Southern extratropics": 0.92
+     },
+     "midi": {
+      "Global": 79,
+      "Arctic": 93,
+      "Northern mid-latitudes": 84,
+      "Tropics": 65,
+      "Southern extratropics": 62
+     },
+     "record": false,
+     "dissonant": true,
+     "description": "2025: planet +1.18 °C, Arctic +2.9 °C",
+     "frame": null
+    }
+   ],
+   "name": "Planet"
+  },
+  "barcelona": {
+   "mapping": "One year is one note. Each 0.1 °C of global warming raises the melody one step of a D minor pentatonic scale; the low drone is 0 °C, the 1951–1980 average. Strings are latitude bands, with the Arctic highest. Tempo speeds up when warming speeds up, a clashing note sounds above +1 °C, and a bell marks each new record year.",
+   "duration_s": 87.82,
+   "voices": [
+    {
+     "name": "Global",
+     "column": "global",
+     "step_c": 0.1,
+     "tonic_midi": 50,
+     "pan": 0.0,
+     "timbre": "pluck",
+     "gain": 0.9,
+     "smooth": 0.0
+    },
+    {
+     "name": "Barcelona",
+     "column": "barcelona",
+     "step_c": 0.25,
+     "tonic_midi": 50,
+     "pan": 0.0,
+     "timbre": "string",
+     "gain": 0.6,
+     "smooth": 0.3
+    }
+   ],
+   "years": [
+    {
+     "year": 1880,
+     "start": 0.0,
+     "dur": 0.8333333333333334,
+     "values": {
+      "Global": -0.17,
+      "Barcelona": 0.22
+     },
+     "midi": {
+      "Global": 45,
+      "Barcelona": 53
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1880: planet -0.17 °C, Barcelona region +0.2 °C",
+     "frame": null
+    },
+    {
+     "year": 1881,
+     "start": 0.8333333333333334,
+     "dur": 0.8333333333333334,
+     "values": {
+      "Global": -0.09,
+      "Barcelona": 0.06
+     },
+     "midi": {
+      "Global": 48,
+      "Barcelona": 53
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1881: planet -0.09 °C, Barcelona region +0.1 °C",
+     "frame": 3
+    },
+    {
+     "year": 1882,
+     "start": 1.6666666666666667,
+     "dur": 0.8333333333333334,
+     "values": {
+      "Global": -0.11,
+      "Barcelona": -0.06
+     },
+     "midi": {
+      "Global": 48,
+      "Barcelona": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1882: planet -0.11 °C, Barcelona region -0.1 °C",
+     "frame": 9
+    },
+    {
+     "year": 1883,
+     "start": 2.5,
+     "dur": 0.8333333333333334,
+     "values": {
+      "Global": -0.18,
+      "Barcelona": -0.68
+     },
+     "midi": {
+      "Global": 45,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1883: planet -0.18 °C, Barcelona region -0.7 °C",
+     "frame": 15
+    },
+    {
+     "year": 1884,
+     "start": 3.3333333333333335,
+     "dur": 0.8333333333333334,
+     "values": {
+      "Global": -0.28,
+      "Barcelona": -0.25
+     },
+     "midi": {
+      "Global": 43,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1884: planet -0.28 °C, Barcelona region -0.2 °C",
+     "frame": 21
+    },
+    {
+     "year": 1885,
+     "start": 4.166666666666667,
+     "dur": 0.8333333333333334,
+     "values": {
+      "Global": -0.33,
+      "Barcelona": -0.44
+     },
+     "midi": {
+      "Global": 43,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1885: planet -0.33 °C, Barcelona region -0.4 °C",
+     "frame": 27
+    },
+    {
+     "year": 1886,
+     "start": 5.0,
+     "dur": 0.8333333333333334,
+     "values": {
+      "Global": -0.31,
+      "Barcelona": -0.38
+     },
+     "midi": {
+      "Global": 43,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1886: planet -0.31 °C, Barcelona region -0.4 °C",
+     "frame": 33
+    },
+    {
+     "year": 1887,
+     "start": 5.833333333333333,
+     "dur": 0.8333333333333334,
+     "values": {
+      "Global": -0.36,
+      "Barcelona": -0.76
+     },
+     "midi": {
+      "Global": 41,
+      "Barcelona": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1887: planet -0.36 °C, Barcelona region -0.8 °C",
+     "frame": 39
+    },
+    {
+     "year": 1888,
+     "start": 6.666666666666666,
+     "dur": 0.8333333333333334,
+     "values": {
+      "Global": -0.18,
+      "Barcelona": -0.9
+     },
+     "midi": {
+      "Global": 45,
+      "Barcelona": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1888: planet -0.18 °C, Barcelona region -0.9 °C",
+     "frame": 45
+    },
+    {
+     "year": 1889,
+     "start": 7.499999999999999,
+     "dur": 0.8333333333333334,
+     "values": {
+      "Global": -0.11,
+      "Barcelona": -0.92
+     },
+     "midi": {
+      "Global": 48,
+      "Barcelona": 43
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1889: planet -0.11 °C, Barcelona region -0.9 °C",
+     "frame": 51
+    },
+    {
+     "year": 1890,
+     "start": 8.333333333333332,
+     "dur": 0.7537688442211056,
+     "values": {
+      "Global": -0.36,
+      "Barcelona": -1.04
+     },
+     "midi": {
+      "Global": 41,
+      "Barcelona": 43
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1890: planet -0.36 °C, Barcelona region -1.0 °C",
+     "frame": 57
+    },
+    {
+     "year": 1891,
+     "start": 9.087102177554438,
+     "dur": 0.7204610951008645,
+     "values": {
+      "Global": -0.22,
+      "Barcelona": -0.82
+     },
+     "midi": {
+      "Global": 45,
+      "Barcelona": 43
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1891: planet -0.22 °C, Barcelona region -0.8 °C",
+     "frame": 63
+    },
+    {
+     "year": 1892,
+     "start": 9.807563272655303,
+     "dur": 0.6863103953147877,
+     "values": {
+      "Global": -0.27,
+      "Barcelona": -0.13
+     },
+     "midi": {
+      "Global": 43,
+      "Barcelona": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1892: planet -0.27 °C, Barcelona region -0.1 °C",
+     "frame": 69
+    },
+    {
+     "year": 1893,
+     "start": 10.49387366797009,
+     "dur": 0.6700975662056395,
+     "values": {
+      "Global": -0.31,
+      "Barcelona": 0.24
+     },
+     "midi": {
+      "Global": 43,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1893: planet -0.31 °C, Barcelona region +0.2 °C",
+     "frame": 75
+    },
+    {
+     "year": 1894,
+     "start": 11.16397123417573,
+     "dur": 0.6909945899730235,
+     "values": {
+      "Global": -0.3,
+      "Barcelona": -0.35
+     },
+     "midi": {
+      "Global": 43,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1894: planet -0.30 °C, Barcelona region -0.3 °C",
+     "frame": 81
+    },
+    {
+     "year": 1895,
+     "start": 11.854965824148753,
+     "dur": 0.6828650760584226,
+     "values": {
+      "Global": -0.23,
+      "Barcelona": -0.04
+     },
+     "midi": {
+      "Global": 45,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1895: planet -0.23 °C, Barcelona region -0.0 °C",
+     "frame": 87
+    },
+    {
+     "year": 1896,
+     "start": 12.537830900207176,
+     "dur": 0.6473045616639932,
+     "values": {
+      "Global": -0.11,
+      "Barcelona": -0.77
+     },
+     "midi": {
+      "Global": 48,
+      "Barcelona": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1896: planet -0.11 °C, Barcelona region -0.8 °C",
+     "frame": 93
+    },
+    {
+     "year": 1897,
+     "start": 13.18513546187117,
+     "dur": 0.6088054186968189,
+     "values": {
+      "Global": -0.11,
+      "Barcelona": 0.09
+     },
+     "midi": {
+      "Global": 48,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1897: planet -0.11 °C, Barcelona region +0.1 °C",
+     "frame": 99
+    },
+    {
+     "year": 1898,
+     "start": 13.79394088056799,
+     "dur": 0.6170114686024444,
+     "values": {
+      "Global": -0.28,
+      "Barcelona": 0.07
+     },
+     "midi": {
+      "Global": 43,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1898: planet -0.28 °C, Barcelona region +0.1 °C",
+     "frame": 105
+    },
+    {
+     "year": 1899,
+     "start": 14.410952349170433,
+     "dur": 0.6316165781214288,
+     "values": {
+      "Global": -0.18,
+      "Barcelona": 0.48
+     },
+     "midi": {
+      "Global": 45,
+      "Barcelona": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1899: planet -0.18 °C, Barcelona region +0.5 °C",
+     "frame": 111
+    },
+    {
+     "year": 1900,
+     "start": 15.042568927291862,
+     "dur": 0.5905775011196729,
+     "values": {
+      "Global": -0.08,
+      "Barcelona": -0.02
+     },
+     "midi": {
+      "Global": 48,
+      "Barcelona": 50
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "1900: planet -0.08 °C, Barcelona region -0.0 °C, warmest year so far",
+     "frame": 117
+    },
+    {
+     "year": 1901,
+     "start": 15.633146428411536,
+     "dur": 0.6117681081897888,
+     "values": {
+      "Global": -0.16,
+      "Barcelona": -0.66
+     },
+     "midi": {
+      "Global": 45,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1901: planet -0.16 °C, Barcelona region -0.7 °C",
+     "frame": 123
+    },
+    {
+     "year": 1902,
+     "start": 16.244914536601325,
+     "dur": 0.6433550392078208,
+     "values": {
+      "Global": -0.28,
+      "Barcelona": -0.59
+     },
+     "midi": {
+      "Global": 43,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1902: planet -0.28 °C, Barcelona region -0.6 °C",
+     "frame": 129
+    },
+    {
+     "year": 1903,
+     "start": 16.888269575809147,
+     "dur": 0.6563913582107115,
+     "values": {
+      "Global": -0.37,
+      "Barcelona": -0.54
+     },
+     "midi": {
+      "Global": 41,
+      "Barcelona": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1903: planet -0.37 °C, Barcelona region -0.5 °C",
+     "frame": 135
+    },
+    {
+     "year": 1904,
+     "start": 17.54466093401986,
+     "dur": 0.6360843977983962,
+     "values": {
+      "Global": -0.47,
+      "Barcelona": 0.1
+     },
+     "midi": {
+      "Global": 38,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1904: planet -0.47 °C, Barcelona region +0.1 °C",
+     "frame": 141
+    },
+    {
+     "year": 1905,
+     "start": 18.180745331818255,
+     "dur": 0.6588940285541101,
+     "values": {
+      "Global": -0.26,
+      "Barcelona": -0.6
+     },
+     "midi": {
+      "Global": 43,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1905: planet -0.26 °C, Barcelona region -0.6 °C",
+     "frame": 147
+    },
+    {
+     "year": 1906,
+     "start": 18.839639360372363,
+     "dur": 0.6546691459148801,
+     "values": {
+      "Global": -0.22,
+      "Barcelona": -0.38
+     },
+     "midi": {
+      "Global": 45,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1906: planet -0.22 °C, Barcelona region -0.4 °C",
+     "frame": 153
+    },
+    {
+     "year": 1907,
+     "start": 19.494308506287243,
+     "dur": 0.6090166255074237,
+     "values": {
+      "Global": -0.38,
+      "Barcelona": -0.51
+     },
+     "midi": {
+      "Global": 41,
+      "Barcelona": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1907: planet -0.38 °C, Barcelona region -0.5 °C",
+     "frame": 159
+    },
+    {
+     "year": 1908,
+     "start": 20.103325131794666,
+     "dur": 0.6071916854943158,
+     "values": {
+      "Global": -0.42,
+      "Barcelona": -0.23
+     },
+     "midi": {
+      "Global": 41,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1908: planet -0.42 °C, Barcelona region -0.2 °C",
+     "frame": 165
+    },
+    {
+     "year": 1909,
+     "start": 20.710516817288983,
+     "dur": 0.5689767375229167,
+     "values": {
+      "Global": -0.48,
+      "Barcelona": -0.8
+     },
+     "midi": {
+      "Global": 38,
+      "Barcelona": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1909: planet -0.48 °C, Barcelona region -0.8 °C",
+     "frame": 171
+    },
+    {
+     "year": 1910,
+     "start": 21.2794935548119,
+     "dur": 0.5302134503880939,
+     "values": {
+      "Global": -0.44,
+      "Barcelona": -0.73
+     },
+     "midi": {
+      "Global": 41,
+      "Barcelona": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1910: planet -0.44 °C, Barcelona region -0.7 °C",
+     "frame": 177
+    },
+    {
+     "year": 1911,
+     "start": 21.809707005199993,
+     "dur": 0.5166642379064448,
+     "values": {
+      "Global": -0.44,
+      "Barcelona": 0.05
+     },
+     "midi": {
+      "Global": 41,
+      "Barcelona": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1911: planet -0.44 °C, Barcelona region +0.1 °C",
+     "frame": 183
+    },
+    {
+     "year": 1912,
+     "start": 22.326371243106436,
+     "dur": 0.5410100859702385,
+     "values": {
+      "Global": -0.37,
+      "Barcelona": -0.61
+     },
+     "midi": {
+      "Global": 41,
+      "Barcelona": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1912: planet -0.37 °C, Barcelona region -0.6 °C",
+     "frame": 189
+    },
+    {
+     "year": 1913,
+     "start": 22.867381329076675,
+     "dur": 0.5751372204174171,
+     "values": {
+      "Global": -0.34,
+      "Barcelona": -0.24
+     },
+     "midi": {
+      "Global": 43,
+      "Barcelona": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1913: planet -0.34 °C, Barcelona region -0.2 °C",
+     "frame": 195
+    },
+    {
+     "year": 1914,
+     "start": 23.442518549494093,
+     "dur": 0.5422094513671901,
+     "values": {
+      "Global": -0.15,
+      "Barcelona": -0.5
+     },
+     "midi": {
+      "Global": 48,
+      "Barcelona": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1914: planet -0.15 °C, Barcelona region -0.5 °C",
+     "frame": 201
+    },
+    {
+     "year": 1915,
+     "start": 23.98472800086128,
+     "dur": 0.5569651145357504,
+     "values": {
+      "Global": -0.14,
+      "Barcelona": -0.36
+     },
+     "midi": {
+      "Global": 48,
+      "Barcelona": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1915: planet -0.14 °C, Barcelona region -0.4 °C",
+     "frame": 207
+    },
+    {
+     "year": 1916,
+     "start": 24.54169311539703,
+     "dur": 0.5650710369877275,
+     "values": {
+      "Global": -0.36,
+      "Barcelona": -0.2
+     },
+     "midi": {
+      "Global": 41,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1916: planet -0.36 °C, Barcelona region -0.2 °C",
+     "frame": 213
+    },
+    {
+     "year": 1917,
+     "start": 25.10676415238476,
+     "dur": 0.5851085649369148,
+     "values": {
+      "Global": -0.46,
+      "Barcelona": -0.24
+     },
+     "midi": {
+      "Global": 38,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1917: planet -0.46 °C, Barcelona region -0.2 °C",
+     "frame": 219
+    },
+    {
+     "year": 1918,
+     "start": 25.691872717321672,
+     "dur": 0.5926742047942315,
+     "values": {
+      "Global": -0.3,
+      "Barcelona": -0.59
+     },
+     "midi": {
+      "Global": 43,
+      "Barcelona": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1918: planet -0.30 °C, Barcelona region -0.6 °C",
+     "frame": 225
+    },
+    {
+     "year": 1919,
+     "start": 26.284546922115904,
+     "dur": 0.5780968014877615,
+     "values": {
+      "Global": -0.27,
+      "Barcelona": -0.64
+     },
+     "midi": {
+      "Global": 43,
+      "Barcelona": 45
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1919: planet -0.27 °C, Barcelona region -0.6 °C",
+     "frame": 231
+    },
+    {
+     "year": 1920,
+     "start": 26.862643723603664,
+     "dur": 0.5756440570754512,
+     "values": {
+      "Global": -0.27,
+      "Barcelona": 0.21
+     },
+     "midi": {
+      "Global": 43,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1920: planet -0.27 °C, Barcelona region +0.2 °C",
+     "frame": 237
+    },
+    {
+     "year": 1921,
+     "start": 27.438287780679115,
+     "dur": 0.5546062465822759,
+     "values": {
+      "Global": -0.18,
+      "Barcelona": 0.26
+     },
+     "midi": {
+      "Global": 45,
+      "Barcelona": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1921: planet -0.18 °C, Barcelona region +0.3 °C",
+     "frame": 243
+    },
+    {
+     "year": 1922,
+     "start": 27.99289402726139,
+     "dur": 0.5738996782930195,
+     "values": {
+      "Global": -0.28,
+      "Barcelona": -0.41
+     },
+     "midi": {
+      "Global": 43,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1922: planet -0.28 °C, Barcelona region -0.4 °C",
+     "frame": 249
+    },
+    {
+     "year": 1923,
+     "start": 28.56679370555441,
+     "dur": 0.5926610111911541,
+     "values": {
+      "Global": -0.26,
+      "Barcelona": -0.35
+     },
+     "midi": {
+      "Global": 43,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1923: planet -0.26 °C, Barcelona region -0.3 °C",
+     "frame": 255
+    },
+    {
+     "year": 1924,
+     "start": 29.159454716745564,
+     "dur": 0.5988582820006594,
+     "values": {
+      "Global": -0.27,
+      "Barcelona": -0.14
+     },
+     "midi": {
+      "Global": 43,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1924: planet -0.27 °C, Barcelona region -0.1 °C",
+     "frame": 261
+    },
+    {
+     "year": 1925,
+     "start": 29.758312998746224,
+     "dur": 0.6137949224820941,
+     "values": {
+      "Global": -0.22,
+      "Barcelona": -0.55
+     },
+     "midi": {
+      "Global": 45,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1925: planet -0.22 °C, Barcelona region -0.6 °C",
+     "frame": 267
+    },
+    {
+     "year": 1926,
+     "start": 30.372107921228316,
+     "dur": 0.5847838343857089,
+     "values": {
+      "Global": -0.11,
+      "Barcelona": 0.18
+     },
+     "midi": {
+      "Global": 48,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1926: planet -0.11 °C, Barcelona region +0.2 °C",
+     "frame": 273
+    },
+    {
+     "year": 1927,
+     "start": 30.956891755614027,
+     "dur": 0.5656022629496663,
+     "values": {
+      "Global": -0.22,
+      "Barcelona": 0.09
+     },
+     "midi": {
+      "Global": 45,
+      "Barcelona": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1927: planet -0.22 °C, Barcelona region +0.1 °C",
+     "frame": 279
+    },
+    {
+     "year": 1928,
+     "start": 31.522494018563695,
+     "dur": 0.5810277593931658,
+     "values": {
+      "Global": -0.2,
+      "Barcelona": 0.31
+     },
+     "midi": {
+      "Global": 45,
+      "Barcelona": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1928: planet -0.20 °C, Barcelona region +0.3 °C",
+     "frame": 285
+    },
+    {
+     "year": 1929,
+     "start": 32.10352177795686,
+     "dur": 0.596348961415971,
+     "values": {
+      "Global": -0.36,
+      "Barcelona": -0.18
+     },
+     "midi": {
+      "Global": 41,
+      "Barcelona": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1929: planet -0.36 °C, Barcelona region -0.2 °C",
+     "frame": 291
+    },
+    {
+     "year": 1930,
+     "start": 32.69987073937283,
+     "dur": 0.6018670788232742,
+     "values": {
+      "Global": -0.15,
+      "Barcelona": 0.02
+     },
+     "midi": {
+      "Global": 48,
+      "Barcelona": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1930: planet -0.15 °C, Barcelona region +0.0 °C",
+     "frame": 297
+    },
+    {
+     "year": 1931,
+     "start": 33.3017378181961,
+     "dur": 0.613799260554018,
+     "values": {
+      "Global": -0.09,
+      "Barcelona": -0.19
+     },
+     "midi": {
+      "Global": 48,
+      "Barcelona": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1931: planet -0.09 °C, Barcelona region -0.2 °C",
+     "frame": 303
+    },
+    {
+     "year": 1932,
+     "start": 33.91553707875012,
+     "dur": 0.6160071760342146,
+     "values": {
+      "Global": -0.16,
+      "Barcelona": -0.28
+     },
+     "midi": {
+      "Global": 45,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1932: planet -0.16 °C, Barcelona region -0.3 °C",
+     "frame": 309
+    },
+    {
+     "year": 1933,
+     "start": 34.531544254784336,
+     "dur": 0.6443218000772025,
+     "values": {
+      "Global": -0.28,
+      "Barcelona": -0.13
+     },
+     "midi": {
+      "Global": 43,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1933: planet -0.28 °C, Barcelona region -0.1 °C",
+     "frame": 315
+    },
+    {
+     "year": 1934,
+     "start": 35.17586605486154,
+     "dur": 0.634941220794263,
+     "values": {
+      "Global": -0.13,
+      "Barcelona": -0.01
+     },
+     "midi": {
+      "Global": 48,
+      "Barcelona": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1934: planet -0.13 °C, Barcelona region -0.0 °C",
+     "frame": 321
+    },
+    {
+     "year": 1935,
+     "start": 35.8108072756558,
+     "dur": 0.6608107896524462,
+     "values": {
+      "Global": -0.2,
+      "Barcelona": -0.2
+     },
+     "midi": {
+      "Global": 45,
+      "Barcelona": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1935: planet -0.20 °C, Barcelona region -0.2 °C",
+     "frame": 327
+    },
+    {
+     "year": 1936,
+     "start": 36.47161806530824,
+     "dur": 0.6769102812418055,
+     "values": {
+      "Global": -0.15,
+      "Barcelona": -0.28
+     },
+     "midi": {
+      "Global": 48,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1936: planet -0.15 °C, Barcelona region -0.3 °C",
+     "frame": 333
+    },
+    {
+     "year": 1937,
+     "start": 37.148528346550044,
+     "dur": 0.6457832468863443,
+     "values": {
+      "Global": -0.03,
+      "Barcelona": 0.28
+     },
+     "midi": {
+      "Global": 50,
+      "Barcelona": 50
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "1937: planet -0.03 °C, Barcelona region +0.3 °C, warmest year so far",
+     "frame": 339
+    },
+    {
+     "year": 1938,
+     "start": 37.79431159343639,
+     "dur": 0.6202938752956111,
+     "values": {
+      "Global": 0.0,
+      "Barcelona": -0.03
+     },
+     "midi": {
+      "Global": 50,
+      "Barcelona": 50
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "1938: planet +0.00 °C, Barcelona region -0.0 °C, warmest year so far",
+     "frame": 345
+    },
+    {
+     "year": 1939,
+     "start": 38.414605468732,
+     "dur": 0.5693535432587723,
+     "values": {
+      "Global": -0.02,
+      "Barcelona": -0.34
+     },
+     "midi": {
+      "Global": 50,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1939: planet -0.02 °C, Barcelona region -0.3 °C",
+     "frame": 351
+    },
+    {
+     "year": 1940,
+     "start": 38.98395901199077,
+     "dur": 0.5479144780855509,
+     "values": {
+      "Global": 0.12,
+      "Barcelona": -0.44
+     },
+     "midi": {
+      "Global": 53,
+      "Barcelona": 48
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "1940: planet +0.12 °C, Barcelona region -0.4 °C, warmest year so far",
+     "frame": 357
+    },
+    {
+     "year": 1941,
+     "start": 39.53187349007632,
+     "dur": 0.5318917286762207,
+     "values": {
+      "Global": 0.18,
+      "Barcelona": -0.65
+     },
+     "midi": {
+      "Global": 55,
+      "Barcelona": 48
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "1941: planet +0.18 °C, Barcelona region -0.7 °C, warmest year so far",
+     "frame": 363
+    },
+    {
+     "year": 1942,
+     "start": 40.06376521875254,
+     "dur": 0.5288956397281797,
+     "values": {
+      "Global": 0.06,
+      "Barcelona": 0.17
+     },
+     "midi": {
+      "Global": 53,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1942: planet +0.06 °C, Barcelona region +0.2 °C",
+     "frame": 369
+    },
+    {
+     "year": 1943,
+     "start": 40.59266085848072,
+     "dur": 0.50018696945181,
+     "values": {
+      "Global": 0.09,
+      "Barcelona": 0.78
+     },
+     "midi": {
+      "Global": 53,
+      "Barcelona": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1943: planet +0.09 °C, Barcelona region +0.8 °C",
+     "frame": 375
+    },
+    {
+     "year": 1944,
+     "start": 41.09284782793253,
+     "dur": 0.48557787074445635,
+     "values": {
+      "Global": 0.2,
+      "Barcelona": -0.02
+     },
+     "midi": {
+      "Global": 55,
+      "Barcelona": 50
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "1944: planet +0.20 °C, Barcelona region -0.0 °C, warmest year so far",
+     "frame": 381
+    },
+    {
+     "year": 1945,
+     "start": 41.57842569867699,
+     "dur": 0.48057171799900705,
+     "values": {
+      "Global": 0.09,
+      "Barcelona": 0.71
+     },
+     "midi": {
+      "Global": 53,
+      "Barcelona": 53
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1945: planet +0.09 °C, Barcelona region +0.7 °C",
+     "frame": 387
+    },
+    {
+     "year": 1946,
+     "start": 42.05899741667599,
+     "dur": 0.5107207356676656,
+     "values": {
+      "Global": -0.07,
+      "Barcelona": 0.21
+     },
+     "midi": {
+      "Global": 48,
+      "Barcelona": 53
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1946: planet -0.07 °C, Barcelona region +0.2 °C",
+     "frame": 393
+    },
+    {
+     "year": 1947,
+     "start": 42.56971815234366,
+     "dur": 0.553583021228151,
+     "values": {
+      "Global": -0.03,
+      "Barcelona": 0.69
+     },
+     "midi": {
+      "Global": 50,
+      "Barcelona": 55
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1947: planet -0.03 °C, Barcelona region +0.7 °C",
+     "frame": 399
+    },
+    {
+     "year": 1948,
+     "start": 43.12330117357181,
+     "dur": 0.5686780025542088,
+     "values": {
+      "Global": -0.11,
+      "Barcelona": 0.44
+     },
+     "midi": {
+      "Global": 48,
+      "Barcelona": 55
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1948: planet -0.11 °C, Barcelona region +0.4 °C",
+     "frame": 405
+    },
+    {
+     "year": 1949,
+     "start": 43.69197917612602,
+     "dur": 0.5859015145684161,
+     "values": {
+      "Global": -0.11,
+      "Barcelona": 0.75
+     },
+     "midi": {
+      "Global": 48,
+      "Barcelona": 55
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1949: planet -0.11 °C, Barcelona region +0.8 °C",
+     "frame": 411
+    },
+    {
+     "year": 1950,
+     "start": 44.27788069069443,
+     "dur": 0.5559414641915351,
+     "values": {
+      "Global": -0.17,
+      "Barcelona": 0.62
+     },
+     "midi": {
+      "Global": 45,
+      "Barcelona": 55
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1950: planet -0.17 °C, Barcelona region +0.6 °C",
+     "frame": 417
+    },
+    {
+     "year": 1951,
+     "start": 44.833822154885965,
+     "dur": 0.5418095211640761,
+     "values": {
+      "Global": -0.07,
+      "Barcelona": -0.06
+     },
+     "midi": {
+      "Global": 48,
+      "Barcelona": 53
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1951: planet -0.07 °C, Barcelona region -0.1 °C",
+     "frame": 423
+    },
+    {
+     "year": 1952,
+     "start": 45.37563167605004,
+     "dur": 0.5714720026494238,
+     "values": {
+      "Global": 0.01,
+      "Barcelona": 0.42
+     },
+     "midi": {
+      "Global": 50,
+      "Barcelona": 53
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1952: planet +0.01 °C, Barcelona region +0.4 °C",
+     "frame": 429
+    },
+    {
+     "year": 1953,
+     "start": 45.94710367869946,
+     "dur": 0.6073266914519448,
+     "values": {
+      "Global": 0.08,
+      "Barcelona": 0.35
+     },
+     "midi": {
+      "Global": 53,
+      "Barcelona": 53
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1953: planet +0.08 °C, Barcelona region +0.3 °C",
+     "frame": 435
+    },
+    {
+     "year": 1954,
+     "start": 46.55443037015141,
+     "dur": 0.5626676070227521,
+     "values": {
+      "Global": -0.13,
+      "Barcelona": -0.29
+     },
+     "midi": {
+      "Global": 48,
+      "Barcelona": 53
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1954: planet -0.13 °C, Barcelona region -0.3 °C",
+     "frame": 441
+    },
+    {
+     "year": 1955,
+     "start": 47.11709797717416,
+     "dur": 0.550924148946795,
+     "values": {
+      "Global": -0.14,
+      "Barcelona": 0.38
+     },
+     "midi": {
+      "Global": 48,
+      "Barcelona": 53
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1955: planet -0.14 °C, Barcelona region +0.4 °C",
+     "frame": 447
+    },
+    {
+     "year": 1956,
+     "start": 47.66802212612096,
+     "dur": 0.5643004812338773,
+     "values": {
+      "Global": -0.19,
+      "Barcelona": -0.62
+     },
+     "midi": {
+      "Global": 45,
+      "Barcelona": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1956: planet -0.19 °C, Barcelona region -0.6 °C",
+     "frame": 453
+    },
+    {
+     "year": 1957,
+     "start": 48.23232260735484,
+     "dur": 0.5844474719864571,
+     "values": {
+      "Global": 0.05,
+      "Barcelona": -0.01
+     },
+     "midi": {
+      "Global": 50,
+      "Barcelona": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1957: planet +0.05 °C, Barcelona region -0.0 °C",
+     "frame": 459
+    },
+    {
+     "year": 1958,
+     "start": 48.816770079341296,
+     "dur": 0.5806703429649218,
+     "values": {
+      "Global": 0.06,
+      "Barcelona": 0.16
+     },
+     "midi": {
+      "Global": 53,
+      "Barcelona": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1958: planet +0.06 °C, Barcelona region +0.2 °C",
+     "frame": 465
+    },
+    {
+     "year": 1959,
+     "start": 49.39744042230622,
+     "dur": 0.5844359920600808,
+     "values": {
+      "Global": 0.03,
+      "Barcelona": 0.44
+     },
+     "midi": {
+      "Global": 50,
+      "Barcelona": 53
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1959: planet +0.03 °C, Barcelona region +0.4 °C",
+     "frame": 471
+    },
+    {
+     "year": 1960,
+     "start": 49.9818764143663,
+     "dur": 0.5851919211559212,
+     "values": {
+      "Global": -0.02,
+      "Barcelona": 0.17
+     },
+     "midi": {
+      "Global": 50,
+      "Barcelona": 53
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1960: planet -0.02 °C, Barcelona region +0.2 °C",
+     "frame": 477
+    },
+    {
+     "year": 1961,
+     "start": 50.567068335522215,
+     "dur": 0.590409550878136,
+     "values": {
+      "Global": 0.06,
+      "Barcelona": 0.81
+     },
+     "midi": {
+      "Global": 53,
+      "Barcelona": 53
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1961: planet +0.06 °C, Barcelona region +0.8 °C",
+     "frame": 483
+    },
+    {
+     "year": 1962,
+     "start": 51.15747788640035,
+     "dur": 0.6217648935971778,
+     "values": {
+      "Global": 0.03,
+      "Barcelona": 0.07
+     },
+     "midi": {
+      "Global": 50,
+      "Barcelona": 53
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1962: planet +0.03 °C, Barcelona region +0.1 °C",
+     "frame": 489
+    },
+    {
+     "year": 1963,
+     "start": 51.77924277999753,
+     "dur": 0.6465545231099472,
+     "values": {
+      "Global": 0.05,
+      "Barcelona": -0.3
+     },
+     "midi": {
+      "Global": 50,
+      "Barcelona": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1963: planet +0.05 °C, Barcelona region -0.3 °C",
+     "frame": 495
+    },
+    {
+     "year": 1964,
+     "start": 52.42579730310748,
+     "dur": 0.6561702852808969,
+     "values": {
+      "Global": -0.2,
+      "Barcelona": 0.42
+     },
+     "midi": {
+      "Global": 45,
+      "Barcelona": 53
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1964: planet -0.20 °C, Barcelona region +0.4 °C",
+     "frame": 501
+    },
+    {
+     "year": 1965,
+     "start": 53.08196758838837,
+     "dur": 0.6760430617719689,
+     "values": {
+      "Global": -0.11,
+      "Barcelona": -0.18
+     },
+     "midi": {
+      "Global": 48,
+      "Barcelona": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1965: planet -0.11 °C, Barcelona region -0.2 °C",
+     "frame": 507
+    },
+    {
+     "year": 1966,
+     "start": 53.758010650160344,
+     "dur": 0.6622414639020722,
+     "values": {
+      "Global": -0.06,
+      "Barcelona": 0.12
+     },
+     "midi": {
+      "Global": 48,
+      "Barcelona": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1966: planet -0.06 °C, Barcelona region +0.1 °C",
+     "frame": 513
+    },
+    {
+     "year": 1967,
+     "start": 54.420252114062414,
+     "dur": 0.6690371735432284,
+     "values": {
+      "Global": -0.02,
+      "Barcelona": 0.17
+     },
+     "midi": {
+      "Global": 50,
+      "Barcelona": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1967: planet -0.02 °C, Barcelona region +0.2 °C",
+     "frame": 519
+    },
+    {
+     "year": 1968,
+     "start": 55.089289287605645,
+     "dur": 0.6539873605742151,
+     "values": {
+      "Global": -0.08,
+      "Barcelona": 0.14
+     },
+     "midi": {
+      "Global": 48,
+      "Barcelona": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1968: planet -0.08 °C, Barcelona region +0.1 °C",
+     "frame": 525
+    },
+    {
+     "year": 1969,
+     "start": 55.74327664817986,
+     "dur": 0.6772321359697794,
+     "values": {
+      "Global": 0.05,
+      "Barcelona": -0.21
+     },
+     "midi": {
+      "Global": 50,
+      "Barcelona": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1969: planet +0.05 °C, Barcelona region -0.2 °C",
+     "frame": 531
+    },
+    {
+     "year": 1970,
+     "start": 56.42050878414964,
+     "dur": 0.6874684608038564,
+     "values": {
+      "Global": 0.03,
+      "Barcelona": -0.04
+     },
+     "midi": {
+      "Global": 50,
+      "Barcelona": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1970: planet +0.03 °C, Barcelona region -0.0 °C",
+     "frame": 537
+    },
+    {
+     "year": 1971,
+     "start": 57.107977244953496,
+     "dur": 0.6679923725843014,
+     "values": {
+      "Global": -0.08,
+      "Barcelona": -0.08
+     },
+     "midi": {
+      "Global": 48,
+      "Barcelona": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1971: planet -0.08 °C, Barcelona region -0.1 °C",
+     "frame": 543
+    },
+    {
+     "year": 1972,
+     "start": 57.7759696175378,
+     "dur": 0.6892027709198709,
+     "values": {
+      "Global": 0.01,
+      "Barcelona": -0.54
+     },
+     "midi": {
+      "Global": 50,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1972: planet +0.01 °C, Barcelona region -0.5 °C",
+     "frame": 549
+    },
+    {
+     "year": 1973,
+     "start": 58.46517238845767,
+     "dur": 0.6783824343605217,
+     "values": {
+      "Global": 0.16,
+      "Barcelona": -0.08
+     },
+     "midi": {
+      "Global": 55,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1973: planet +0.16 °C, Barcelona region -0.1 °C",
+     "frame": 555
+    },
+    {
+     "year": 1974,
+     "start": 59.14355482281819,
+     "dur": 0.6640359843586641,
+     "values": {
+      "Global": -0.07,
+      "Barcelona": -0.27
+     },
+     "midi": {
+      "Global": 48,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1974: planet -0.07 °C, Barcelona region -0.3 °C",
+     "frame": 561
+    },
+    {
+     "year": 1975,
+     "start": 59.80759080717685,
+     "dur": 0.6616291746727169,
+     "values": {
+      "Global": -0.01,
+      "Barcelona": -0.06
+     },
+     "midi": {
+      "Global": 50,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1975: planet -0.01 °C, Barcelona region -0.1 °C",
+     "frame": 567
+    },
+    {
+     "year": 1976,
+     "start": 60.46921998184957,
+     "dur": 0.6775971259417481,
+     "values": {
+      "Global": -0.1,
+      "Barcelona": -0.07
+     },
+     "midi": {
+      "Global": 48,
+      "Barcelona": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1976: planet -0.10 °C, Barcelona region -0.1 °C",
+     "frame": 573
+    },
+    {
+     "year": 1977,
+     "start": 61.14681710779132,
+     "dur": 0.6435106293719873,
+     "values": {
+      "Global": 0.18,
+      "Barcelona": -0.03
+     },
+     "midi": {
+      "Global": 55,
+      "Barcelona": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1977: planet +0.18 °C, Barcelona region -0.0 °C",
+     "frame": 579
+    },
+    {
+     "year": 1978,
+     "start": 61.79032773716331,
+     "dur": 0.6316398341504815,
+     "values": {
+      "Global": 0.07,
+      "Barcelona": -0.32
+     },
+     "midi": {
+      "Global": 53,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1978: planet +0.07 °C, Barcelona region -0.3 °C",
+     "frame": 585
+    },
+    {
+     "year": 1979,
+     "start": 62.42196757131379,
+     "dur": 0.6329603066373655,
+     "values": {
+      "Global": 0.16,
+      "Barcelona": -0.06
+     },
+     "midi": {
+      "Global": 55,
+      "Barcelona": 48
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1979: planet +0.16 °C, Barcelona region -0.1 °C",
+     "frame": 591
+    },
+    {
+     "year": 1980,
+     "start": 63.05492787795116,
+     "dur": 0.6034144860534719,
+     "values": {
+      "Global": 0.26,
+      "Barcelona": -0.41
+     },
+     "midi": {
+      "Global": 57,
+      "Barcelona": 48
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "1980: planet +0.26 °C, Barcelona region -0.4 °C, warmest year so far",
+     "frame": 597
+    },
+    {
+     "year": 1981,
+     "start": 63.65834236400463,
+     "dur": 0.5457159366512797,
+     "values": {
+      "Global": 0.32,
+      "Barcelona": -0.01
+     },
+     "midi": {
+      "Global": 57,
+      "Barcelona": 48
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "1981: planet +0.32 °C, Barcelona region -0.0 °C, warmest year so far",
+     "frame": 603
+    },
+    {
+     "year": 1982,
+     "start": 64.20405830065592,
+     "dur": 0.5578393442194975,
+     "values": {
+      "Global": 0.14,
+      "Barcelona": 0.48
+     },
+     "midi": {
+      "Global": 53,
+      "Barcelona": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1982: planet +0.14 °C, Barcelona region +0.5 °C",
+     "frame": 609
+    },
+    {
+     "year": 1983,
+     "start": 64.76189764487542,
+     "dur": 0.5636646053951814,
+     "values": {
+      "Global": 0.31,
+      "Barcelona": 0.36
+     },
+     "midi": {
+      "Global": 57,
+      "Barcelona": 53
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1983: planet +0.31 °C, Barcelona region +0.4 °C",
+     "frame": 615
+    },
+    {
+     "year": 1984,
+     "start": 65.3255622502706,
+     "dur": 0.5516885081609559,
+     "values": {
+      "Global": 0.16,
+      "Barcelona": -0.36
+     },
+     "midi": {
+      "Global": 55,
+      "Barcelona": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1984: planet +0.16 °C, Barcelona region -0.4 °C",
+     "frame": 621
+    },
+    {
+     "year": 1985,
+     "start": 65.87725075843154,
+     "dur": 0.5628221168221149,
+     "values": {
+      "Global": 0.12,
+      "Barcelona": 0.15
+     },
+     "midi": {
+      "Global": 53,
+      "Barcelona": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1985: planet +0.12 °C, Barcelona region +0.1 °C",
+     "frame": 627
+    },
+    {
+     "year": 1986,
+     "start": 66.44007287525366,
+     "dur": 0.5411036052217776,
+     "values": {
+      "Global": 0.18,
+      "Barcelona": 0.14
+     },
+     "midi": {
+      "Global": 55,
+      "Barcelona": 50
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1986: planet +0.18 °C, Barcelona region +0.1 °C",
+     "frame": 633
+    },
+    {
+     "year": 1987,
+     "start": 66.98117648047544,
+     "dur": 0.5519393511956627,
+     "values": {
+      "Global": 0.32,
+      "Barcelona": 0.35
+     },
+     "midi": {
+      "Global": 57,
+      "Barcelona": 53
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1987: planet +0.32 °C, Barcelona region +0.3 °C",
+     "frame": 639
+    },
+    {
+     "year": 1988,
+     "start": 67.5331158316711,
+     "dur": 0.5255501606654487,
+     "values": {
+      "Global": 0.39,
+      "Barcelona": 0.59
+     },
+     "midi": {
+      "Global": 60,
+      "Barcelona": 53
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "1988: planet +0.39 °C, Barcelona region +0.6 °C, warmest year so far",
+     "frame": 645
+    },
+    {
+     "year": 1989,
+     "start": 68.05866599233654,
+     "dur": 0.5447965232126027,
+     "values": {
+      "Global": 0.27,
+      "Barcelona": 0.74
+     },
+     "midi": {
+      "Global": 57,
+      "Barcelona": 55
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1989: planet +0.27 °C, Barcelona region +0.7 °C",
+     "frame": 651
+    },
+    {
+     "year": 1990,
+     "start": 68.60346251554914,
+     "dur": 0.5449280006189798,
+     "values": {
+      "Global": 0.45,
+      "Barcelona": 0.91
+     },
+     "midi": {
+      "Global": 60,
+      "Barcelona": 55
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "1990: planet +0.45 °C, Barcelona region +0.9 °C, warmest year so far",
+     "frame": 657
+    },
+    {
+     "year": 1991,
+     "start": 69.14839051616812,
+     "dur": 0.5655840343841172,
+     "values": {
+      "Global": 0.41,
+      "Barcelona": 0.06
+     },
+     "midi": {
+      "Global": 60,
+      "Barcelona": 55
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1991: planet +0.41 °C, Barcelona region +0.1 °C",
+     "frame": 663
+    },
+    {
+     "year": 1992,
+     "start": 69.71397455055224,
+     "dur": 0.5855485159262412,
+     "values": {
+      "Global": 0.22,
+      "Barcelona": 0.35
+     },
+     "midi": {
+      "Global": 55,
+      "Barcelona": 55
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1992: planet +0.22 °C, Barcelona region +0.3 °C",
+     "frame": 669
+    },
+    {
+     "year": 1993,
+     "start": 70.29952306647847,
+     "dur": 0.6025643932868041,
+     "values": {
+      "Global": 0.23,
+      "Barcelona": 0.19
+     },
+     "midi": {
+      "Global": 55,
+      "Barcelona": 53
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1993: planet +0.23 °C, Barcelona region +0.2 °C",
+     "frame": 675
+    },
+    {
+     "year": 1994,
+     "start": 70.90208745976527,
+     "dur": 0.5996429963401835,
+     "values": {
+      "Global": 0.31,
+      "Barcelona": 0.93
+     },
+     "midi": {
+      "Global": 57,
+      "Barcelona": 55
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1994: planet +0.31 °C, Barcelona region +0.9 °C",
+     "frame": 681
+    },
+    {
+     "year": 1995,
+     "start": 71.50173045610545,
+     "dur": 0.5573740978186573,
+     "values": {
+      "Global": 0.45,
+      "Barcelona": 0.56
+     },
+     "midi": {
+      "Global": 60,
+      "Barcelona": 55
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1995: planet +0.45 °C, Barcelona region +0.6 °C",
+     "frame": 687
+    },
+    {
+     "year": 1996,
+     "start": 72.0591045539241,
+     "dur": 0.5632845335699711,
+     "values": {
+      "Global": 0.33,
+      "Barcelona": 0.09
+     },
+     "midi": {
+      "Global": 57,
+      "Barcelona": 55
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1996: planet +0.33 °C, Barcelona region +0.1 °C",
+     "frame": 693
+    },
+    {
+     "year": 1997,
+     "start": 72.62238908749407,
+     "dur": 0.5681039059076214,
+     "values": {
+      "Global": 0.47,
+      "Barcelona": 0.92
+     },
+     "midi": {
+      "Global": 62,
+      "Barcelona": 55
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "1997: planet +0.47 °C, Barcelona region +0.9 °C, warmest year so far",
+     "frame": 699
+    },
+    {
+     "year": 1998,
+     "start": 73.19049299340169,
+     "dur": 0.5571465910297526,
+     "values": {
+      "Global": 0.61,
+      "Barcelona": 0.49
+     },
+     "midi": {
+      "Global": 65,
+      "Barcelona": 55
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "1998: planet +0.61 °C, Barcelona region +0.5 °C, warmest year so far",
+     "frame": 705
+    },
+    {
+     "year": 1999,
+     "start": 73.74763958443144,
+     "dur": 0.5716830042978073,
+     "values": {
+      "Global": 0.38,
+      "Barcelona": 0.7
+     },
+     "midi": {
+      "Global": 60,
+      "Barcelona": 55
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "1999: planet +0.38 °C, Barcelona region +0.7 °C",
+     "frame": 711
+    },
+    {
+     "year": 2000,
+     "start": 74.31932258872925,
+     "dur": 0.5954589407148997,
+     "values": {
+      "Global": 0.39,
+      "Barcelona": 0.78
+     },
+     "midi": {
+      "Global": 60,
+      "Barcelona": 57
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2000: planet +0.39 °C, Barcelona region +0.8 °C",
+     "frame": 717
+    },
+    {
+     "year": 2001,
+     "start": 74.91478152944416,
+     "dur": 0.6011416159518839,
+     "values": {
+      "Global": 0.53,
+      "Barcelona": 0.79
+     },
+     "midi": {
+      "Global": 62,
+      "Barcelona": 57
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2001: planet +0.53 °C, Barcelona region +0.8 °C",
+     "frame": 723
+    },
+    {
+     "year": 2002,
+     "start": 75.51592314539604,
+     "dur": 0.5422597795239238,
+     "values": {
+      "Global": 0.63,
+      "Barcelona": 0.61
+     },
+     "midi": {
+      "Global": 65,
+      "Barcelona": 57
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "2002: planet +0.63 °C, Barcelona region +0.6 °C, warmest year so far",
+     "frame": 729
+    },
+    {
+     "year": 2003,
+     "start": 76.05818292491996,
+     "dur": 0.5062502547141418,
+     "values": {
+      "Global": 0.62,
+      "Barcelona": 1.28
+     },
+     "midi": {
+      "Global": 65,
+      "Barcelona": 57
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2003: planet +0.62 °C, Barcelona region +1.3 °C",
+     "frame": 735
+    },
+    {
+     "year": 2004,
+     "start": 76.56443317963411,
+     "dur": 0.5084109511835476,
+     "values": {
+      "Global": 0.53,
+      "Barcelona": 0.57
+     },
+     "midi": {
+      "Global": 62,
+      "Barcelona": 57
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2004: planet +0.53 °C, Barcelona region +0.6 °C",
+     "frame": 741
+    },
+    {
+     "year": 2005,
+     "start": 77.07284413081766,
+     "dur": 0.5084236749272251,
+     "values": {
+      "Global": 0.68,
+      "Barcelona": 0.5
+     },
+     "midi": {
+      "Global": 67,
+      "Barcelona": 57
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "2005: planet +0.68 °C, Barcelona region +0.5 °C, warmest year so far",
+     "frame": 747
+    },
+    {
+     "year": 2006,
+     "start": 77.58126780574489,
+     "dur": 0.4950109049220495,
+     "values": {
+      "Global": 0.64,
+      "Barcelona": 1.16
+     },
+     "midi": {
+      "Global": 65,
+      "Barcelona": 57
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2006: planet +0.64 °C, Barcelona region +1.2 °C",
+     "frame": 753
+    },
+    {
+     "year": 2007,
+     "start": 78.07627871066694,
+     "dur": 0.5043391628490288,
+     "values": {
+      "Global": 0.66,
+      "Barcelona": 0.84
+     },
+     "midi": {
+      "Global": 67,
+      "Barcelona": 57
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2007: planet +0.66 °C, Barcelona region +0.8 °C",
+     "frame": 759
+    },
+    {
+     "year": 2008,
+     "start": 78.58061787351598,
+     "dur": 0.5339311054744258,
+     "values": {
+      "Global": 0.54,
+      "Barcelona": 0.71
+     },
+     "midi": {
+      "Global": 62,
+      "Barcelona": 57
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2008: planet +0.54 °C, Barcelona region +0.7 °C",
+     "frame": 765
+    },
+    {
+     "year": 2009,
+     "start": 79.1145489789904,
+     "dur": 0.519483942737843,
+     "values": {
+      "Global": 0.66,
+      "Barcelona": 1.01
+     },
+     "midi": {
+      "Global": 67,
+      "Barcelona": 57
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2009: planet +0.66 °C, Barcelona region +1.0 °C",
+     "frame": 771
+    },
+    {
+     "year": 2010,
+     "start": 79.63403292172825,
+     "dur": 0.5000025370577387,
+     "values": {
+      "Global": 0.72,
+      "Barcelona": 0.36
+     },
+     "midi": {
+      "Global": 67,
+      "Barcelona": 57
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "2010: planet +0.72 °C, Barcelona region +0.4 °C, warmest year so far",
+     "frame": 777
+    },
+    {
+     "year": 2011,
+     "start": 80.13403545878599,
+     "dur": 0.5281712788634891,
+     "values": {
+      "Global": 0.61,
+      "Barcelona": 1.31
+     },
+     "midi": {
+      "Global": 65,
+      "Barcelona": 60
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2011: planet +0.61 °C, Barcelona region +1.3 °C",
+     "frame": 783
+    },
+    {
+     "year": 2012,
+     "start": 80.66220673764948,
+     "dur": 0.5656129375354193,
+     "values": {
+      "Global": 0.65,
+      "Barcelona": 1.01
+     },
+     "midi": {
+      "Global": 65,
+      "Barcelona": 60
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2012: planet +0.65 °C, Barcelona region +1.0 °C",
+     "frame": 789
+    },
+    {
+     "year": 2013,
+     "start": 81.2278196751849,
+     "dur": 0.5925124893051513,
+     "values": {
+      "Global": 0.67,
+      "Barcelona": 0.63
+     },
+     "midi": {
+      "Global": 67,
+      "Barcelona": 57
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2013: planet +0.67 °C, Barcelona region +0.6 °C",
+     "frame": 795
+    },
+    {
+     "year": 2014,
+     "start": 81.82033216449005,
+     "dur": 0.5757552316287465,
+     "values": {
+      "Global": 0.75,
+      "Barcelona": 1.42
+     },
+     "midi": {
+      "Global": 69,
+      "Barcelona": 60
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "2014: planet +0.75 °C, Barcelona region +1.4 °C, warmest year so far",
+     "frame": 801
+    },
+    {
+     "year": 2015,
+     "start": 82.3960873961188,
+     "dur": 0.565137990963477,
+     "values": {
+      "Global": 0.89,
+      "Barcelona": 1.41
+     },
+     "midi": {
+      "Global": 72,
+      "Barcelona": 62
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "2015: planet +0.89 °C, Barcelona region +1.4 °C, warmest year so far",
+     "frame": 807
+    },
+    {
+     "year": 2016,
+     "start": 82.96122538708228,
+     "dur": 0.5256932193730759,
+     "values": {
+      "Global": 1.01,
+      "Barcelona": 1.32
+     },
+     "midi": {
+      "Global": 74,
+      "Barcelona": 62
+     },
+     "record": true,
+     "dissonant": true,
+     "description": "2016: planet +1.01 °C, Barcelona region +1.3 °C, warmest year so far",
+     "frame": 813
+    },
+    {
+     "year": 2017,
+     "start": 83.48691860645536,
+     "dur": 0.5185466564320892,
+     "values": {
+      "Global": 0.91,
+      "Barcelona": 1.42
+     },
+     "midi": {
+      "Global": 72,
+      "Barcelona": 62
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2017: planet +0.91 °C, Barcelona region +1.4 °C",
+     "frame": 819
+    },
+    {
+     "year": 2018,
+     "start": 84.00546526288745,
+     "dur": 0.502653990597193,
+     "values": {
+      "Global": 0.85,
+      "Barcelona": 1.31
+     },
+     "midi": {
+      "Global": 69,
+      "Barcelona": 62
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2018: planet +0.85 °C, Barcelona region +1.3 °C",
+     "frame": 825
+    },
+    {
+     "year": 2019,
+     "start": 84.50811925348465,
+     "dur": 0.4890249583764216,
+     "values": {
+      "Global": 0.98,
+      "Barcelona": 1.3
+     },
+     "midi": {
+      "Global": 74,
+      "Barcelona": 62
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2019: planet +0.98 °C, Barcelona region +1.3 °C",
+     "frame": 831
+    },
+    {
+     "year": 2020,
+     "start": 84.99714421186107,
+     "dur": 0.48326883257311254,
+     "values": {
+      "Global": 1.01,
+      "Barcelona": 1.56
+     },
+     "midi": {
+      "Global": 74,
+      "Barcelona": 62
+     },
+     "record": false,
+     "dissonant": true,
+     "description": "2020: planet +1.01 °C, Barcelona region +1.6 °C",
+     "frame": 837
+    },
+    {
+     "year": 2021,
+     "start": 85.48041304443419,
+     "dur": 0.48652488429168506,
+     "values": {
+      "Global": 0.85,
+      "Barcelona": 1.25
+     },
+     "midi": {
+      "Global": 69,
+      "Barcelona": 62
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2021: planet +0.85 °C, Barcelona region +1.2 °C",
+     "frame": 843
+    },
+    {
+     "year": 2022,
+     "start": 85.96693792872587,
+     "dur": 0.48916148734851406,
+     "values": {
+      "Global": 0.89,
+      "Barcelona": 2.11
+     },
+     "midi": {
+      "Global": 72,
+      "Barcelona": 65
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2022: planet +0.89 °C, Barcelona region +2.1 °C",
+     "frame": 849
+    },
+    {
+     "year": 2023,
+     "start": 86.45609941607438,
+     "dur": 0.45454545454545453,
+     "values": {
+      "Global": 1.17,
+      "Barcelona": 2.06
+     },
+     "midi": {
+      "Global": 79,
+      "Barcelona": 67
+     },
+     "record": true,
+     "dissonant": true,
+     "description": "2023: planet +1.17 °C, Barcelona region +2.1 °C, warmest year so far",
+     "frame": 855
+    },
+    {
+     "year": 2024,
+     "start": 86.91064487061983,
+     "dur": 0.45454545454545453,
+     "values": {
+      "Global": 1.28,
+      "Barcelona": 2.0
+     },
+     "midi": {
+      "Global": 81,
+      "Barcelona": 67
+     },
+     "record": true,
+     "dissonant": true,
+     "description": "2024: planet +1.28 °C, Barcelona region +2.0 °C, warmest year so far",
+     "frame": 879
+    },
+    {
+     "year": 2025,
+     "start": 87.36519032516529,
+     "dur": 0.45454545454545453,
+     "values": {
+      "Global": 1.18,
+      "Barcelona": 2.12
+     },
+     "midi": {
+      "Global": 79,
+      "Barcelona": 69
+     },
+     "record": false,
+     "dissonant": true,
+     "description": "2025: planet +1.18 °C, Barcelona region +2.1 °C",
+     "frame": null
+    }
+   ],
+   "name": "Barcelona region"
+  }
+ }
+}

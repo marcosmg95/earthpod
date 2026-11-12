@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Environments
+.env
+.venv
+env/
+venv/
+backend/env
+
+# Large downloaded inputs (recreate with backend/data/download_data.ps1)
+backend/data/raw/
+
+# Generated outputs (recreate with backend/scripts/*)
+backend/out/
+frontend/player/frames/
+
+# Editors / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Leftover from the pre-reorganisation layout
+poc/

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Earth Jukebox</title>
+<meta name="description" content="Insert a coin and listen to a NASA picture of Earth, played as chiptune music.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="locked">
+<div class="crt" aria-hidden="true"></div>
+
+<!-- 0. power-on: browsers only allow sound after a key press or click -->
+<div id="start" class="start">
+  <p class="start-title">EARTH JUKEBOX</p>
+  <button id="startBtn" class="start-btn" autofocus>PRESS ENTER TO START</button>
+  <p class="start-note">THIS EXPERIENCE USES SOUND</p>
+</div>
+
+<header class="hud-top">
+  <span>EARTH JUKEBOX</span>
+  <span id="credit" aria-live="off">CREDIT 00</span>
+</header>
+<button id="mute" class="corner" aria-pressed="true">MUTE</button>
+
+<main>
+  <!-- 1. attract screen -->
+  <section id="s-attract" class="screen" aria-labelledby="welcome">
+    <div class="attract">
+      <h1 id="welcome" class="welcome" data-text="WELCOME TO THIS EARTHLY EXPERIENCE">WELCOME TO THIS EARTHLY EXPERIENCE</h1>
+      <ul id="elements" class="elements" aria-label="The four voices of the Earth"></ul>
+      <button id="hearAgain" class="hear" hidden>HEAR THE ELEMENTS AGAIN</button>
+      <p class="sub">SCROLL DOWN TO DISCOVER</p>
+      <div class="arrow" aria-hidden="true">&#8595;</div>
+    </div>
+    <p class="footnote">A NASA SPACE APPS SONIFICATION</p>
+  </section>
+
+  <!-- 2. insert coin -->
+  <section id="s-coin" class="screen" aria-labelledby="insert">
+    <div class="coinbox">
+      <h2 id="insert" class="insert">INSERT A COIN</h2>
+      <div class="machine" aria-hidden="true">
+        <canvas id="slot" width="24" height="24"></canvas>
+        <div id="coin" class="coin"><canvas id="coinArt" width="16" height="16"></canvas></div>
+      </div>
+      <p id="coinhelp" class="help big">PRESS ENTER OR SPACE</p>
+      <p id="loadmsg" class="help warn" hidden></p>
+    </div>
+  </section>
+
+  <!-- 3. the planetary jukebox -->
+  <section id="s-play" class="screen play" aria-labelledby="jbtitle" hidden>
+    <h2 id="jbtitle" class="sr-only">The planetary jukebox</h2>
+    <div class="playgrid">
+      <div class="deck">
+        <canvas id="disc" width="640" height="640" aria-hidden="true"></canvas>
+        <p class="np"><span class="dimtxt">NOW PLAYING</span><br><b id="npCode">--</b> <span id="npName">SELECT A RECORD</span></p>
+        <div class="controls">
+          <button id="playBtn" aria-pressed="false">PLAY</button>
+          <button id="replay">REPLAY</button>
+          <button id="again" class="primary">INSERT ANOTHER COIN</button>
+        </div>
+        <div class="keysel" role="group" aria-labelledby="keylabel">
+          <span id="keylabel" class="dimtxt">KEY</span>
+          <button id="keyDown" aria-label="Lower the key by a semitone">-</button>
+          <output id="keyName">D</output>
+          <button id="keyUp" aria-label="Raise the key by a semitone">+</button>
+          <output id="modeName" class="dimtxt">MINOR PENTATONIC</output>
+        </div>
+        <div class="keysel" role="group" aria-labelledby="stylelabel">
+          <span id="stylelabel" class="dimtxt">STYLE</span>
+          <button id="styleBtn" aria-pressed="true" aria-describedby="styleHelp">MELODY</button>
+          <span id="styleHelp" class="dimtxt">COMPUTER VISION COMPOSES A SONG</span>
+        </div>
+      </div>
+
+      <div class="stage">
+        <canvas id="view" width="1280" height="853" role="img" aria-label=""></canvas>
+        <div id="selectcard" class="titlecard" hidden>
+          <h3 class="place">SELECT A RECORD</h3>
+          <p class="ttitle">TYPE A LETTER AND A NUMBER, FOR EXAMPLE <b>B3</b><br>OR CLICK A RECORD BELOW</p>
+          <p class="code" aria-live="polite"><span id="typed">_ _</span></p>
+          <p id="countdown" class="ready">SURPRISE RECORD IN 8</p>
+        </div>
+        <div id="titlecard" class="titlecard gone">
+          <p id="trackno" class="trackno">A1</p>
+          <h3 id="place" class="place">EARTH</h3>
+          <p id="ttitle" class="ttitle"></p>
+          <p class="ready">GET READY</p>
+        </div>
+        <p id="endmsg" class="endmsg" hidden>TRACK COMPLETE</p>
+      </div>
+
+      <div class="boardwrap">
+        <h3 class="boardtitle">RECORDS</h3>
+        <div id="board" class="board" role="group" aria-label="Records"></div>
+      </div>
+
+      <aside class="panel">
+        <dl class="readout">
+          <div><dt>COL</dt><dd id="rCol">--</dd></div>
+          <div><dt>NOTE</dt><dd id="rNote">--</dd></div>
+          <div><dt>VOICE</dt><dd id="rVoice">--</dd></div>
+          <div><dt>CHORD</dt><dd id="rChord">--</dd></div>
+        </dl>
+        <div id="bars" class="bars" aria-hidden="true"></div>
+        <details class="legend" open>
+          <summary>HOW IT SOUNDS</summary>
+          <ul id="legend"></ul>
+          <p id="rules" class="rules">UP = HIGHER NOTE<br>BRIGHT = LOUD · DARK = SILENT<br>BRIGHT COLUMNS PLAY FASTER<br>SOUND PANS LEFT TO RIGHT</p>
+        </details>
+      </aside>
+    </div>
+    <p id="cap" class="credit"></p>
+    <p class="keys">KEYS: A-D + 1-9 CHOOSE A RECORD · SPACE PLAY/PAUSE · LEFT/RIGHT STEP · +/- KEY · V STYLE · R REPLAY · N NEW COIN · M MUTE</p>
+  </section>
+</main>
+
+<div id="live" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script type="module" src="main.js"></script>
+</body>
+</html>
