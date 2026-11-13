@@ -164,6 +164,62 @@ MAPPING_TEXT = (
 )
 
 
+# --- Night lights (NASA Black Marble, data behind SVS 5313) -------------------------------
+# Same Voice type; here step_c is "% light change per scale step" and the tonic is the 2012 level.
+NIGHT_TONIC_MIDI = 62  # D4 = each city's 2012 glow
+NIGHT_VOICES = [
+    Voice("Barcelona", "barcelona", 2.0, NIGHT_TONIC_MIDI, 0.0, "pluck", 0.9),
+    Voice("Kyiv", "kyiv", 5.0, NIGHT_TONIC_MIDI + 12, 0.5, "string", 0.45),
+]
+NIGHT_NAMES = {"barcelona": "Barcelona", "kyiv": "Kyiv", "delhi": "Delhi"}
+
+
+def build_night_track(pct: pd.DataFrame, voices: list[Voice] = NIGHT_VOICES,
+                      bpm: float = 60.0, alarm_drop_pct: float = 20.0) -> dict:
+    """pct: % change in total night light vs 2012, index = year, columns = region keys."""
+    voices = [v for v in voices if v.column in pct.columns]
+    level = 1.0 + pct / 100.0                      # light relative to 2012
+    yoy = (level / level.shift(1) - 1.0) * 100.0   # % change vs previous year
+    beat = 60.0 / bpm
+    years, t = [], 0.0
+    for year, row in pct.iterrows():
+        yi = YearInfo(year=int(year), start=t, dur=beat)
+        parts = []
+        for v in voices:
+            val = row[v.column]
+            if pd.isna(val):
+                continue
+            yi.values[v.name] = round(float(val), 1)
+            yi.midi[v.name] = value_to_midi(float(val), v.step_c, v.tonic_midi)
+            word = "brighter" if val > 0 else "darker"
+            parts.append(f"{v.name} {abs(val):.0f}% {word} than 2012" if round(val) else f"{v.name} at its 2012 level")
+            drop = yoy.loc[year, v.column]
+            if pd.notna(drop) and drop <= -alarm_drop_pct:
+                yi.dissonant = True
+                parts.append(f"{v.name} lost {abs(drop):.0f}% of its light in one year")
+        yi.description = f"{yi.year}: " + ", ".join(parts)
+        years.append(asdict(yi))
+        t += beat
+
+    steps = "; ".join(f"{v.name} moves one step per {v.step_c:g}%" for v in voices)
+    text = ("One year is one note, from 2012 to 2023, using night-time light measured from space. "
+            "Each city starts on the home note, its own 2012 glow, which the low drone holds. "
+            f"The melody steps down the D minor pentatonic scale as the city gets darker and up as it gets brighter ({steps}). "
+            f"A clashing note sounds when a city loses more than {alarm_drop_pct:g}% of its light in a single year. "
+            "Part of a fall can be LED street lighting, which the satellite barely sees.")
+    return {
+        "name": "Night lights (" + ", ".join(v.name for v in voices) + ")",
+        "mapping": text,
+        "duration_s": round(t, 3),
+        "voices": [asdict(v) for v in voices],
+        "years": years,
+        "reference": {"midi": NIGHT_TONIC_MIDI, "label": "Reference: each city's 2012 glow"},
+        "drone_midi": NIGHT_TONIC_MIDI - 12,
+        "caption": "Data: NASA Black Marble VNP46A4 (Suomi NPP VIIRS), yearly night lights; see SVS 5313. Not endorsed by NASA.",
+        "chart_label": "Line chart of night-light change versus 2012, in percent",
+    }
+
+
 def score_to_dict(notes, info, duration, voices=DEFAULT_VOICES) -> dict:
     return {
         "mapping": MAPPING_TEXT,

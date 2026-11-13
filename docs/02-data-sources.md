@@ -16,6 +16,7 @@
 | 5234 / 5196 | CO₂ (AIRS monthly; DYAMOND) | Seasonal "breathing" rhythm |
 | 5221 | Global mean sea level 1993–2023 | Unverified; good drone layer |
 | 5147–5154 | GEOS-FP/CF forecasts (temp, wind, PM2.5…) | Other teams already use these |
+| 5313 | Change in Night Lights 2012–2023 (EIC 32:9) | H.265 MP4 2160p (33 MB), 7680x2160 frames; no colorbar/time file. Data = Black Marble VNP46A4 (LAADS 5200, token) → `poc5`; zooms India, Ukraine, W. Europe, E. Med |
 
 ## Numeric data (drive the sound with this)
 - GISTEMP v4 global monthly/annual CSV: https://data.giss.nasa.gov/gistemp/tabledata_v4/GLB.Ts+dSST.csv (anomaly vs 1951–1980)

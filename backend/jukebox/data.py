@@ -52,6 +52,15 @@ def load_barcelona_annual(path: Path | None = None) -> pd.Series | None:
     return s
 
 
+def load_blackmarble_annual(path: Path | None = None) -> pd.DataFrame | None:
+    """Night-light % change vs 2012 per region (columns) and year (index), from PoC 5 (or None)."""
+    path = path or DERIVED_DIR / "blackmarble_annual.csv"
+    if not Path(path).exists():
+        return None
+    df = pd.read_csv(path)
+    return df.pivot(index="year", columns="region", values="pct_change_vs_first").sort_index()
+
+
 def load_frame_years(path: Path | None = None) -> list[int] | None:
     """SVS 5450 time.txt: one year per movie frame (900 lines)."""
     path = path or RAW_DIR / "svs5450_time.txt"

@@ -73,9 +73,16 @@ async function init() {
   selectTrack(keys[0]);
 }
 
+const DEFAULT_CAPTION = $("cap").textContent, DEFAULT_CHART = $("chart").getAttribute("aria-label");
+const refOf = () => track.reference || { midi: 50, label: "Reference: 0 °C, the 1951 to 1980 average" };
+
 function selectTrack(k) {
+  if (playing) stop();
   key = k; track = DATA.tracks[k];
   $("mapping").textContent = track.mapping;
+  $("cap").textContent = track.caption || DEFAULT_CAPTION;
+  $("chart").setAttribute("aria-label", track.chart_label || DEFAULT_CHART);
+  $("ref").textContent = track.reference ? "Reference tone (2012 level)" : "Reference tone (0 °C)";
   $("year").max = track.years.length - 1;
   idx = Math.min(idx, track.years.length - 1);
   document.querySelector(`input[value="${k}"]`).checked = true;
@@ -87,6 +94,7 @@ function show(announce) {
   $("year").value = idx;
   $("year").setAttribute("aria-valuetext", y.description);
   if (y.frame != null) { const img = $("frame"); img.hidden = false; img.src = `frames/frame_${String(y.frame).padStart(3, "0")}.png`; img.alt = y.description; img.onerror = () => img.hidden = true; }
+  else $("frame").hidden = true;
   drawChart();
   if (announce) say(y.description);
 }
@@ -159,7 +167,7 @@ function tick() {                // lookahead scheduler
 }
 
 function startDrone() {
-  drone = ctx.createOscillator(); drone.frequency.value = midiHz(38);
+  drone = ctx.createOscillator(); drone.frequency.value = midiHz(track.drone_midi ?? 38);
   const g = ctx.createGain(); g.gain.value = 0.06; drone.connect(g).connect(master); drone.start();
 }
 
@@ -180,7 +188,7 @@ function stop() {
 
 function step(n) { if (playing) stop(); idx = Math.max(0, Math.min(track.years.length - 1, idx + n)); show(true); preview(); }
 function preview() { ensureAudio(); ctx.resume(); scheduleYear(track.years[idx], ctx.currentTime + 0.02); }
-function refTone() { ensureAudio(); ctx.resume(); voiceNote(50, ctx.currentTime + 0.02, 1.5, "pluck", 0.3, 0); say("Reference: 0 °C, the 1951 to 1980 average"); }
+function refTone() { const r = refOf(); ensureAudio(); ctx.resume(); voiceNote(r.midi, ctx.currentTime + 0.02, 1.5, "pluck", 0.3, 0); say(r.label); }
 
 $("play").onclick = () => playing ? stop() : play();
 $("ref").onclick = refTone;

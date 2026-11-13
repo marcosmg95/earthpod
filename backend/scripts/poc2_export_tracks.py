@@ -39,10 +39,15 @@ def main():
         b = b.dropna(subset=["barcelona"])
         out["tracks"]["barcelona"] = track(b, voices, "Barcelona region")
 
-    frames = data.load_frame_years()
+    frames = data.load_frame_years()  # SVS 5450 frames: temperature tracks only
     for t in out["tracks"].values():
         for y in t["years"]:
             y["frame"] = data.frame_for_year(frames, y["year"]) if frames else None
+
+    night = data.load_blackmarble_annual()  # PoC 5: NASA Black Marble night lights
+    if night is not None:
+        out["tracks"]["night"] = mapping.build_night_track(night)
+        out["source"] += "; night lights: NASA Black Marble VNP46A4 (SVS 5313)"
 
     WEB.mkdir(exist_ok=True)
     path = WEB / "tracks.json"

@@ -1,6 +1,8 @@
 numpy>=1.24
-pandas>=2.0
+pandas>=2.0,<3   # 3.x DLLs blocked by Windows Smart App Control
 matplotlib>=3.7
 opencv-python>=4.8
 # PoC 4 only (Barcelona from the gridded file):
 netCDF4>=1.6
+# PoC 5 only (Black Marble night lights, HDF5):
+h5py>=3.9

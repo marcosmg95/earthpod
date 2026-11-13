@@ -12,6 +12,14 @@ Run `download_data.ps1` (PowerShell, from this folder). It fills `raw/` with:
 - NH / SH tables
 - SVS 5450 equirectangular movie (4096×2048, 900 frames; ~6 frames per year), `time.txt` (frame → year), colorbars
 - Two full-res PNG frames to validate colormap inversion
+- SVS 5313 night-lights EIC movie (2160p, 32:9, H.265, 33 MB) + a print JPG.
+  Re-encode for browsers: `ffmpeg -i raw/svs5313_EIC_2160p30_h265.mp4 -c:v libx264 -crf 23 -vf scale=3840:-2 -an raw/svs5313_EIC_h264.mp4`
+
+## Black Marble night lights (needs an Earthdata token)
+`download_blackmarble.ps1` fetches NASA Black Marble VNP46A4 (yearly VIIRS night lights, LAADS collection 5200 v002)
+into `raw/blackmarble/`: the data behind SVS 5313. Default: Barcelona tile h18v04, 2012–2023, ~135 MB/tile (~1.6 GB).
+Add Kyiv/Delhi with `-Tiles h18v04,h21v03,h25v06`. Set `$env:EARTHDATA_TOKEN` first (steps in the script header).
+Then `python backend\scripts\poc5_blackmarble_regions.py` writes `derived/blackmarble_annual.csv` + `.json`.
 
 After it runs, frames can be extracted at low res, one per year, e.g.:
 `ffmpeg -i raw/svs5450_SOS_4096x2048.mp4 -vf "select=not(mod(n\,6)),scale=360:180" -vsync vfr frames/f%03d.png`
@@ -20,3 +28,5 @@ After it runs, frames can be extracted at low res, one per year, e.g.:
 ## Citations
 - GISTEMP Team, 2026: GISS Surface Temperature Analysis (GISTEMP), version 4. NASA Goddard Institute for Space Studies. https://data.giss.nasa.gov/gistemp/
 - NASA Scientific Visualization Studio, "Global Temperature Anomalies from 1880 to 2024" (SVS 5450). https://svs.gsfc.nasa.gov/5450/
+- NASA Scientific Visualization Studio, "Change in Night Lights between 2012 and 2023 - EIC Version" (SVS 5313), visualizer Kel Elkins. https://svs.gsfc.nasa.gov/5313/
+- NASA Black Marble VNP46A4 (Román et al.), Suomi NPP VIIRS, NASA LAADS DAAC. https://ladsweb.modaps.eosdis.nasa.gov/

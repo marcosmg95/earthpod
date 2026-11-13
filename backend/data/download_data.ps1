@@ -6,6 +6,7 @@ $raw = Join-Path $PSScriptRoot "raw"
 New-Item -ItemType Directory -Force -Path $raw | Out-Null
 
 $svs = "https://svs.gsfc.nasa.gov/vis/a000000/a005400/a005450"
+$svs5313 = "https://svs.gsfc.nasa.gov/vis/a000000/a005300/a005313"
 $files = @(
   # GISTEMP v4 gridded anomalies, 2x2 deg, monthly (~26 MB) -> Barcelona-region cell
   @{u="https://data.giss.nasa.gov/pub/gistemp/gistemp1200_GHCNv4_ERSSTv5.nc.gz"; f="gistemp1200_GHCNv4_ERSSTv5.nc.gz"},
@@ -20,7 +21,10 @@ $files = @(
   @{u="$svs/giss_navy_anomaly_Vertical-both.png"; f="svs5450_cbar_vertical.png"},
   # Two full-res PNG frames for validating the inversion (6.4 MB each)
   @{u="$svs/frames/4096x2048_2x1_30p/2024GISTEMP_SOS000.png"; f="svs5450_frame000.png"},
-  @{u="$svs/frames/4096x2048_2x1_30p/2024GISTEMP_SOS850.png"; f="svs5450_frame850.png"}
+  @{u="$svs/frames/4096x2048_2x1_30p/2024GISTEMP_SOS850.png"; f="svs5450_frame850.png"},
+  # SVS 5313 Change in Night Lights 2012-2023, EIC 32:9 version (H.265 - re-encode to H.264 for browsers)
+  @{u="$svs5313/nightlights_flat_series_and_change_wZooms_13_EIC_2160p30_h265.mp4"; f="svs5313_EIC_2160p30_h265.mp4"},
+  @{u="$svs5313/nightlights_flat_series_and_change_wZooms_13_EIC.02599_print.jpg"; f="svs5313_print.jpg"}
 )
 
 foreach ($x in $files) {

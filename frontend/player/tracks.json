@@ -1,5 +1,5 @@
 {
- "source": "NASA GISTEMP v4 (GISTEMP Team, 2026); frames: NASA SVS 5450",
+ "source": "NASA GISTEMP v4 (GISTEMP Team, 2026); frames: NASA SVS 5450; night lights: NASA Black Marble VNP46A4 (SVS 5313)",
  "tracks": {
   "planet": {
    "mapping": "One year is one note. Each 0.1 °C of global warming raises the melody one step of a D minor pentatonic scale; the low drone is 0 °C, the 1951–1980 average. Strings are latitude bands, with the Arctic highest. Tempo speeds up when warming speeds up, a clashing note sounds above +1 °C, and a bell marks each new record year.",
@@ -5928,6 +5928,234 @@
     }
    ],
    "name": "Barcelona region"
+  },
+  "night": {
+   "name": "Night lights (Barcelona, Kyiv)",
+   "mapping": "One year is one note, from 2012 to 2023, using night-time light measured from space. Each city starts on the home note, its own 2012 glow, which the low drone holds. The melody steps down the D minor pentatonic scale as the city gets darker and up as it gets brighter (Barcelona moves one step per 2%; Kyiv moves one step per 5%). A clashing note sounds when a city loses more than 20% of its light in a single year. Part of a fall can be LED street lighting, which the satellite barely sees.",
+   "duration_s": 12.0,
+   "voices": [
+    {
+     "name": "Barcelona",
+     "column": "barcelona",
+     "step_c": 2.0,
+     "tonic_midi": 62,
+     "pan": 0.0,
+     "timbre": "pluck",
+     "gain": 0.9,
+     "smooth": 0.0
+    },
+    {
+     "name": "Kyiv",
+     "column": "kyiv",
+     "step_c": 5.0,
+     "tonic_midi": 74,
+     "pan": 0.5,
+     "timbre": "string",
+     "gain": 0.45,
+     "smooth": 0.0
+    }
+   ],
+   "years": [
+    {
+     "year": 2012,
+     "start": 0.0,
+     "dur": 1.0,
+     "values": {
+      "Barcelona": 0.0,
+      "Kyiv": 0.0
+     },
+     "midi": {
+      "Barcelona": 62,
+      "Kyiv": 74
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2012: Barcelona at its 2012 level, Kyiv at its 2012 level"
+    },
+    {
+     "year": 2013,
+     "start": 1.0,
+     "dur": 1.0,
+     "values": {
+      "Barcelona": -3.7,
+      "Kyiv": -6.8
+     },
+     "midi": {
+      "Barcelona": 57,
+      "Kyiv": 72
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2013: Barcelona 4% darker than 2012, Kyiv 7% darker than 2012"
+    },
+    {
+     "year": 2014,
+     "start": 2.0,
+     "dur": 1.0,
+     "values": {
+      "Barcelona": -6.8,
+      "Kyiv": -4.2
+     },
+     "midi": {
+      "Barcelona": 55,
+      "Kyiv": 72
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2014: Barcelona 7% darker than 2012, Kyiv 4% darker than 2012"
+    },
+    {
+     "year": 2015,
+     "start": 3.0,
+     "dur": 1.0,
+     "values": {
+      "Barcelona": -7.6,
+      "Kyiv": 1.6
+     },
+     "midi": {
+      "Barcelona": 53,
+      "Kyiv": 74
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2015: Barcelona 8% darker than 2012, Kyiv 2% brighter than 2012"
+    },
+    {
+     "year": 2016,
+     "start": 4.0,
+     "dur": 1.0,
+     "values": {
+      "Barcelona": -9.1,
+      "Kyiv": 3.3
+     },
+     "midi": {
+      "Barcelona": 50,
+      "Kyiv": 77
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2016: Barcelona 9% darker than 2012, Kyiv 3% brighter than 2012"
+    },
+    {
+     "year": 2017,
+     "start": 5.0,
+     "dur": 1.0,
+     "values": {
+      "Barcelona": -8.8,
+      "Kyiv": 2.3
+     },
+     "midi": {
+      "Barcelona": 53,
+      "Kyiv": 74
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2017: Barcelona 9% darker than 2012, Kyiv 2% brighter than 2012"
+    },
+    {
+     "year": 2018,
+     "start": 6.0,
+     "dur": 1.0,
+     "values": {
+      "Barcelona": -10.0,
+      "Kyiv": 2.9
+     },
+     "midi": {
+      "Barcelona": 50,
+      "Kyiv": 77
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2018: Barcelona 10% darker than 2012, Kyiv 3% brighter than 2012"
+    },
+    {
+     "year": 2019,
+     "start": 7.0,
+     "dur": 1.0,
+     "values": {
+      "Barcelona": -9.5,
+      "Kyiv": 7.0
+     },
+     "midi": {
+      "Barcelona": 50,
+      "Kyiv": 77
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2019: Barcelona 10% darker than 2012, Kyiv 7% brighter than 2012"
+    },
+    {
+     "year": 2020,
+     "start": 8.0,
+     "dur": 1.0,
+     "values": {
+      "Barcelona": -10.6,
+      "Kyiv": -10.4
+     },
+     "midi": {
+      "Barcelona": 50,
+      "Kyiv": 69
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2020: Barcelona 11% darker than 2012, Kyiv 10% darker than 2012"
+    },
+    {
+     "year": 2021,
+     "start": 9.0,
+     "dur": 1.0,
+     "values": {
+      "Barcelona": -11.9,
+      "Kyiv": 13.2
+     },
+     "midi": {
+      "Barcelona": 48,
+      "Kyiv": 81
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2021: Barcelona 12% darker than 2012, Kyiv 13% brighter than 2012"
+    },
+    {
+     "year": 2022,
+     "start": 10.0,
+     "dur": 1.0,
+     "values": {
+      "Barcelona": -10.9,
+      "Kyiv": -53.6
+     },
+     "midi": {
+      "Barcelona": 50,
+      "Kyiv": 48
+     },
+     "record": false,
+     "dissonant": true,
+     "description": "2022: Barcelona 11% darker than 2012, Kyiv 54% darker than 2012, Kyiv lost 59% of its light in one year"
+    },
+    {
+     "year": 2023,
+     "start": 11.0,
+     "dur": 1.0,
+     "values": {
+      "Barcelona": -9.3,
+      "Kyiv": -35.5
+     },
+     "midi": {
+      "Barcelona": 50,
+      "Kyiv": 57
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2023: Barcelona 9% darker than 2012, Kyiv 35% darker than 2012"
+    }
+   ],
+   "reference": {
+    "midi": 62,
+    "label": "Reference: each city's 2012 glow"
+   },
+   "drone_midi": 50,
+   "caption": "Data: NASA Black Marble VNP46A4 (Suomi NPP VIIRS), yearly night lights; see SVS 5313. Not endorsed by NASA.",
+   "chart_label": "Line chart of night-light change versus 2012, in percent"
   }
  }
 }

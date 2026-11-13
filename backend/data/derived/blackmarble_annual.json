@@ -1,0 +1,304 @@
+{
+ "source": "NASA Black Marble VNP46A4 v002 (LAADS DAAC), Suomi NPP VIIRS; visual: NASA SVS 5313",
+ "units": "nW/cm^2/sr",
+ "regions": {
+  "barcelona": {
+   "name": "Barcelona metro area",
+   "years": [
+    {
+     "region": "barcelona",
+     "year": 2012,
+     "tile": "h18v04",
+     "layer": "AllAngle_Composite_Snow_Free",
+     "mean_radiance": 31.65734531279699,
+     "median_radiance": 10.008163928985596,
+     "sum_radiance": 287195.4366776943,
+     "valid_px": 9072,
+     "total_px": 9072,
+     "pct_change_vs_first": 0.0
+    },
+    {
+     "region": "barcelona",
+     "year": 2013,
+     "tile": "h18v04",
+     "layer": "AllAngle_Composite_Snow_Free",
+     "mean_radiance": 30.492513899561644,
+     "median_radiance": 9.249169826507568,
+     "sum_radiance": 276628.0860968232,
+     "valid_px": 9072,
+     "total_px": 9072,
+     "pct_change_vs_first": -3.68
+    },
+    {
+     "region": "barcelona",
+     "year": 2014,
+     "tile": "h18v04",
+     "layer": "AllAngle_Composite_Snow_Free",
+     "mean_radiance": 29.497744533474798,
+     "median_radiance": 9.072823524475098,
+     "sum_radiance": 267603.5384076834,
+     "valid_px": 9072,
+     "total_px": 9072,
+     "pct_change_vs_first": -6.82
+    },
+    {
+     "region": "barcelona",
+     "year": 2015,
+     "tile": "h18v04",
+     "layer": "AllAngle_Composite_Snow_Free",
+     "mean_radiance": 29.240941203940114,
+     "median_radiance": 8.817718982696533,
+     "sum_radiance": 265273.8186021447,
+     "valid_px": 9072,
+     "total_px": 9072,
+     "pct_change_vs_first": -7.63
+    },
+    {
+     "region": "barcelona",
+     "year": 2016,
+     "tile": "h18v04",
+     "layer": "AllAngle_Composite_Snow_Free",
+     "mean_radiance": 28.785843247774416,
+     "median_radiance": 8.657269954681396,
+     "sum_radiance": 261145.1699438095,
+     "valid_px": 9072,
+     "total_px": 9072,
+     "pct_change_vs_first": -9.07
+    },
+    {
+     "region": "barcelona",
+     "year": 2017,
+     "tile": "h18v04",
+     "layer": "AllAngle_Composite_Snow_Free",
+     "mean_radiance": 28.857934680210533,
+     "median_radiance": 8.730962753295898,
+     "sum_radiance": 261799.18341886997,
+     "valid_px": 9072,
+     "total_px": 9072,
+     "pct_change_vs_first": -8.84
+    },
+    {
+     "region": "barcelona",
+     "year": 2018,
+     "tile": "h18v04",
+     "layer": "AllAngle_Composite_Snow_Free",
+     "mean_radiance": 28.50490791421561,
+     "median_radiance": 8.890150547027588,
+     "sum_radiance": 258596.52459776402,
+     "valid_px": 9072,
+     "total_px": 9072,
+     "pct_change_vs_first": -9.96
+    },
+    {
+     "region": "barcelona",
+     "year": 2019,
+     "tile": "h18v04",
+     "layer": "AllAngle_Composite_Snow_Free",
+     "mean_radiance": 28.637990326806246,
+     "median_radiance": 8.95876169204712,
+     "sum_radiance": 259803.84824478626,
+     "valid_px": 9072,
+     "total_px": 9072,
+     "pct_change_vs_first": -9.54
+    },
+    {
+     "region": "barcelona",
+     "year": 2020,
+     "tile": "h18v04",
+     "layer": "AllAngle_Composite_Snow_Free",
+     "mean_radiance": 28.30063052196877,
+     "median_radiance": 8.73612117767334,
+     "sum_radiance": 256743.32009530067,
+     "valid_px": 9072,
+     "total_px": 9072,
+     "pct_change_vs_first": -10.6
+    },
+    {
+     "region": "barcelona",
+     "year": 2021,
+     "tile": "h18v04",
+     "layer": "AllAngle_Composite_Snow_Free",
+     "mean_radiance": 27.89946488471705,
+     "median_radiance": 9.37389612197876,
+     "sum_radiance": 253103.94543415308,
+     "valid_px": 9072,
+     "total_px": 9072,
+     "pct_change_vs_first": -11.87
+    },
+    {
+     "region": "barcelona",
+     "year": 2022,
+     "tile": "h18v04",
+     "layer": "AllAngle_Composite_Snow_Free",
+     "mean_radiance": 28.200820464174374,
+     "median_radiance": 9.115871906280518,
+     "sum_radiance": 255837.8432509899,
+     "valid_px": 9072,
+     "total_px": 9072,
+     "pct_change_vs_first": -10.92
+    },
+    {
+     "region": "barcelona",
+     "year": 2023,
+     "tile": "h18v04",
+     "layer": "AllAngle_Composite_Snow_Free",
+     "mean_radiance": 28.716171758929416,
+     "median_radiance": 9.527395248413086,
+     "sum_radiance": 260513.11019700766,
+     "valid_px": 9072,
+     "total_px": 9072,
+     "pct_change_vs_first": -9.29
+    }
+   ]
+  },
+  "kyiv": {
+   "name": "Kyiv",
+   "years": [
+    {
+     "region": "kyiv",
+     "year": 2012,
+     "tile": "h21v03",
+     "layer": "AllAngle_Composite_Snow_Free",
+     "mean_radiance": 13.370424989674591,
+     "median_radiance": 2.1865415573120117,
+     "sum_radiance": 200235.48464536667,
+     "valid_px": 14976,
+     "total_px": 14976,
+     "pct_change_vs_first": 0.0
+    },
+    {
+     "region": "kyiv",
+     "year": 2013,
+     "tile": "h21v03",
+     "layer": "AllAngle_Composite_Snow_Free",
+     "mean_radiance": 12.455754320165063,
+     "median_radiance": 2.2924939393997192,
+     "sum_radiance": 186537.37669879198,
+     "valid_px": 14976,
+     "total_px": 14976,
+     "pct_change_vs_first": -6.84
+    },
+    {
+     "region": "kyiv",
+     "year": 2014,
+     "tile": "h21v03",
+     "layer": "AllAngle_Composite_Snow_Free",
+     "mean_radiance": 12.815550219112387,
+     "median_radiance": 2.2337011098861694,
+     "sum_radiance": 191925.6800814271,
+     "valid_px": 14976,
+     "total_px": 14976,
+     "pct_change_vs_first": -4.15
+    },
+    {
+     "region": "kyiv",
+     "year": 2015,
+     "tile": "h21v03",
+     "layer": "AllAngle_Composite_Snow_Free",
+     "mean_radiance": 13.587372640032385,
+     "median_radiance": 2.1788376569747925,
+     "sum_radiance": 203484.492657125,
+     "valid_px": 14976,
+     "total_px": 14976,
+     "pct_change_vs_first": 1.62
+    },
+    {
+     "region": "kyiv",
+     "year": 2016,
+     "tile": "h21v03",
+     "layer": "AllAngle_Composite_Snow_Free",
+     "mean_radiance": 13.807395168723396,
+     "median_radiance": 2.3253657817840576,
+     "sum_radiance": 206779.55004680157,
+     "valid_px": 14976,
+     "total_px": 14976,
+     "pct_change_vs_first": 3.27
+    },
+    {
+     "region": "kyiv",
+     "year": 2017,
+     "tile": "h21v03",
+     "layer": "AllAngle_Composite_Snow_Free",
+     "mean_radiance": 13.680144721510796,
+     "median_radiance": 2.559142827987671,
+     "sum_radiance": 204873.84734934568,
+     "valid_px": 14976,
+     "total_px": 14976,
+     "pct_change_vs_first": 2.32
+    },
+    {
+     "region": "kyiv",
+     "year": 2018,
+     "tile": "h21v03",
+     "layer": "AllAngle_Composite_Snow_Free",
+     "mean_radiance": 13.756413131080663,
+     "median_radiance": 2.552154064178467,
+     "sum_radiance": 206016.043051064,
+     "valid_px": 14976,
+     "total_px": 14976,
+     "pct_change_vs_first": 2.89
+    },
+    {
+     "region": "kyiv",
+     "year": 2019,
+     "tile": "h21v03",
+     "layer": "AllAngle_Composite_Snow_Free",
+     "mean_radiance": 14.308755750035564,
+     "median_radiance": 2.850777506828308,
+     "sum_radiance": 214287.92611253262,
+     "valid_px": 14976,
+     "total_px": 14976,
+     "pct_change_vs_first": 7.02
+    },
+    {
+     "region": "kyiv",
+     "year": 2020,
+     "tile": "h21v03",
+     "layer": "AllAngle_Composite_Snow_Free",
+     "mean_radiance": 11.976694452106697,
+     "median_radiance": 2.868802547454834,
+     "sum_radiance": 179362.9761147499,
+     "valid_px": 14976,
+     "total_px": 14976,
+     "pct_change_vs_first": -10.42
+    },
+    {
+     "region": "kyiv",
+     "year": 2021,
+     "tile": "h21v03",
+     "layer": "AllAngle_Composite_Snow_Free",
+     "mean_radiance": 15.136216227024889,
+     "median_radiance": 3.391499876976013,
+     "sum_radiance": 226679.97421592474,
+     "valid_px": 14976,
+     "total_px": 14976,
+     "pct_change_vs_first": 13.21
+    },
+    {
+     "region": "kyiv",
+     "year": 2022,
+     "tile": "h21v03",
+     "layer": "AllAngle_Composite_Snow_Free",
+     "mean_radiance": 6.207843479274525,
+     "median_radiance": 0.7569936513900757,
+     "sum_radiance": 92968.66394561529,
+     "valid_px": 14976,
+     "total_px": 14976,
+     "pct_change_vs_first": -53.57
+    },
+    {
+     "region": "kyiv",
+     "year": 2023,
+     "tile": "h21v03",
+     "layer": "AllAngle_Composite_Snow_Free",
+     "mean_radiance": 8.628976381710197,
+     "median_radiance": 0.8956016600131989,
+     "sum_radiance": 129227.55029249191,
+     "valid_px": 14976,
+     "total_px": 14976,
+     "pct_change_vs_first": -35.46
+    }
+   ]
+  }
+ }
+}
