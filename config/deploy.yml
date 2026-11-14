@@ -10,10 +10,7 @@ servers:
       cpus: 0.25
 
 proxy:
-  ssl: true
-  hosts:
-    - earthpod.earth
-    - www.earthpod.earth
+  host: earthpod.earth
   app_port: 80
   healthcheck:
     path: /up

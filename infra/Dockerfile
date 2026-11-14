@@ -1,9 +1,13 @@
-# Static site for earthpod.earth: the arcade at / and the GISTEMP player at /player/.
-# Built and deployed by Kamal (config/deploy.yml) from GitHub Actions (.github/workflows/ci.yml).
+# build the web app
+FROM node:22-alpine AS build
+WORKDIR /web
+COPY frontend/web/package.json frontend/web/package-lock.json ./
+RUN npm ci
+COPY frontend/web/ ./
+RUN npm run build
+
+# serve it
 FROM nginx:1.27-alpine
-
 COPY infra/nginx.conf /etc/nginx/conf.d/default.conf
-COPY frontend/arcade/ /usr/share/nginx/html/
-COPY frontend/player/ /usr/share/nginx/html/player/
-
+COPY --from=build /web/dist /usr/share/nginx/html
 EXPOSE 80
