@@ -7,7 +7,7 @@ Background (has its own meaning, always there):
             louder in the brighter years of each scene, brighter in tone while the lights grow, darker
             while they shrink; in the change maps, brighter the more of the picture is purple ("new lights")
     clock   one tick each time the year label changes (1 year = 1 beat; a lower "tock" for 2012)
-Foreground: one instrument per region, entering when the movie shows it.
+Foreground: one electronic instrument per region (jukebox.instruments.ELECTRONIC), entering when the movie shows it.
     Acts 1–2 (world map): three longitude bands of one copy of the map — Americas, Europe + Africa, Asia.
     Acts 3–4 (zoom boxes, from frame 668): Western Europe, Eastern Mediterranean, Ukraine, India.
 
@@ -30,9 +30,10 @@ TITLE = "Night lights: grid hum, year clock and regions"
 DESCRIPTION = (
     "Background: a low electrical hum (louder in the brighter years of each scene, brighter in tone while the "
     "lights grow, darker while they shrink) and a soft clock tick each time the year label changes. "
-    "Foreground: one instrument per region, entering when the movie shows it. On the world map: Americas "
-    "marimba (left), Europe and Africa oboe (centre), Asia kalimba (right). With the zoom boxes: Western Europe "
-    "vibraphone, Eastern Mediterranean harp, Ukraine flute, India cello, each panned to its box. Higher "
+    "Foreground: one electronic instrument per region, entering when the movie shows it. On the world map: "
+    "Americas synth pluck (left), Europe and Africa pulse-wave lead (centre), Asia chiptune square (right). With "
+    "the zoom boxes: Western Europe FM electric piano, Eastern Mediterranean FM glass bell, Ukraine theremin-like "
+    "sine lead, India saw bass, each panned to its box. Higher "
     "register = further north. In the year-by-year scenes each instrument's pitch is its region's brightness "
     "that year, ranked against its other years (higher note = brighter year). In the change maps each region "
     "in turn plays a rising run, as loud as its purple 'new lights', then a falling run, as loud as its "
@@ -41,15 +42,16 @@ DESCRIPTION = (
     "2012–2023). These are picture indices, not calibrated radiance; map shading, labels and zooms affect them.")
 
 # ---- mix (live sliders: no re-render) ----------------------------------------------------------------
+# defaults put every region at about the same loudness while it plays (about -24 dB RMS before the mix)
 HUM_GAIN = 0.10
 CLOCK_GAIN = 0.20
-AMERICAS_GAIN = 0.40        # marimba
-EUROPE_AFRICA_GAIN = 0.30   # oboe
-ASIA_GAIN = 0.40            # kalimba
-WESTERN_EUROPE_GAIN = 0.35  # vibraphone
-EAST_MED_GAIN = 0.40        # harp
-UKRAINE_GAIN = 0.28         # flute
-INDIA_GAIN = 0.30           # cello
+AMERICAS_GAIN = 0.80        # synth pluck
+EUROPE_AFRICA_GAIN = 0.12   # pulse-wave lead
+ASIA_GAIN = 0.55            # chiptune square
+WESTERN_EUROPE_GAIN = 0.48  # FM electric piano
+EAST_MED_GAIN = 0.44        # FM glass bell
+UKRAINE_GAIN = 0.14         # theremin-like sine lead
+INDIA_GAIN = 0.27           # saw bass
 OUTPUT_GAIN = 1.0
 
 # ---- melody ------------------------------------------------------------------------------------------
@@ -96,20 +98,23 @@ PARAMS = {
 # columns 22-24 are the dark Atlantic). Europe + Africa's lights sit further north (light-weighted row 4.1
 # of 15, vs 5.2 for the other two), so it gets the highest register.
 BANDS = {
-    "americas":      dict(inst="marimba", low=62, pan=-0.70, cols=(0, 22)),    # D4
-    "europe_africa": dict(inst="oboe",    low=67, pan=+0.00, cols=(22, 37)),   # G4
-    "asia":          dict(inst="kalimba", low=57, pan=+0.70, cols=(37, 64)),   # A3
+    "americas":      dict(inst="synth_pluck", low=62, pan=-0.70, cols=(0, 22)),    # D4
+    "europe_africa": dict(inst="pulse_lead", low=67, pan=+0.00, cols=(22, 37)),   # G4
+    "asia":          dict(inst="chip",    low=57, pan=+0.70, cols=(37, 64)),   # A3
 }
 # Zoom boxes (nightlights_frames.BOXES, same order): lowest note by latitude, pan from the box on screen.
 CITIES = {
-    "western_europe": dict(box="weur", inst="vibraphone", low=69),  # A4 ~47N
-    "east_med":       dict(box="emed", inst="harp",       low=62),  # D4 ~33N
-    "ukraine":        dict(box="ukr",  inst="flute",      low=74),  # D5 ~49N
-    "india":          dict(box="ind",  inst="cello",      low=50),  # D3 ~22N
+    "western_europe": dict(box="weur", inst="fm_piano",   low=69),  # A4 ~47N
+    "east_med":       dict(box="emed", inst="fm_glass",   low=62),  # D4 ~33N
+    "ukraine":        dict(box="ukr",  inst="theremin",   low=74),  # D5 ~49N
+    "india":          dict(box="ind",  inst="saw_bass",   low=50),  # D3 ~22N
 }
 BOX_PAN = {b.key: b.pan for b in nf.BOXES}
 LABELS = {"americas": "Americas", "europe_africa": "Europe and Africa", "asia": "Asia",
           **{k: next(b.name for b in nf.BOXES if b.key == c["box"]) for k, c in CITIES.items()}}
+INST_NAMES = {"synth_pluck": "synth pluck", "pulse_lead": "pulse-wave lead", "chip": "chiptune square",
+              "fm_piano": "FM electric piano", "fm_glass": "FM glass bell", "theremin": "theremin-like sine lead",
+              "saw_bass": "saw bass"}
 SETTLE_FRAMES = 18          # a change map has faded in this many frames after its scene starts
 
 
@@ -323,6 +328,6 @@ def samples(sr: int = synth.SR) -> dict[str, tuple[str, np.ndarray]]:
             synth.add_at(clip, synth.pan_stereo(y, pan), i * step, sr)
         label = LABELS[name]
         side = "on the left" if pan < -0.2 else "on the right" if pan > 0.2 else "in the centre"
-        out[name] = (f"{label}: {inst}, heard {side}. Low notes mean a dimmer year, high notes a brighter one.",
+        out[name] = (f"{label}: {INST_NAMES[inst]}, heard {side}. Low notes mean a dimmer year, high notes a brighter one.",
                      synth.normalize(clip))
     return out

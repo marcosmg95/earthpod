@@ -359,6 +359,18 @@ class TestInstruments(unittest.TestCase):
         np.testing.assert_allclose(instruments.ranks([5.0, 1.0, 3.0]), [1.0, 0.0, 0.5])
         np.testing.assert_allclose(instruments.ranks([2.0, 2.0]), [0.5, 0.5])
 
+    def test_electronic_models_are_pitched(self):
+        sr, hz = 16000, 200.0
+        for inst in instruments.ELECTRONIC:
+            with self.subTest(inst):
+                y = instruments.tone(inst, hz, 0.5, sr)
+                self.assertTrue(np.isfinite(y).all())
+                self.assertLessEqual(np.abs(y).max(), 1.0 + 1e-9)
+                seg = y[int(0.02 * sr):int(0.25 * sr)]
+                ac = np.correlate(seg, seg, "full")[len(seg) - 1:]
+                lag = 20 + ac[20:200].argmax()            # repeats once per period (80 samples at 200 Hz)
+                self.assertAlmostEqual(lag, sr / hz, delta=2)
+
     def test_scale_notes_stay_in_d_minor_pentatonic(self):
         for m in instruments.scale_notes(57, 12):
             self.assertIn((m - mapping.TONIC_MIDI) % 12, mapping.SCALE)

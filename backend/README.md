@@ -116,13 +116,15 @@ scene boundaries and the frames at which each year label appears were read from 
   from the movie's pictures (`nightlights_frames.extract_grids`), not from the per-frame CSV.
 - `nightlights_grid_and_regions` (stem script, the night-lights cousin of `co2_15`): background = a 49 Hz (G1, ~50 Hz
   mains) electrical hum, louder in the brighter years of each scene and brighter in tone while the lights grow, plus a
-  clock tick at every year-label change (1 year = 1 beat). Foreground = one instrument per region: three longitude
-  bands of the world map in sections 1–2 (Americas marimba, Europe + Africa oboe, Asia kalimba), then the four zoom
-  boxes from frame 668 (Western Europe vibraphone, Eastern Mediterranean harp, Ukraine flute, India cello). Register =
+  clock tick at every year-label change (1 year = 1 beat). Foreground = one electronic instrument per region: three
+  longitude bands of the world map in sections 1–2 (Americas synth pluck, Europe + Africa pulse-wave lead, Asia
+  chiptune square), then the four zoom boxes from frame 668 (Western Europe FM electric piano, Eastern Mediterranean
+  FM glass bell, Ukraine theremin-like sine lead, India saw bass). Register =
   latitude, pan = longitude / box position, shared D minor pentatonic; pitch in the year scenes = that year's
   brightness ranked among the region's years. In the change maps each region in turn plays a rising run (loudness =
   purple "new lights") and a falling run (orange "lights out"), then all hold a final note, high where new lights
-  win and low where lights went out. Instrument models are shared with `co2_15` in `jukebox/instruments.py`.
+  win and low where lights went out. The synths are `jukebox.instruments.ELECTRONIC` (band-limited saw / square /
+  pulse with a filter envelope, and 2-operator FM); `co2_15`'s acoustic models live in the same module.
 - `nightlights_nervous_system`: an electrical murmur whose loudness follows bright-pixel intensity, stereo
   position the bright areas' screen position, and shimmer changes in intensity; it does not tell increases from
   decreases. The map shows Earth twice side by side, so screen position is only loosely geographic.
