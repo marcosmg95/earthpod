@@ -81,6 +81,17 @@ class TestWindow(unittest.TestCase):
         self.assertEqual(len(ctx.frame_features().table), len(ctx.timeline.labels))
         self.assertIn("frames 30-59", preview.describe_window(ctx, 1.0, 2.0))
 
+    def test_measured_timelines(self):
+        night = preview.build_context(5313)
+        self.assertEqual((len(night.timeline.labels), night.timeline.fps, night.sr), (1300, 30.0, 44100))
+        found = sonify.measured_timeline(5313, night.movie)
+        self.assertEqual((found.origin, len(found.chapters), found.still), ("nightlights", 3, False))
+        self.assertEqual(sonify.measured_timeline(5196, "x_globe_orbit_1080p30.mp4", fps=25).timeline.fps, 25)
+        scan = sonify.measured_timeline(5669, preview.build_context(5669).movie, fps=25)
+        self.assertEqual((scan.origin, scan.still, scan.timeline.fps), ("page", True, 10.0))   # the page's own rate
+        self.assertIsNone(sonify.measured_timeline(5196, "not_measured.mp4"))
+        self.assertIsNone(sonify.measured_timeline(1, "a.mp4"))
+
     def test_main_writes_wav(self):
         with tempfile.TemporaryDirectory() as tmp:
             old, preview.OUT_DIR = preview.OUT_DIR, Path(tmp)

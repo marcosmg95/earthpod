@@ -10,31 +10,7 @@ measuring module (jukebox/pages/svs<id>.py) and writes data/derived/svs<id>_fram
 import sys
 import time
 
-import requests
-
-from jukebox import pages
-
-
-def download(url: str, path) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    part = path.with_name(path.name + ".part")
-    for attempt in range(30):
-        have = part.stat().st_size if part.exists() else 0
-        try:
-            with requests.get(url, stream=True, timeout=120, headers={"Range": f"bytes={have}-"} if have else {}) as r:
-                if r.status_code == 416:          # already complete
-                    break
-                r.raise_for_status()
-                with open(part, "ab" if have and r.status_code == 206 else "wb") as f:
-                    for chunk in r.iter_content(1 << 20):
-                        f.write(chunk)
-            break
-        except requests.RequestException as e:
-            print(f"  download interrupted ({type(e).__name__}), resuming ({attempt + 1})")
-            time.sleep(2)
-    else:
-        raise RuntimeError(f"Could not download {url}")
-    part.rename(path)
+from jukebox import pages, svs
 
 
 def main(ids: list[int]) -> None:
@@ -44,7 +20,7 @@ def main(ids: list[int]) -> None:
         for name, url in {mod.MOVIE: mod.URL, **getattr(mod, "EXTRA", {})}.items():
             if not path.with_name(name).exists():
                 print(f"SVS {viz_id}: downloading {name} ...")
-                download(url, path.with_name(name))
+                svs.download_file(url, path.with_name(name))
         t0 = time.perf_counter()
         table, arrays = mod.extract(path)
         pages.save(viz_id, table, arrays)

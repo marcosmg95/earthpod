@@ -6,9 +6,8 @@ data/derived/svs5196_<move>_frames.csv and svs5196_profiles.npz (committed; see 
     uv run python scripts/poc6_svs5196_features.py
 """
 import numpy as np
-import requests
 
-from jukebox import data, frames
+from jukebox import data, frames, svs
 
 BASE = "https://svs.gsfc.nasa.gov/vis/a000000/a005100/a005196/"
 MOVIES = {
@@ -28,9 +27,7 @@ def main():
         path = raw / name
         if not path.exists():
             print(f"downloading {name} ...")
-            r = requests.get(BASE + name, timeout=300)
-            r.raise_for_status()
-            path.write_bytes(r.content)
+            svs.download_file(BASE + name, path)
         table, profiles[tag] = frames.extract(path, tag)
         out = frames.path_for(5196, tag)
         table.to_csv(out, index=False, lineterminator="\n")

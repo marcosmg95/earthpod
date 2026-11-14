@@ -1,5 +1,11 @@
+import io
+import tempfile
 import unittest
-from unittest.mock import Mock, patch
+from contextlib import redirect_stdout
+from pathlib import Path
+from unittest.mock import MagicMock, Mock, patch
+
+import requests
 
 from jukebox import svs
 
@@ -40,6 +46,28 @@ class TestSvs(unittest.TestCase):
         self.assertEqual(svs.download_media("https://example.test/movie.mp4"), b"video")
         get.assert_called_once_with("https://example.test/movie.mp4", timeout=300)
         response.raise_for_status.assert_called_once_with()
+
+    @patch("jukebox.svs.requests.get")
+    def test_download_file_resumes_from_the_part_file(self, get):
+        response = MagicMock(status_code=206)
+        response.__enter__.return_value = response
+        response.iter_content.return_value = [b"lo ", b"world"]
+        get.return_value = response
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "sub" / "movie.mp4"
+            path.parent.mkdir()
+            path.with_name("movie.mp4.part").write_bytes(b"hel")
+            self.assertEqual(svs.download_file("https://example.test/movie.mp4", path), path)
+            self.assertEqual(path.read_bytes(), b"hello world")
+            self.assertFalse(path.with_name("movie.mp4.part").exists())
+        self.assertEqual(get.call_args.kwargs["headers"], {"Range": "bytes=3-"})
+
+    @patch("jukebox.svs.requests.get", side_effect=requests.ConnectionError)
+    def test_download_file_gives_up(self, get):
+        with tempfile.TemporaryDirectory() as tmp, redirect_stdout(io.StringIO()):
+            with self.assertRaises(RuntimeError):
+                svs.download_file("https://example.test/x", Path(tmp) / "x", attempts=2, wait_s=0)
+        self.assertEqual(get.call_count, 2)
 
 
 if __name__ == "__main__":

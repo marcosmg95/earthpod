@@ -169,6 +169,43 @@ class SonifyContext:
         return synth.render(notes, self.duration, sr=self.sr, tail=0.0, **kw)
 
 
+# ---- timeline and context of a movie (shared by the explorer and jukebox.preview) ---------------------
+
+DEFAULT_FPS = 30.0
+
+
+@dataclass
+class MovieTimeline:
+    """The timeline of a movie this project has measured, and what the player needs to show it."""
+    timeline: Timeline
+    origin: str                                   # "page" (jukebox.pages), "nightlights" or "frames" (SVS 5196)
+    chapters: list[tuple[str, float]] = field(default_factory=list)   # (title, seconds)
+    still: bool = False                           # a still image played as a left-to-right scan
+
+
+def measured_timeline(viz_id: int, movie: str, fps: float | None = None) -> MovieTimeline | None:
+    """Timeline from the committed measurements of `movie`, or None if this movie was not measured.
+
+    A page module's movie plays at its own frame rate; for the others `fps` (default: 30) applies.
+    """
+    if (page := pages.load(viz_id, movie)) is not None:
+        return MovieTimeline(Timeline(page.labels, page.fps), "page", page.chapter_times(), page.still)
+    if nightlights_frames.load(viz_id, movie) is not None:
+        timeline = Timeline(nightlights_frames.labels(), fps or nightlights_frames.FPS)
+        return MovieTimeline(timeline, "nightlights",
+                             [(title, timeline.time_of(frame)) for title, frame in nightlights_frames.SECTIONS])
+    if (feats := frames.load(viz_id, movie)) is not None:
+        return MovieTimeline(Timeline(feats.table.label.tolist(), fps or DEFAULT_FPS), "frames")
+    return None
+
+
+def context_for(viz_id: int, timeline: Timeline, movie: str = "", data: dict | None = None,
+                params: dict | None = None) -> SonifyContext:
+    """The context a script is rendered with: the sample rate follows the movie length (sample_rate_for)."""
+    return SonifyContext(viz_id=viz_id, timeline=timeline, data=data or {}, movie=movie,
+                         params=dict(params or {}), sr=sample_rate_for(timeline.duration))
+
+
 # ---- scripts -----------------------------------------------------------------
 
 def discover(folder: Path) -> dict[str, Path]:

@@ -5,8 +5,9 @@ Used by apps/svs_explorer.py to browse visualizations quickly, and reusable from
 from __future__ import annotations
 
 import re
+import time
 from dataclasses import dataclass
-from pathlib import PurePosixPath
+from pathlib import Path, PurePosixPath
 from urllib.parse import urlparse
 
 import requests
@@ -40,6 +41,34 @@ def download_media(url: str) -> bytes:
     r = requests.get(url, timeout=300)
     r.raise_for_status()
     return r.content
+
+
+def download_file(url: str, path: Path, attempts: int = 30, wait_s: float = 2.0) -> Path:
+    """Download a large file to `path`, resuming a broken download from `<path>.part` (HTTP Range).
+
+    Raises RuntimeError when it still fails after `attempts` tries.
+    """
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    part = path.with_name(path.name + ".part")
+    for attempt in range(attempts):
+        have = part.stat().st_size if part.exists() else 0
+        try:
+            with requests.get(url, stream=True, timeout=120, headers={"Range": f"bytes={have}-"} if have else {}) as r:
+                if r.status_code == 416:          # already complete
+                    break
+                r.raise_for_status()
+                with open(part, "ab" if have and r.status_code == 206 else "wb") as f:
+                    for chunk in r.iter_content(1 << 20):
+                        f.write(chunk)
+            break
+        except requests.RequestException as e:
+            print(f"  download interrupted ({type(e).__name__}), resuming ({attempt + 1})")
+            time.sleep(wait_s)
+    else:
+        raise RuntimeError(f"Could not download {url}")
+    part.replace(path)
+    return path
 
 
 def https_url(url: str) -> str:

@@ -59,34 +59,29 @@ def viz_id_of(script: Path) -> int | None:
 def build_context(viz_id: int, movie: str | None = None, fps: float | None = None,
                   params: dict | None = None) -> sonify.SonifyContext:
     """Timeline + movie for an SVS page from the committed/downloaded data, with no network when possible."""
-    fps = fps or 30.0
+    measure = None                 # the script that measures this page's movie, if the project has one
     if (mod := pages.module(viz_id)) is not None:
-        feats = pages.load(viz_id, mod.MOVIE)
-        if feats is None:
-            raise FileNotFoundError(f"SVS {viz_id} is not measured yet: run scripts/poc8_page_features.py {viz_id}")
-        timeline, movie = sonify.Timeline(feats.labels, feats.fps), mod.MOVIE
-        return sonify.SonifyContext(viz_id=viz_id, timeline=timeline, movie=movie, params=dict(params or {}),
-                                    sr=sonify.sample_rate_for(timeline.duration))
-    if viz_id == 5313:
-        timeline, movie, fps = sonify.Timeline(nightlights_frames.labels(), nightlights_frames.FPS), \
-            nightlights_frames.MOVIE, nightlights_frames.FPS
+        movie, measure = mod.MOVIE, f"scripts/poc8_page_features.py {viz_id}"
+    elif viz_id == 5313:
+        movie, measure = nightlights_frames.MOVIE, "scripts/poc7_svs5313_features.py"
     elif viz_id == 5196:
         tag = movie if movie in frames.SVS5196_MOVIES else (frames.movie_tag(movie) if movie else "orbit")
-        movie = frames.SVS5196_MOVIES[tag or "orbit"][0]
-        feats = frames.load(viz_id, movie)
-        if feats is None:
-            raise FileNotFoundError(f"No measured frames for SVS 5196 movie {movie!r}")
-        timeline = sonify.Timeline(feats.table.label.tolist(), fps)
+        movie, measure = frames.SVS5196_MOVIES[tag or "orbit"][0], "scripts/poc6_svs5196_features.py"
+    if measure:
+        found = sonify.measured_timeline(viz_id, movie, fps)
+        if found is None:
+            raise FileNotFoundError(f"SVS {viz_id} movie {movie!r} is not measured yet: run {measure}")
+        timeline = found.timeline
     else:
         years = data.load_frame_years(data.RAW_DIR / f"svs{viz_id}_time.txt")
         if years is not None:
-            timeline = sonify.Timeline([str(y) for y in years], fps)
+            timeline = sonify.Timeline([str(y) for y in years], fps or sonify.DEFAULT_FPS)
         else:
             tt = svs.fetch_time_txt(svs.fetch(viz_id))
             if tt is None:
                 raise FileNotFoundError(f"SVS {viz_id} has no time.txt: put one in data/raw/svs{viz_id}_time.txt")
-            timeline = sonify.Timeline(tt[1], fps)
-    return sonify.SonifyContext(viz_id=viz_id, timeline=timeline, movie=movie or "", params=dict(params or {}))
+            timeline = sonify.Timeline(tt[1], fps or sonify.DEFAULT_FPS)
+    return sonify.context_for(viz_id, timeline, movie or "", params=params)
 
 
 def parse_overrides(items: list[str], available: dict[str, sonify.Param]) -> dict:

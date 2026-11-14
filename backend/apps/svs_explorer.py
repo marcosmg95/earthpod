@@ -16,7 +16,7 @@ import pandas as pd
 import requests
 import streamlit as st
 
-from jukebox import frames, nightlights_frames, pages, sonify, svs, video
+from jukebox import pages, sonify, svs, video
 import live_player  # apps/ is on sys.path when Streamlit runs this file
 
 SONIFICATIONS = Path(__file__).resolve().parents[1] / "sonifications"
@@ -178,38 +178,34 @@ with tab_sonify:
         movie = movie_items[names.index(st.selectbox("Movie", names, key=f"son_movie_{viz_id}"))]
 
         # 1. timeline: which data label is on screen at each video time
-        tt = load_time_txt(viz_id)
         c1, c2 = st.columns([1, 3])
         fps = c1.number_input("Frames per second", min_value=1.0, max_value=120.0, step=1.0,
-                              value=svs.fps_from_frames(items) or 30.0, key=f"son_fps_{viz_id}",
+                              value=svs.fps_from_frames(items) or sonify.DEFAULT_FPS, key=f"son_fps_{viz_id}",
                               help="From the frame-folder name (…_30p) when available.")
-        night_feats = nightlights_frames.load(viz_id, movie.filename)
-        page_feats = pages.load(viz_id, movie.filename)
-        chapters = []
-        if page_feats is not None:
-            timeline = sonify.Timeline(page_feats.labels, page_feats.fps)
-            chapters = page_feats.chapter_times()
-            what = (f"a left-to-right scan of the image in {page_feats.n_frames} steps at {page_feats.fps:g} per second"
-                    if page_feats.still else f"{page_feats.n_frames} frames at {page_feats.fps:g} fps (the movie's own)")
+        measured = sonify.measured_timeline(viz_id, movie.filename, fps)   # committed measurements come first
+        tt = None if measured else load_time_txt(viz_id)
+        chapters = measured.chapters if measured else []
+        is_still = bool(measured and measured.still)
+        if measured:
+            timeline = measured.timeline
+            labels = timeline.labels
+        if measured and measured.origin == "page":
+            what = (f"a left-to-right scan of the image in {len(labels)} steps at {timeline.fps:g} per second"
+                    if is_still else f"{len(labels)} frames at {timeline.fps:g} fps (the movie's own)")
             c2.markdown(f"**Timeline** from the measured movie (`scripts/poc8_page_features.py`): {what} → "
-                        f"{timeline.duration:.1f} s, {timeline.labels[0]} … {timeline.labels[-1]}.")
-        elif night_feats is not None:
-            labels = nightlights_frames.labels()
-            timeline = sonify.Timeline(labels, fps)
-            chapters = [(title, timeline.time_of(frame)) for title, frame in nightlights_frames.SECTIONS]
+                        f"{timeline.duration:.1f} s, {labels[0]} … {labels[-1]}.")
+        elif measured and measured.origin == "nightlights":
             c2.markdown(f"**Timeline** from the measured SVS 5313 movie: {len(labels)} frames "
                         f"→ {timeline.duration:.1f} s at {fps:g} fps (movie: 30 fps), in "
                         f"{len(chapters)} sections; year labels read from the movie.")
+        elif measured:
+            c2.markdown(f"**Timeline** from the movie's own frames (measured by `scripts/poc6_svs5196_features.py`): "
+                        f"{len(labels)} frames, {labels[0]} … {labels[-1]} → {timeline.duration:.1f} s at {fps:g} fps")
         elif tt:
             tt_url, labels = tt
             timeline = sonify.Timeline(labels, fps)
             c2.markdown(f"**Timeline** from [time.txt]({tt_url}): {len(labels)} frames, "
                         f"{labels[0]} … {labels[-1]} → {timeline.duration:.1f} s at {fps:g} fps")
-        elif (feats := frames.load(viz_id, movie.filename)) is not None:
-            labels = feats.table.label.tolist()
-            timeline = sonify.Timeline(labels, fps)
-            c2.markdown(f"**Timeline** from the movie's own frames (measured by `scripts/poc6_svs5196_features.py`): "
-                        f"{len(labels)} frames, {labels[0]} … {labels[-1]} → {timeline.duration:.1f} s at {fps:g} fps")
         else:
             c2.markdown("**Timeline:** this page has no time.txt, so years are spread evenly over the movie.")
             a, b, c = st.columns(3)
@@ -271,8 +267,7 @@ with tab_sonify:
             status.warning(f"Timeline is {timeline.duration:.0f} s; the player handles up to "
                            f"{sonify.MAX_DURATION_S:.0f} s. Raise the fps or shorten the year range.")
         elif mod and key not in cache and (auto or status.button("Render sonification", type="primary")):
-            ctx = sonify.SonifyContext(viz_id=viz_id, timeline=timeline, data=data, movie=movie.filename,
-                                       params=overrides, sr=sonify.sample_rate_for(timeline.duration))
+            ctx = sonify.context_for(viz_id, timeline, movie.filename, data=data, params=overrides)
             try:
                 status.caption(f"Rendering {path.name}…")
                 stems = sonify.render_stems(path, ctx)
@@ -292,7 +287,7 @@ with tab_sonify:
             got = live_player.live_player(
                 movie.url, son["wavs"], son["id"], live_player.mix_spec(meta, specs, levels), mix_id,
                 meta.normalize, son["spans"], son["secs"], aspect=aspect, chapters=chapters,
-                still=bool(page_feats is not None and page_feats.still), key=player_key)
+                still=is_still, key=player_key)
             if got and got.get("_mix") == mix_id:
                 levels = {k: v for k, v in got.items() if k in live}
             gains = {stem: levels.get(p, specs[p].default if p in specs else meta.gains[stem])
@@ -307,8 +302,8 @@ with tab_sonify:
             if video_download and video_download["key"] != video_key:
                 del st.session_state["son_video_download"]
                 video_download = None
-            is_still = page_feats is not None and page_feats.still     # an image: nothing to re-encode
-            if not is_still and st.button("Prepare video-only download (H.264)", key=f"prepare_video_{viz_id}"):
+            if not is_still and st.button(           # a still image has nothing to re-encode
+"Prepare video-only download (H.264)", key=f"prepare_video_{viz_id}"):
                 try:
                     with st.spinner("Downloading the movie from NASA SVS…"):
                         video_bytes = svs.download_media(movie.url)
