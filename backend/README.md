@@ -12,7 +12,7 @@ Managed with [uv](https://docs.astral.sh/uv/) — install once with `pip install
 | 3 | `scripts/poc3_validate_inversion.py` | `data/raw/` (run `data/download_data.ps1`) | SVS 5450 frame colours read back into °C match GISTEMP → **r for the Validity slide**; also writes `frontend/player/frames/` |
 | 4 | `scripts/poc4_barcelona.py` | gridded netCDF + `--extra netcdf` | Barcelona-region series → second track ("Listen to Barcelona") |
 | 5 | `scripts/poc5_blackmarble_regions.py` | `data/download_blackmarble.ps1` (Earthdata token) + `--extra blackmarble` | Black Marble night lights (SVS 5313 data) per region/year → `data/derived/blackmarble_annual.*` |
-| — | `apps/svs_explorer.py` | internet | Streamlit: type any SVS id → metadata, filterable media list, movie/image previews, datasets, linked pages, raw JSON |
+| — | `apps/svs_explorer.py` | internet | Streamlit: type any SVS id → metadata, filterable media list, movie/image previews, datasets, linked pages, raw JSON; **Sonify** tab plays a data sonification locked to a movie |
 | — | `scripts/fetch_arcade_images.py` | internet | ~34 public-domain NASA images → `frontend/arcade/images` |
 | — | `scripts/make_voice.py` | Windows TTS | Arcade voice-over clips → `frontend/arcade/voice` |
 
@@ -24,6 +24,23 @@ uv run python scripts\poc1_render_global.py      # -> backend\out\earth_jukebox_
 uv run python scripts\poc2_export_tracks.py      # -> frontend\player\tracks.json
 uv run python -m streamlit run apps\svs_explorer.py        # SVS explorer, http://localhost:8501/?id=5450
 ```
+In VS Code, the same entry points are in **Run and Debug** (Ctrl+Shift+D, `.vscode/launch.json`): SVS explorer,
+tests, PoC 1/2, arcade and player web servers, current file. Breakpoints work in the Streamlit app and in sonification scripts.
+
+### Sonification scripts (`sonifications/`)
+The explorer's **Sonify** tab: pick a movie and a script → **Render** → the video's play/pause/seek/speed drive the audio
+(the `<video>` is the master clock; the audio re-syncs if it drifts by more than 80 ms).
+The timeline (which data label is on screen at each moment) comes from the page's `time.txt` (one label per frame,
+e.g. SVS 5450) and the frame rate in the frame-folder name (`…_30p`); without a time.txt you give a year range and length.
+A script is a plain `.py` file; copy `sonifications/gistemp_lead.py` to start:
+```python
+TITLE = "Short name"
+DESCRIPTION = "What data, what mapping."
+def render(ctx):                  # ctx: jukebox.sonify.SonifyContext
+    notes = ctx.notes_from_series(my_series_by_year, mapping.DEFAULT_VOICES[0])  # one note per on-screen year
+    return ctx.render_notes(notes)  # or any stereo numpy array (n, 2) at ctx.sr; sample 0 = video time 0
+```
+`ctx.timeline.spans()` gives `(label, t0, t1)` for custom mappings. Scripts are re-imported on every Render, so edit and re-render without restarting.
 After `data\download_data.ps1` (~180 MB into `backend\data\raw`, gitignored):
 ```powershell
 uv run python scripts\poc3_validate_inversion.py                # r + data\derived\validation_svs5450.* + frontend\player\frames
@@ -74,8 +91,11 @@ src/jukebox/mapping.py    data -> notes (scale quantization, tempo, dissonance, 
 src/jukebox/synth.py      numpy synth -> stereo WAV (no audio libraries)
 src/jukebox/colormap.py   colorbar LUT (CIELAB), frame inversion, cos(lat) area mean
 src/jukebox/blackmarble.py  Black Marble HDF5 tiles -> regional radiance
-src/jukebox/svs.py        NASA SVS API client (fetch, flatten media, credits, linked pages)
+src/jukebox/svs.py        NASA SVS API client (fetch, flatten media, credits, linked pages, time.txt, fps)
+src/jukebox/sonify.py     Timeline (frame -> label), SonifyContext, script loader/runner
 apps/svs_explorer.py      Streamlit SVS explorer
+apps/sync_player.py       video-master / audio-follower player (HTML+JS in st.iframe)
+sonifications/            sonification scripts shown in the Sonify tab (gistemp_lead.py = demo)
 scripts/                  PoC entry points (see table above)
 tests/                    unittest: data, mapping, synth, colormap round trip, layers, Black Marble, SVS parsing
 data/                     gistemp/ (committed), derived/, raw/ (downloaded, gitignored) — see data/README.md

@@ -1,6 +1,7 @@
 """Tiny numpy synthesizer: renders a list of Notes to a stereo WAV (no audio deps)."""
 from __future__ import annotations
 
+import io
 import wave
 from pathlib import Path
 
@@ -65,13 +66,25 @@ def render(notes: list[Note], duration: float, sr: int = SR,
     return out / peak * 10 ** (-6 / 20)
 
 
-def write_wav(path: str | Path, stereo: np.ndarray, sr: int = SR) -> Path:
-    path = Path(path)
-    path.parent.mkdir(parents=True, exist_ok=True)
+def _write_pcm(target, stereo: np.ndarray, sr: int) -> None:
+    """16-bit stereo PCM to a path or a binary file object."""
     pcm = (np.clip(stereo, -1, 1) * 32767).astype("<i2")
-    with wave.open(str(path), "wb") as w:
+    with wave.open(target, "wb") as w:
         w.setnchannels(2)
         w.setsampwidth(2)
         w.setframerate(sr)
         w.writeframes(pcm.tobytes())
+
+
+def write_wav(path: str | Path, stereo: np.ndarray, sr: int = SR) -> Path:
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    _write_pcm(str(path), stereo, sr)
     return path
+
+
+def wav_bytes(stereo: np.ndarray, sr: int = SR) -> bytes:
+    """Same as write_wav, in memory (for the Streamlit player / downloads)."""
+    buf = io.BytesIO()
+    _write_pcm(buf, stereo, sr)
+    return buf.getvalue()

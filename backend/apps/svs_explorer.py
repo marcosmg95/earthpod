@@ -8,12 +8,16 @@ The id is kept in the URL (?id=5450), so a page can be shared or bookmarked.
 from __future__ import annotations
 
 import json
+from pathlib import Path
 
 import pandas as pd
 import requests
 import streamlit as st
 
-from jukebox import svs
+from jukebox import sonify, svs, synth
+from sync_player import sync_player  # apps/ is on sys.path when Streamlit runs this file
+
+SONIFICATIONS = Path(__file__).resolve().parents[1] / "sonifications"
 
 # SVS pages the project already uses (handy starting points).
 KNOWN = {
@@ -29,6 +33,11 @@ st.set_page_config(page_title="SVS explorer", page_icon="🛰️", layout="wide"
 @st.cache_data(ttl=3600, show_spinner="Fetching from svs.gsfc.nasa.gov…")
 def load(viz_id: int) -> dict:
     return svs.fetch(viz_id)
+
+
+@st.cache_data(ttl=3600, show_spinner="Looking for time.txt…")
+def load_time_txt(viz_id: int) -> tuple[str, list[str]] | None:
+    return svs.fetch_time_txt(load(viz_id))
 
 
 def go(viz_id: int) -> None:
@@ -96,8 +105,8 @@ items = svs.media_items(data)
 datasets = data.get("datasets") or []
 linked = svs.linked_pages(data)
 
-tab_media, tab_data, tab_links, tab_raw = st.tabs([
-    f"Media ({len(items)})", f"Datasets ({len(datasets)})",
+tab_media, tab_sonify, tab_data, tab_links, tab_raw = st.tabs([
+    f"Media ({len(items)})", "Sonify", f"Datasets ({len(datasets)})",
     f"Linked pages ({len(linked)})", "Raw JSON",
 ])
 
@@ -140,6 +149,74 @@ with tab_media:
             cols = st.columns(3)
             for n, row in enumerate(images.head(GALLERY_MAX).itertuples()):
                 cols[n % 3].image(row.url, caption=row.filename, width="stretch")
+
+# ---- sonify: data audio locked to a movie -----------------------------------
+with tab_sonify:
+    movie_items = [i for i in items if i.ext in ("mp4", "webm", "mov")]
+    scripts = sonify.discover(SONIFICATIONS)
+    if not movie_items:
+        st.info("No movies on this page to sonify.")
+    elif not scripts:
+        st.info(f"No sonification scripts in {SONIFICATIONS}.")
+    else:
+        names = [m.filename for m in movie_items]
+        movie = movie_items[names.index(st.selectbox("Movie", names, key=f"son_movie_{viz_id}"))]
+
+        # 1. timeline: which data label is on screen at each video time
+        tt = load_time_txt(viz_id)
+        c1, c2 = st.columns([1, 3])
+        fps = c1.number_input("Frames per second", min_value=1.0, max_value=120.0, step=1.0,
+                              value=svs.fps_from_frames(items) or 30.0, key=f"son_fps_{viz_id}",
+                              help="From the frame-folder name (…_30p) when available.")
+        if tt:
+            tt_url, labels = tt
+            timeline = sonify.Timeline(labels, fps)
+            c2.markdown(f"**Timeline** from [time.txt]({tt_url}): {len(labels)} frames, "
+                        f"{labels[0]} … {labels[-1]} → {timeline.duration:.1f} s at {fps:g} fps")
+        else:
+            c2.markdown("**Timeline:** this page has no time.txt, so years are spread evenly over the movie.")
+            a, b, c = st.columns(3)
+            y0 = a.number_input("First year", value=1880, step=1, key=f"son_y0_{viz_id}")
+            y1 = b.number_input("Last year", value=2024, step=1, key=f"son_y1_{viz_id}")
+            secs = c.number_input("Movie length (s)", min_value=1.0, value=30.0, step=1.0, key=f"son_len_{viz_id}")
+            timeline = sonify.Timeline.linear(int(y0), int(y1), secs, fps)
+
+        # 2. script
+        name = st.selectbox("Sonification script", list(scripts), key="son_script",
+                            help=f"Python files in {SONIFICATIONS.name}/ — edit one, then press Render again.")
+        path = scripts[name]
+        try:
+            mod = sonify.load(path)
+            st.markdown(f"**{getattr(mod, 'TITLE', name)}** — {getattr(mod, 'DESCRIPTION', '')}")
+        except Exception as e:  # show script errors instead of crashing the explorer
+            st.exception(e)
+            mod = None
+
+        # 3. render + locked player
+        key = (viz_id, movie.url, name, path.stat().st_mtime, fps,
+               len(timeline.labels), timeline.labels[0], timeline.labels[-1])
+        if timeline.duration > sonify.MAX_DURATION_S:
+            st.warning(f"Timeline is {timeline.duration:.0f} s; the player handles up to "
+                       f"{sonify.MAX_DURATION_S:.0f} s. Raise the fps or shorten the year range.")
+        elif mod and st.button("Render sonification", type="primary"):
+            ctx = sonify.SonifyContext(viz_id=viz_id, timeline=timeline, data=data)
+            try:
+                with st.spinner(f"Running {path.name}…"):
+                    wav = synth.wav_bytes(sonify.run(path, ctx), ctx.sr)
+                st.session_state.son = {"key": key, "wav": wav, "spans": timeline.spans(),
+                                        "secs": timeline.duration}
+            except Exception as e:
+                st.exception(e)
+
+        son = st.session_state.get("son")
+        if son and son["key"] == key:
+            aspect = movie.width / movie.height if movie.width and movie.height else 16 / 9
+            sync_player(movie.url, son["wav"], son["spans"], son["secs"], aspect=aspect)
+            st.download_button("Download sonification (.wav)", son["wav"], f"svs{viz_id}_{name}.wav",
+                               mime="audio/wav")
+            st.caption("Press play on the video: pause, seek and speed changes carry the audio with it.")
+        elif son and son["key"][:2] == key[:2]:
+            st.caption("Settings or script changed — press Render again.")
 
 # ---- datasets ---------------------------------------------------------------
 with tab_data:

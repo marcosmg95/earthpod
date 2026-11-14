@@ -4,6 +4,7 @@ Used by apps/svs_explorer.py to browse visualizations quickly, and reusable from
 """
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from pathlib import PurePosixPath
 from urllib.parse import urlparse
@@ -89,3 +90,45 @@ def linked_pages(data: dict) -> list[dict]:
                 out.append({"id": p["id"], "title": p.get("title", ""),
                             "page_type": p.get("page_type", ""), "relation": rel})
     return out
+
+
+# ---- timeline helpers (video time <-> data) --------------------------------
+
+def vis_dirs(data: dict) -> list[str]:
+    """Unique /vis/ directories that hold this page's media (where time.txt lives)."""
+    dirs: list[str] = []
+    for it in media_items(data):
+        u = urlparse(it.url)
+        if "/frames/" in u.path:   # .../a005450/frames/3840x2160_16x9_30p/ -> .../a005450/
+            path = u.path.split("/frames/")[0]
+        else:                      # file or folder: its parent directory
+            path = u.path.rstrip("/").rsplit("/", 1)[0]
+        d = f"{u.scheme}://{u.netloc}{path}/"
+        if d not in dirs:
+            dirs.append(d)
+    return dirs
+
+
+def fetch_time_txt(data: dict, session: requests.Session | None = None) -> tuple[str, list[str]] | None:
+    """(url, labels) from the first <vis dir>/time.txt that exists: one label per movie frame."""
+    for d in vis_dirs(data):
+        url = d + "time.txt"
+        try:
+            r = (session or requests).get(url, timeout=TIMEOUT)
+        except requests.RequestException:
+            continue
+        if r.ok and "html" not in r.headers.get("content-type", ""):
+            labels = [x.strip() for x in r.text.splitlines() if x.strip()]
+            if labels:
+                return url, labels
+    return None
+
+
+def fps_from_frames(items: list[MediaItem]) -> float | None:
+    """Frame rate from SVS frame-folder names like '3840x2160_16x9_30p' (-> 30)."""
+    for it in items:
+        if it.media_type == "Frames":
+            m = re.search(r"_(\d{2,3})p\b", it.filename)
+            if m:
+                return float(m.group(1))
+    return None
