@@ -6,7 +6,7 @@ from unittest.mock import patch
 import numpy as np
 import pandas as pd
 
-from jukebox import frames, mapping, nightlights_frames, sonify, svs, synth
+from jukebox import frames, instruments, mapping, nightlights_frames, sonify, svs, synth
 
 
 class TestTimeline(unittest.TestCase):
@@ -290,6 +290,78 @@ class TestNightLightsThreeActs(unittest.TestCase):
         self.assertGreater(g["world_light"][-1].sum(), 1.2 * g["world_light"][0].sum())
         ind = [b.key for b in nightlights_frames.BOXES].index("ind")
         self.assertGreater(g["box_light"][ind, -1].sum(), 1.5 * g["box_light"][ind, 0].sum())
+
+
+class TestNightLightsGridAndRegions(unittest.TestCase):
+    SCRIPT = Path(__file__).resolve().parents[1] / "sonifications" / "svs5313" / "nightlights_grid_and_regions.py"
+    SR = 8000
+
+    @classmethod
+    def setUpClass(cls):
+        cls.mod = sonify.load(cls.SCRIPT)
+        cls.ctx = sonify.SonifyContext(5313, sonify.Timeline(nightlights_frames.labels(), 30),
+                                       movie=nightlights_frames.MOVIE, sr=cls.SR)
+        cls.stems = sonify.render_stems(cls.SCRIPT, cls.ctx)
+
+    def _rms(self, stem, t0, t1):
+        a = self.stems.audio[stem][int(t0 * self.SR):int(t1 * self.SR)]
+        return float(np.sqrt((a ** 2).mean()))
+
+    def test_every_stem_plays_and_mixes_live(self):
+        self.assertEqual(set(self.stems.audio), set(self.mod.STEMS))
+        for name, audio in self.stems.audio.items():
+            with self.subTest(name):
+                self.assertEqual(audio.shape, (self.ctx.n_samples, 2))
+                self.assertTrue(np.isfinite(audio).all())
+                self.assertGreater(np.abs(audio).max(), 0.05)
+        self.assertLessEqual(np.abs(self.stems.mix()).max(), 1.0)
+
+    def test_bands_hand_over_to_the_zoom_boxes(self):
+        for band in self.mod.BANDS:
+            self.assertGreater(self._rms(band, 0.5, 9.5), 0.003)
+            self.assertEqual(self._rms(band, 25, 43), 0.0)
+        for city in self.mod.CITIES:
+            self.assertEqual(self._rms(city, 0, 21), 0.0)
+            self.assertGreater(self._rms(city, 28, 36), 0.003)
+
+    def test_box_voices_sit_at_their_boxes(self):
+        west, east = self.stems.audio["western_europe"], self.stems.audio["india"]
+        self.assertGreater(np.linalg.norm(west[:, 0]), 2 * np.linalg.norm(west[:, 1]))
+        self.assertGreater(np.linalg.norm(east[:, 1]), 2 * np.linalg.norm(east[:, 0]))
+
+    def test_final_note_is_high_for_new_lights_and_low_for_lights_out(self):
+        scale = {"a": [60, 62, 65], "b": [60, 62, 65]}
+        notes = self.mod.change_notes({"a": (3.0, 1.0), "b": (1.0, 3.0)}, "zoom_change", scale, 43.0)
+        self.assertEqual(notes["a"][-1][2], 65)
+        self.assertEqual(notes["b"][-1][2], 60)
+        up = [n[2] for n in notes["a"][:self.mod.RUN_NOTES]]
+        self.assertEqual(up, sorted(up))
+
+    def test_ukraine_dims_in_2022(self):
+        g = self.ctx.nightlights_grids()
+        k = [b.key for b in nightlights_frames.BOXES].index("ukr")
+        c = self.mod.CITIES["ukraine"]
+        scale = instruments.scale_notes(c["low"], self.mod.RANGE_SEMITONES)
+        notes = self.mod.year_notes(g["box_light"][k].sum(axis=(1, 2)), "zoom_years",
+                                    nightlights_frames.BOXES_IN[0] / 30, c["inst"], scale)
+        def pitch(year):   # the note sounding in the middle of that year on screen
+            a, b = nightlights_frames.year_windows("zoom_years")[year - nightlights_frames.FIRST_YEAR]
+            t = (a + b) / 2 / 30
+            return next(m for start, dur, m, _ in notes if start <= t < start + dur)
+        self.assertLess(pitch(2022), pitch(2021))
+
+    def test_legend_has_a_clip_per_stem(self):
+        self.assertEqual(set(self.mod.samples(self.SR)), set(self.mod.STEMS))
+
+
+class TestInstruments(unittest.TestCase):
+    def test_ranks(self):
+        np.testing.assert_allclose(instruments.ranks([5.0, 1.0, 3.0]), [1.0, 0.0, 0.5])
+        np.testing.assert_allclose(instruments.ranks([2.0, 2.0]), [0.5, 0.5])
+
+    def test_scale_notes_stay_in_d_minor_pentatonic(self):
+        for m in instruments.scale_notes(57, 12):
+            self.assertIn((m - mapping.TONIC_MIDI) % 12, mapping.SCALE)
 
 
 class TestSynthTimbres(unittest.TestCase):

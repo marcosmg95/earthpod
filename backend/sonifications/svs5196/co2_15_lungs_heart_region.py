@@ -18,7 +18,7 @@ from pathlib import Path
 
 import numpy as np
 
-from jukebox import mapping, sonify, synth
+from jukebox import instruments, mapping, sonify, synth
 
 TITLE = "Living Earth: lungs, heartbeat and regions"
 DESCRIPTION = ("Background: a centred soft breath (more tan haze on screen = louder; brighter while the haze grows, "
@@ -100,58 +100,17 @@ REGIONS = {
     "south_america": dict(pair=3, inst="cello",      low=57, pan=-0.50, cols=("mid", "bottom")),  # A3 ~15S
 }
 
-# Additive instrument models: partials (ratio, amplitude, decay 1/s; 0 = held), attack / release (s),
-# ring = length of a struck note (s), vib = (rate Hz, depth), trem = (rate Hz, depth), breath = air noise level.
-INSTRUMENTS = {
-    "vibraphone": dict(struck=True, ring=2.6, attack=0.003, release=0.25, trem=(5.5, 0.30),
-                       parts=[(1, 1.0, 0.9), (4, 0.30, 3.0), (10, 0.06, 9.0)]),
-    "marimba":    dict(struck=True, ring=0.7, attack=0.002, release=0.05,
-                       parts=[(1, 1.0, 5.0), (4, 0.35, 16.0), (9.9, 0.08, 40.0)]),
-    "harp":       dict(struck=True, ring=1.8, attack=0.004, release=0.20,
-                       parts=[(k, 1 / k ** 1.4, 1.2 + 0.9 * k) for k in range(1, 9)]),
-    "cello":      dict(struck=False, attack=0.18, release=0.35, vib=(5.0, 0.004),
-                       parts=[(k, 1 / k ** 1.3 * (1.3 if k in (2, 3) else 1.0), 0) for k in range(1, 11)]),
-    "flute":      dict(struck=False, attack=0.09, release=0.25, vib=(5.0, 0.003), breath=0.05,
-                       parts=[(1, 1.0, 0), (2, 0.22, 0), (3, 0.08, 0)]),
-    "oboe":       dict(struck=False, attack=0.05, release=0.18, vib=(5.5, 0.003),
-                       parts=[(1, 0.45, 0), (2, 1.0, 0), (3, 0.80, 0), (4, 0.55, 0), (5, 0.35, 0),
-                              (6, 0.20, 0), (7, 0.12, 0)]),
-}
-
-
-def instrument_tone(inst: str, freq: float, dur: float, sr: int) -> np.ndarray:
-    """One note of an instrument model, mono, `dur` seconds (struck notes ring for their own `ring`)."""
-    spec = INSTRUMENTS[inst]
-    n = max(1, int((spec["ring"] if spec["struck"] else dur) * sr))
-    t = np.arange(n) / sr
-    rate, depth = spec.get("vib", (0.0, 0.0))
-    phase = 2 * np.pi * freq * np.cumsum(1 + depth * np.sin(2 * np.pi * rate * t)) / sr
-    y = sum(a * np.sin(k * phase) * (np.exp(-d * t) if d else 1.0)
-            for k, a, d in spec["parts"] if freq * k < sr / 2)
-    if spec.get("breath"):
-        y = y + spec["breath"] * synth.band_noise(n, 1500, 5000, sr, seed=94)
-    env = np.minimum(1.0, t / spec["attack"])
-    rel = min(n, int(spec["release"] * sr))
-    if rel:
-        env[-rel:] *= np.linspace(1, 0, rel)
-    if "trem" in spec:
-        r, d = spec["trem"]
-        env *= 1 - d * (0.5 - 0.5 * np.cos(2 * np.pi * r * t))
-    return y * env
+INSTRUMENTS = instruments.INSTRUMENTS   # additive models, shared with svs5313/nightlights_grid_and_regions
 
 
 def scale_notes(low: int) -> list[int]:
     """MIDI notes of the shared D minor pentatonic from `low` to `low + RANGE_SEMITONES`."""
-    return [m for m in range(low, low + RANGE_SEMITONES + 1) if (m - mapping.TONIC_MIDI) % 12 in mapping.SCALE]
+    return instruments.scale_notes(low, RANGE_SEMITONES)
 
 
 def window(n: int, sr: int, t_in: float, t_out: float) -> np.ndarray:
     """0..1 per sample: smooth fade in after t_in, fade out before t_out."""
-    t = np.arange(n) / sr
-    up = np.clip((t - t_in) / FADE_S, 0, 1)
-    down = np.clip((t_out - t) / FADE_S, 0, 1)
-    e = np.minimum(up, down)
-    return e * e * (3 - 2 * e)
+    return instruments.window(n, sr, t_in, t_out, FADE_S)
 
 
 def region_notes(series: np.ndarray, fps: float, t_in: float, t_out: float, struck: bool,
@@ -171,9 +130,7 @@ def region_notes(series: np.ndarray, fps: float, t_in: float, t_out: float, stru
         return []
     # Rank scale: each note's place among this voice's notes while the pair is on screen (0 = lowest,
     # 1 = highest), so one bright spike cannot squash the rest of the melody onto a single pitch.
-    raw = np.array([s[2] for s in slots])
-    ranks = (np.argsort(np.argsort(raw, kind="stable"), kind="stable") / max(len(raw) - 1, 1)
-             if np.ptp(raw) > 1e-9 else np.full(len(raw), 0.5))
+    ranks = instruments.ranks([s[2] for s in slots])
     out: list[tuple[float, float, int, float]] = []
     for (k, t, _), v in zip(slots, ranks):
         v = float(v)
@@ -199,7 +156,7 @@ def render_region(name: str, f, ctx, env: np.ndarray) -> np.ndarray:
     out = np.zeros((ctx.n_samples, 2))
     for t, dur, midi, vel in region_notes(series.mean().to_numpy(), ctx.timeline.fps, t_in, t_out,
                                           spec["struck"], scale_notes(r["low"])):
-        y = instrument_tone(r["inst"], mapping.midi_to_hz(midi), dur, ctx.sr) * vel
+        y = instruments.tone(r["inst"], mapping.midi_to_hz(midi), dur, ctx.sr) * vel
         synth.add_at(out, synth.pan_stereo(y, pan), t, ctx.sr)
     return synth.normalize(out * env[:, None])
 
@@ -259,7 +216,7 @@ def samples(sr: int = synth.SR) -> dict[str, tuple[str, np.ndarray]]:
         clip = np.zeros((int((len(scale) * step + 2.0) * sr), 2))
         pan = float(np.clip(r["pan"] * PAN_WIDTH, -1, 1))
         for i, midi in enumerate(scale):
-            y = instrument_tone(r["inst"], mapping.midi_to_hz(midi), step, sr) * (0.6 + 0.4 * i / (len(scale) - 1))
+            y = instruments.tone(r["inst"], mapping.midi_to_hz(midi), step, sr) * (0.6 + 0.4 * i / (len(scale) - 1))
             synth.add_at(clip, synth.pan_stereo(y, pan), i * step, sr)
         label = name.replace("_", " ").title()
         side = "on the left" if pan < -0.2 else "on the right" if pan > 0.2 else "in the centre"

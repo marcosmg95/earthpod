@@ -114,6 +114,15 @@ scene boundaries and the frames at which each year label appears were read from 
   Eastern Mediterranean, Ukraine, India), sweeps all four every year, and tours the final change map. Each section
   is set to the same loudness, so the sparse orange pass is boosted; the sweeps come from coarse grids measured
   from the movie's pictures (`nightlights_frames.extract_grids`), not from the per-frame CSV.
+- `nightlights_grid_and_regions` (stem script, the night-lights cousin of `co2_15`): background = a 49 Hz (G1, ~50 Hz
+  mains) electrical hum, louder in the brighter years of each scene and brighter in tone while the lights grow, plus a
+  clock tick at every year-label change (1 year = 1 beat). Foreground = one instrument per region: three longitude
+  bands of the world map in sections 1–2 (Americas marimba, Europe + Africa oboe, Asia kalimba), then the four zoom
+  boxes from frame 668 (Western Europe vibraphone, Eastern Mediterranean harp, Ukraine flute, India cello). Register =
+  latitude, pan = longitude / box position, shared D minor pentatonic; pitch in the year scenes = that year's
+  brightness ranked among the region's years. In the change maps each region in turn plays a rising run (loudness =
+  purple "new lights") and a falling run (orange "lights out"), then all hold a final note, high where new lights
+  win and low where lights went out. Instrument models are shared with `co2_15` in `jukebox/instruments.py`.
 - `nightlights_nervous_system`: an electrical murmur whose loudness follows bright-pixel intensity, stereo
   position the bright areas' screen position, and shimmer changes in intensity; it does not tell increases from
   decreases. The map shows Earth twice side by side, so screen position is only loosely geographic.
