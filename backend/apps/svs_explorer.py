@@ -16,16 +16,22 @@ import pandas as pd
 import requests
 import streamlit as st
 
-from jukebox import frames, nightlights_frames, sonify, svs, video
+from jukebox import frames, nightlights_frames, pages, sonify, svs, video
 import live_player  # apps/ is on sys.path when Streamlit runs this file
 
 SONIFICATIONS = Path(__file__).resolve().parents[1] / "sonifications"
 
 # SVS pages the project already uses (handy starting points).
 KNOWN = {
-    5450: "GISTEMP temperature anomalies (Science On a Sphere)",
     5313: "Black Marble night lights",
     5196: "DYAMOND global CO2",
+    5669: "GEOS aerosols (still map)",
+    5533: "Air quality model runs",
+    5011: "Lightning from the ISS",
+    3912: "Sea surface currents and temperature",
+    5425: "Perpetual Ocean 2",
+    4960: "Atmospheric river",
+    4950: "GEDI forest height",
 }
 GALLERY_MAX = 12
 CACHE_RENDERS = 6   # recent renders kept, so going back to a setting you tried is instant
@@ -156,6 +162,10 @@ with tab_media:
 # ---- sonify: data audio locked to a movie -----------------------------------
 with tab_sonify:
     movie_items = [i for i in items if i.ext in ("mp4", "webm", "mov")]
+    page_mod = pages.module(viz_id)
+    if page_mod is not None:      # the measured movie first; a measured still image is played as a scan
+        measured = [i for i in items if i.filename == page_mod.MOVIE]
+        movie_items = measured[:1] + [i for i in movie_items if i.filename != page_mod.MOVIE]
     scripts = sonify.discover_for(SONIFICATIONS, viz_id)
     script_dir = sonify.folder_for(SONIFICATIONS, viz_id)
     if not movie_items:
@@ -174,8 +184,16 @@ with tab_sonify:
                               value=svs.fps_from_frames(items) or 30.0, key=f"son_fps_{viz_id}",
                               help="From the frame-folder name (…_30p) when available.")
         night_feats = nightlights_frames.load(viz_id, movie.filename)
+        page_feats = pages.load(viz_id, movie.filename)
         chapters = []
-        if night_feats is not None:
+        if page_feats is not None:
+            timeline = sonify.Timeline(page_feats.labels, page_feats.fps)
+            chapters = page_feats.chapter_times()
+            what = (f"a left-to-right scan of the image in {page_feats.n_frames} steps at {page_feats.fps:g} per second"
+                    if page_feats.still else f"{page_feats.n_frames} frames at {page_feats.fps:g} fps (the movie's own)")
+            c2.markdown(f"**Timeline** from the measured movie (`scripts/poc8_page_features.py`): {what} → "
+                        f"{timeline.duration:.1f} s, {timeline.labels[0]} … {timeline.labels[-1]}.")
+        elif night_feats is not None:
             labels = nightlights_frames.labels()
             timeline = sonify.Timeline(labels, fps)
             chapters = [(title, timeline.time_of(frame)) for title, frame in nightlights_frames.SECTIONS]
@@ -254,7 +272,7 @@ with tab_sonify:
                            f"{sonify.MAX_DURATION_S:.0f} s. Raise the fps or shorten the year range.")
         elif mod and key not in cache and (auto or status.button("Render sonification", type="primary")):
             ctx = sonify.SonifyContext(viz_id=viz_id, timeline=timeline, data=data, movie=movie.filename,
-                                       params=overrides)
+                                       params=overrides, sr=sonify.sample_rate_for(timeline.duration))
             try:
                 status.caption(f"Rendering {path.name}…")
                 stems = sonify.render_stems(path, ctx)
@@ -273,7 +291,8 @@ with tab_sonify:
             aspect = movie.width / movie.height if movie.width and movie.height else 16 / 9
             got = live_player.live_player(
                 movie.url, son["wavs"], son["id"], live_player.mix_spec(meta, specs, levels), mix_id,
-                meta.normalize, son["spans"], son["secs"], aspect=aspect, chapters=chapters, key=player_key)
+                meta.normalize, son["spans"], son["secs"], aspect=aspect, chapters=chapters,
+                still=bool(page_feats is not None and page_feats.still), key=player_key)
             if got and got.get("_mix") == mix_id:
                 levels = {k: v for k, v in got.items() if k in live}
             gains = {stem: levels.get(p, specs[p].default if p in specs else meta.gains[stem])
@@ -288,7 +307,8 @@ with tab_sonify:
             if video_download and video_download["key"] != video_key:
                 del st.session_state["son_video_download"]
                 video_download = None
-            if st.button("Prepare video-only download (H.264)", key=f"prepare_video_{viz_id}"):
+            is_still = page_feats is not None and page_feats.still     # an image: nothing to re-encode
+            if not is_still and st.button("Prepare video-only download (H.264)", key=f"prepare_video_{viz_id}"):
                 try:
                     with st.spinner("Downloading the movie from NASA SVS…"):
                         video_bytes = svs.download_media(movie.url)
@@ -310,7 +330,9 @@ with tab_sonify:
                     help=f"H.264 MP4, no audio, at most {video.MAX_WIDTH} px wide. The sonification is "
                          "not included; it remains available as a separate WAV.",
                 )
-            st.caption("Press play on the video: pause, seek and speed changes carry the audio with it.")
+            st.caption("Press play on the scan: the line shows where the sound is reading the image."
+                       if is_still else
+                       "Press play on the video: pause, seek and speed changes carry the audio with it.")
         elif not auto and mod:
             st.caption("Settings or script changed — press Render again.")
 

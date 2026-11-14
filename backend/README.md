@@ -13,6 +13,7 @@ Managed with [uv](https://docs.astral.sh/uv/) — install once with `pip install
 | 4 | `scripts/poc4_barcelona.py` | gridded netCDF + `--extra netcdf` | Barcelona-region series → second track ("Listen to Barcelona") |
 | 5 | `scripts/poc5_blackmarble_regions.py` | `data/download_blackmarble.ps1` (Earthdata token) + `--extra blackmarble` | Black Marble night lights (SVS 5313 data) per region/year → `data/derived/blackmarble_annual.*` |
 | 7 | `scripts/poc7_svs5313_features.py` | SVS 5313 EIC movie from `data/download_data.ps1` | Screen-space light features for the night-lights nervous-system sonification |
+| 8 | `scripts/poc8_page_features.py [ids]` | internet (downloads ~2.6 GB of movies into `data/raw/`, resumable) | Frame measurements of the other Resources-tab pages (5669, 5533, 5011, 3912, 5425, 4960, 4950) → `data/derived/svs<id>_*` |
 | — | `apps/svs_explorer.py` | internet | Streamlit: type any SVS id → metadata, filterable media list, movie/image previews, datasets, linked pages, raw JSON; **Sonify** tab plays a data sonification locked to a movie |
 | — | `scripts/fetch_arcade_images.py` | internet | ~34 public-domain NASA images → `frontend/arcade/images` |
 | — | `scripts/make_voice.py` | Windows TTS | Arcade voice-over clips → `frontend/arcade/voice` |
@@ -37,7 +38,7 @@ audio swaps in at the current time without stopping the video.
 After rendering, download the sonification as a WAV and optionally prepare a video-only download of the original
 SVS movie; the sonification is not embedded in that video.
 Scripts are grouped by SVS page: `sonifications/svs<id>/` (e.g. `svs5196/` = CO2, `svs5313/` = night lights,
-`svs5450/` = GISTEMP) and the tab only offers the folder of the page you are on, plus any generic script placed
+`svs5669/` = aerosols, `svs5450/` = GISTEMP demo, not on the Resources tab) and the tab only offers the folder of the page you are on, plus any generic script placed
 directly in `sonifications/` (shown for every page). New page → new `svs<id>/` folder.
 Script names are sorted numerically within their text, so `co2_2` appears before `co2_10`.
 The timeline (which data label is on screen at each moment) comes from the page's `time.txt` (one label per frame,
@@ -139,6 +140,33 @@ To reproduce the features, download the SVS 5313 movie with `data\download_data.
 `data\derived\svs5313_eic_frames.csv` and `data\derived\svs5313_eic_grids.npz` (world and zoom-box light grids);
 no Earthdata token is needed (the run decodes the 8K movie, so it takes a few minutes).
 
+**The other pages on the challenge's Resources tab** (besides 5196 and 5313) are measured by one module each in
+`src/jukebox/pages/svs<id>.py` (same contract: `MOVIE`, `URL`, `FPS`, `extract(path)`, `labels(table)`, optional
+`CHAPTERS`; the docstring lists every column). `scripts\poc8_page_features.py` downloads the movie, measures it and
+writes `data\derived\svs<id>_frames.csv` + `svs<id>_arrays.npz` (committed, < 1 MB each). Scripts read them with
+`ctx.page_features()`: `.table` (one row per frame), `.arrays` (grids / profiles, frames first),
+`.column(name, n, sr, smooth)` (a column stretched to audio samples). The explorer and `jukebox.preview` take the
+timeline (labels, fps) and the chapter buttons from these files. All values are **picture indices** (colour share,
+darkness, motion on screen), not physical units; each module's docstring says what they are and are not.
+
+| SVS | Movie measured | Timeline labels | Script (stems) | What you hear |
+|---|---|---|---|---|
+| 5669 GEOS Aerosols | the 1920x1080 **still** map (19 Aug 2025) | longitude of the scan line | `aerosols_scan` (6) | a 48 s west→east scan: wind = all aerosol, a tick every 30°, sulfate vibraphone, dust marimba, smoke (black carbon) cello, sea salt flute; pitch = latitude, loudness = amount |
+| 5533 Air Quality | `EIC_AirQuality_Preview_3840x1080.mp4` (75 s) | pollutant panel at the screen centre | `pollutant_quartet` (6) | CO cello, PM2.5 marimba, NOx oboe, O3 flute panned to their panels; pitch = latitude of the darkest areas, loudness = concentration index, bell on the darkest plumes; a drone that beats faster the dirtier the strip; a call sign per new centre panel |
+| 5011 ISS lightning | `iss_lightning_sos_yearly_07312023_2048p60.mp4` (100 s, map) | season shown (north / south / both) | `storm_map` (6) | a chord that rises with northern-hemisphere storms, thunder = new flashes, an electric click per 10° cell that lights up (pan = longitude, pitch = latitude), Americas / Africa-Europe / Asia-Oceania instruments |
+| 3912 ECCO2 currents + SST | `ecco2_sst_flow.mp4` (67 s, flat map) | frame number (no dates on the page) | `warm_and_cold_currents` (5) | sea noise (motion, warmth), Pacific cello / Atlantic flute / Indian vibraphone (pitch = warmth, loudness = motion), a west→east radar sweep every 8 s with bells for warm water and plucks for cold |
+| 5425 Perpetual Ocean 2 | `perpetual_ocean2_CLOSE_093_clean_noDate_1080p30.mp4` (317 s) | model date 15 Jan 2021 – 25 Dec 2023 | `boundary_currents` (3) | rolling sea (closer camera = louder), a tick per model month, a cello following the white fast-current streamlines and a harp for their height and swirl |
+| 4960 Atmospheric river | `atmos_river_HD.mp4` (292 s) | model date + hour, read from `atmos_river_DATE_ONLY_HD.mp4` with glyph templates | `river_rain_clock` (3) | rushing air + flute for the moisture band, rain drops, a tick every 6 model hours (the movie's time jumps and replays: a swoop marks each jump back) |
+| 4950 GEDI forest height | `GEDI_global_w_colorbar_1080p60.mp4` (51 s, one turn of the globe) | longitude facing the camera | `forest_meridian` (5) | ocean hush, leaf rustle, a harp arpeggio down the meridian facing you (pitch = latitude, louder = taller-looking forest), a cello for the tallest forest, ticks every 30° |
+
+Notes. **5669 is a still image**: the explorer shows it with a moving scan line, a Play button and a position slider
+(the player's `Clock` stands in for the `<video>`; keyboard: Tab to Play, Space/Enter, arrow keys on the slider).
+**Movies longer than 120 s** (5425, 4960) are rendered at 16 kHz (`sonify.sample_rate_for`) so each stem stays ~20 MB
+in the page; their scripts keep to three stems. **5011** prints no dates and its storms swing between hemispheres
+7.7 times (more than the 6.6 years the page states), so it is labelled by season, not date. **5533** panels are
+assigned by colour, and CO / PM2.5 (same hue) by the fixed panel order. **4950** brightness is also shaped by the
+virtual sun and the exaggerated height, so its forest levels are relative to the movie.
+
 Building blocks for new scripts: `synth.band_noise`, `synth.pan_stereo`, `synth.add_at`, `synth.normalize`.
 After `data\download_data.ps1` (~180 MB into `backend\data\raw`, gitignored):
 ```powershell
@@ -197,6 +225,7 @@ apps/live_player.py       video-master / audio-follower player, live stem mixer 
 apps/sync_player.py       older single-WAV player (HTML+JS in st.iframe); no longer used by the explorer
 src/jukebox/frames.py     per-frame colour features of a movie (SVS 5196 CO2), used by co2_*.py
 src/jukebox/nightlights_frames.py  per-frame screen-light features of the SVS 5313 EIC movie
+src/jukebox/pages/        one module per other Resources-tab page (svs5669.py ...): measures its movie / still image
 sonifications/svs<id>/    sonification scripts per SVS page (svs5450/gistemp_lead.py = demo, svs5196/co2_*.py, svs5313/)
 scripts/                  PoC entry points (see table above)
 tests/                    unittest: data, mapping, synth, colormap round trip, layers, Black Marble, SVS parsing

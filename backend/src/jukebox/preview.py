@@ -21,7 +21,7 @@ from pathlib import Path
 
 import numpy as np
 
-from . import data, frames, nightlights_frames, sonify, svs, synth
+from . import data, frames, nightlights_frames, pages, sonify, svs, synth
 
 BACKEND = Path(__file__).resolve().parents[2]
 SONIFICATIONS = BACKEND / "sonifications"
@@ -60,6 +60,13 @@ def build_context(viz_id: int, movie: str | None = None, fps: float | None = Non
                   params: dict | None = None) -> sonify.SonifyContext:
     """Timeline + movie for an SVS page from the committed/downloaded data, with no network when possible."""
     fps = fps or 30.0
+    if (mod := pages.module(viz_id)) is not None:
+        feats = pages.load(viz_id, mod.MOVIE)
+        if feats is None:
+            raise FileNotFoundError(f"SVS {viz_id} is not measured yet: run scripts/poc8_page_features.py {viz_id}")
+        timeline, movie = sonify.Timeline(feats.labels, feats.fps), mod.MOVIE
+        return sonify.SonifyContext(viz_id=viz_id, timeline=timeline, movie=movie, params=dict(params or {}),
+                                    sr=sonify.sample_rate_for(timeline.duration))
     if viz_id == 5313:
         timeline, movie, fps = sonify.Timeline(nightlights_frames.labels(), nightlights_frames.FPS), \
             nightlights_frames.MOVIE, nightlights_frames.FPS

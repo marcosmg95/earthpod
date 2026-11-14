@@ -30,9 +30,16 @@ from types import ModuleType
 import numpy as np
 import pandas as pd
 
-from . import frames, mapping, nightlights_frames, synth
+from . import frames, mapping, nightlights_frames, pages, synth
 
-MAX_DURATION_S = 120.0  # keeps the base64 WAV in the page at a sane size (~20 MB)
+MAX_DURATION_S = 330.0   # longest movie the player takes (SVS 5425 Perpetual Ocean 2 is 317 s)
+FULL_RATE_S = 120.0      # up to this length audio is rendered at synth.SR (44.1 kHz) ...
+LONG_SR = 16000          # ... longer movies at 16 kHz, so each stem's WAV in the page stays ~20 MB
+
+
+def sample_rate_for(duration_s: float) -> int:
+    """Audio sample rate for a movie of this length (see FULL_RATE_S / LONG_SR)."""
+    return synth.SR if duration_s <= FULL_RATE_S else LONG_SR
 
 
 def label_year(label: str) -> int | None:
@@ -114,6 +121,19 @@ class SonifyContext:
             raise LookupError("Night-lights features require the SVS 5313 2160p30 H.265 EIC movie.")
         if len(f.table) != len(self.timeline.labels) or not np.isclose(self.timeline.fps, nightlights_frames.FPS):
             raise ValueError("Night-lights features require the movie's 1300-frame timeline at 30 fps.")
+        return f
+
+    def page_features(self) -> pages.PageFeatures:
+        """Measurements of this page's movie / still image (jukebox.pages, scripts/poc8_page_features.py)."""
+        f = pages.load(self.viz_id, self.movie)
+        if f is None:
+            mod = pages.module(self.viz_id)
+            need = f"the movie {mod.MOVIE!r}" if mod else "a page measured by jukebox.pages"
+            raise LookupError(f"No page features for SVS {self.viz_id} {self.movie!r}: this script needs {need}.")
+        if len(f.table) != len(self.timeline.labels) or not np.isclose(self.timeline.fps, f.fps):
+            raise ValueError(f"SVS {self.viz_id} was measured with {f.n_frames} frames at {f.fps:g} fps, but the "
+                             f"timeline has {len(self.timeline.labels)} at {self.timeline.fps:g}: use the timeline "
+                             "the explorer builds from the page features.")
         return f
 
     def nightlights_grids(self) -> dict[str, np.ndarray]:

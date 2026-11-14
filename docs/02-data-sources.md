@@ -7,16 +7,27 @@
 - Formats: MP4/WebM + frame directories (TIF/EXR, often PNG/JPG). Frame ranges downloadable with curl, e.g.
   `curl -LO "https://svs.gsfc.nasa.gov/vis/.../frames/1024x512/name.[0060-0119].png"`
 
-| SVS ID | Visualization | Notes |
+### The challenge's Resources tab (read 14 Nov 2026)
+https://www.spaceappschallenge.org/2026/challenges/the-earth-information-jukebox/?tab=resources — besides the EIC
+gallery, it lists these SVS pages. All are measured and sonified in this repo (`backend/README.md` → "The other pages
+on the challenge's Resources tab"); 13786 is only a sonification example.
+
+| SVS ID | Resource | What we use |
 |---|---|---|
-| 5450 / 5207 / 5603 | Global Temperature Anomalies 1880–2024/23/25 | 5450: 900 frames 3840x2160; 5207 has `time.txt`; 5603 has `GISTEMPtime.txt`, colormap "vik" |
-| 4626 / 4882 / 4964 | Older temperature anomaly versions | Separate colorbar PNGs (unverified) |
-| 5176 | SST Anomaly near-real-time (EIC) | 902 frames 4096x2048, daily, MUR SST; Mediterranean visible |
-| 5480 / 5046 | Sea ice | Unverified |
-| 5234 / 5196 | CO₂ (AIRS monthly; DYAMOND) | Seasonal "breathing" rhythm |
-| 5221 | Global mean sea level 1993–2023 | Unverified; good drone layer |
-| 5147–5154 | GEOS-FP/CF forecasts (temp, wind, PM2.5…) | Other teams already use these |
-| 5313 | Change in Night Lights 2012–2023 (EIC 32:9) | H.265 MP4 2160p (33 MB), 7680x2160 frames; no colorbar/time file. Data = Black Marble VNP46A4 (LAADS 5200, token) → `poc5`; zooms India, Ukraine, W. Europe, E. Med |
+| 13786 | Data Sonification: Caldwell 73 | reference only (luminosity → volume, position → pitch) |
+| 5313 | Change in Night Lights 2012–2023 – EIC Version | EIC movie (32:9, H.265); `svs5313/` scripts; Black Marble VNP46A4 numbers (PoC 5) |
+| 5196 | DYAMOND Global Carbon Dioxide | 1080p movies; `svs5196/co2_*` |
+| 5669 | GEOS Aerosols (2025) | the **still** map (19 Aug 2025 20:00 UTC) scanned west → east; `svs5669/aerosols_scan` |
+| 5533 | Air Quality Model Runs (GEOS-CF) | `EIC_AirQuality_Preview_3840x1080.mp4`; `svs5533/pollutant_quartet` |
+| 5011 | Lightning Events Detected from the ISS 2017–2023 | SOS map movie (4096x2048, 60 fps); `svs5011/storm_map` |
+| 3912 | Global Sea Surface Currents and Temperature (ECCO2) | `ecco2_sst_flow.mp4` flat map; `svs3912/warm_and_cold_currents` |
+| 5425 | Perpetual Ocean 2: Western Boundary Currents | 1080p "clean, no date" movie (317 s) + dates-only movie; `svs5425/boundary_currents` |
+| 4960 | A 3D View of an Atmospheric River from an Earth System Model | `atmos_river_HD.mp4` (292 s) + dates-only movie; `svs4960/river_rain_clock` |
+| 4950 | GEDI Forest Height | `GEDI_global_w_colorbar_1080p60.mp4`; `svs4950/forest_meridian` |
+
+SVS 5450 (GISTEMP temperature anomalies) is **not** on the Resources tab and is no longer used for the submission;
+its demo script and PoCs 1–4 stay in the repo. Other pages we looked at earlier (5176 SST anomaly, sea ice, sea level,
+GEOS-FP forecasts 5147–5154) are not on the tab either.
 
 ## Numeric data (drive the sound with this)
 - GISTEMP v4 global monthly/annual CSV: https://data.giss.nasa.gov/gistemp/tabledata_v4/GLB.Ts+dSST.csv (anomaly vs 1951–1980)

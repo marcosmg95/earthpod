@@ -30,6 +30,12 @@ SVS 5313 EIC H.265 movie downloaded by `download_data.ps1`, using
 `derived/svs5313_eic_grids.npz`: coarse light grids (world 15x64 per year, purple/orange change maps, and each zoom box
 15x20) that the `nightlights_three_acts` sonification scans.
 
+`derived/svs<id>_frames.csv` + `derived/svs<id>_arrays.npz` for SVS 5669, 5533, 5011, 3912, 5425, 4960 and 4950:
+picture features of one movie (or still image) of each page, written by `scripts\poc8_page_features.py` (it downloads
+~2.6 GB of movies into `raw/svs<id>/` first, resuming broken downloads). Columns and arrays are documented in
+`src/jukebox/pages/svs<id>.py`. `derived/svs4960_glyphs.npz` holds the 20 glyph templates (letters, digits, colon,
+labelled by hand from the movie) used to read the dates of the SVS 4960 dates-only movie.
+
 After it runs, frames can be extracted at low res, one per year, e.g.:
 `ffmpeg -i raw/svs5450_SOS_4096x2048.mp4 -vf "select=not(mod(n\,6)),scale=360:180" -vsync vfr frames/f%03d.png`
 (check `time.txt` for the exact frame→year mapping first).
@@ -38,4 +44,9 @@ After it runs, frames can be extracted at low res, one per year, e.g.:
 - GISTEMP Team, 2026: GISS Surface Temperature Analysis (GISTEMP), version 4. NASA Goddard Institute for Space Studies. https://data.giss.nasa.gov/gistemp/
 - NASA Scientific Visualization Studio, "Global Temperature Anomalies from 1880 to 2024" (SVS 5450). https://svs.gsfc.nasa.gov/5450/
 - NASA Scientific Visualization Studio, "Change in Night Lights between 2012 and 2023 - EIC Version" (SVS 5313), visualizer Kel Elkins. https://svs.gsfc.nasa.gov/5313/
+- NASA Scientific Visualization Studio pages on the challenge's Resources tab, each credited in its script's
+  DESCRIPTION: GEOS Aerosols (SVS 5669), Air Quality Model Runs (SVS 5533, GEOS-CF), Lightning Events Detected from the
+  ISS 2017-2023 (SVS 5011, LIS), Global Sea Surface Currents and Temperature (SVS 3912, ECCO2), Perpetual Ocean 2:
+  Western Boundary Currents (SVS 5425, ECCO2), A 3D View of an Atmospheric River from an Earth System Model (SVS 4960),
+  GEDI Forest Height (SVS 4950). https://svs.gsfc.nasa.gov/<id>/
 - NASA Black Marble VNP46A4 (Román et al.), Suomi NPP VIIRS, NASA LAADS DAAC. https://ladsweb.modaps.eosdis.nasa.gov/

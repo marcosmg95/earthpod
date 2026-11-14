@@ -9,13 +9,24 @@
   <audio> element routed through Web Audio (gain per stem -> master volume). New audio from a re-render is
   swapped in at the current time with a short crossfade; level sliders re-mix in the browser.
   No autoplay: sound starts only when the user plays the video.
+  Still images (args.still): a Clock with the same interface stands in for the <video>; the image is shown with
+  a scan line at the position being sonified, and a play button + slider replace the video controls.
 -->
 <style>
   :root { --fg:#1b1f24; --muted:#5b6470; --bg:#ffffff; --line:#d0d7de; --accent:#1f6feb; }
   @media (prefers-color-scheme: dark) { :root { --fg:#e6edf3; --muted:#9aa4af; --bg:#0e1117; --line:#30363d; } }
   html, body { margin:0; padding:0; }
+  [hidden] { display:none !important; }   /* display rules below would otherwise override the hidden attribute */
   body { font:14px/1.4 system-ui, sans-serif; color:var(--fg); background:var(--bg); }
   video { width:100%; background:#000; display:block; }
+  .still { position:relative; margin:0; background:#000; }
+  .still img { width:100%; display:block; object-fit:contain; }
+  .scan { position:absolute; top:0; bottom:0; width:2px; left:0; background:#fff;
+          box-shadow:0 0 6px 2px rgba(255,255,255,.6); pointer-events:none; }
+  .stillctl { display:flex; gap:12px; align-items:center; padding:6px 2px 0; }
+  .stillctl input { flex:1; }
+  .stillctl button { font:inherit; color:var(--fg); background:var(--bg); border:1px solid var(--line);
+                     border-radius:6px; padding:4px 14px; cursor:pointer; min-width:9ch; }
   .bar { display:flex; flex-wrap:wrap; gap:12px 20px; align-items:center; padding:8px 2px; }
   .label { font-size:22px; font-weight:600; min-width:7ch; font-variant-numeric:tabular-nums; }
   .muted { color:var(--muted); }
@@ -40,6 +51,16 @@
 <body>
 <video id="v" controls preload="metadata" playsinline
        aria-label="SVS movie; the data sonification plays in sync with it"></video>
+<figure class="still" id="stillbox" hidden>
+  <img id="img" alt="SVS still image. A vertical line shows the part of the image being sonified.">
+  <div class="scan" id="scan" aria-hidden="true"></div>
+</figure>
+<div class="stillctl" id="stillctl" hidden>
+  <button id="playbtn" type="button">Play</button>
+  <label class="sr" for="seek">Scan position, seconds</label>
+  <input id="seek" type="range" min="0" max="1" step="0.1" value="0">
+  <span class="muted" id="clock" aria-hidden="true">0.0 s</span>
+</div>
 <nav id="chapters" aria-label="Movie sections" hidden></nav>
 <div class="bar">
   <span class="label" id="lbl" aria-hidden="true">—</span>
@@ -66,7 +87,38 @@ function fitHeight() {
 new ResizeObserver(fitHeight).observe(document.body);
 
 const $ = id => document.getElementById(id);
-const v = $("v"), lbl = $("lbl"), live = $("live"), statusEl = $("status");
+const lbl = $("lbl"), live = $("live"), statusEl = $("status");
+
+// A media clock for still images: the properties and events the code below uses from <video>.
+class Clock extends EventTarget {
+  constructor() { super(); this._t = 0; this._start = 0; this.paused = true; this.seeking = false;
+                  this.duration = NaN; this._rate = 1; }
+  _now() { return this._t + (performance.now() - this._start) / 1000 * this._rate; }
+  get currentTime() { return this.paused ? this._t : Math.min(this._now(), this.duration || Infinity); }
+  set currentTime(t) {
+    this._t = Math.max(0, Math.min(+t, this.duration || +t)); this._start = performance.now();
+    this.dispatchEvent(new Event("seeking")); this.dispatchEvent(new Event("seeked"));
+  }
+  get playbackRate() { return this._rate; }
+  set playbackRate(r) { this._t = this.currentTime; this._start = performance.now(); this._rate = r;
+                        this.dispatchEvent(new Event("ratechange")); }
+  play() {
+    if (!this.paused) return Promise.resolve();
+    if (this._t >= this.duration) this._t = 0;
+    this._start = performance.now(); this.paused = false;
+    this.dispatchEvent(new Event("play")); this.dispatchEvent(new Event("playing"));
+    return Promise.resolve();
+  }
+  pause() { if (this.paused) return; this._t = this.currentTime; this.paused = true; this.dispatchEvent(new Event("pause")); }
+  check() {                                     // every animation frame: stop at the end
+    if (!this.paused && this._now() >= this.duration) {
+      this._t = this.duration; this.paused = true;
+      this.dispatchEvent(new Event("pause")); this.dispatchEvent(new Event("ended"));
+    }
+  }
+}
+const video = $("v"), clock = new Clock();
+let v = video;                                  // the master clock: the <video>, or `clock` for a still image
 const DRIFT = 0.08, NORM = Math.pow(10, -6 / 20);   // same -6 dB peak as synth.normalize
 
 let spans = [], chapters = [], AUDIO_S = 0, normalize = false;
@@ -239,14 +291,17 @@ function buildChapters() {
 }
 function chapterAt(t) { let k = -1; chapters.forEach(([, t0], i) => { if (t >= t0) k = i; }); return k; }
 
-v.addEventListener("play",    () => { align(cur); playSet(cur); });
-v.addEventListener("playing", () => { align(cur); playSet(cur); });
-v.addEventListener("waiting", () => pauseSet(cur));           // video buffering: hold the audio
-v.addEventListener("pause",   () => { pauseSet(cur); align(cur); announce(); });
-v.addEventListener("ended",   () => pauseSet(cur));
-v.addEventListener("seeking", () => { if (cur) seekSet(cur); });
-v.addEventListener("seeked",  () => { align(cur); announce(); });
-v.addEventListener("ratechange", () => [cur, pending].forEach(s => s && s.els.forEach(el => { el.playbackRate = v.playbackRate; })));
+function bind(m) {                            // the same handlers on both clocks; only the active one fires
+m.addEventListener("play",    () => { align(cur); playSet(cur); });
+m.addEventListener("playing", () => { align(cur); playSet(cur); });
+m.addEventListener("waiting", () => pauseSet(cur));           // video buffering: hold the audio
+m.addEventListener("pause",   () => { pauseSet(cur); align(cur); announce(); });
+m.addEventListener("ended",   () => pauseSet(cur));
+m.addEventListener("seeking", () => { if (cur) seekSet(cur); });
+m.addEventListener("seeked",  () => { align(cur); announce(); });
+m.addEventListener("ratechange", () => [cur, pending].forEach(s => s && s.els.forEach(el => { el.playbackRate = v.playbackRate; })));
+m.addEventListener("loadedmetadata", () => { showDuration(); fitHeight(); });
+}
 function showDuration() {
   if (!v.duration) return;
   const d = $("dur"), diff = Math.abs(v.duration - AUDIO_S);
@@ -254,13 +309,45 @@ function showDuration() {
   d.textContent = `movie ${v.duration.toFixed(1)} s · audio ${AUDIO_S.toFixed(1)} s` +
     (diff > 0.5 ? " — lengths differ: check the fps / timeline" : "");
 }
-v.addEventListener("loadedmetadata", () => { showDuration(); fitHeight(); });
+bind(video); bind(clock);
 $("vol").addEventListener("input", e => { master.gain.value = $("mute").checked ? 0 : +e.target.value; });
 $("mute").addEventListener("change", e => { master.gain.value = e.target.checked ? 0 : +$("vol").value; });
 master.gain.value = 0.9;
 
+// ---- still-image controls ----
+const playbtn = $("playbtn"), seek = $("seek"), clockEl = $("clock"), scan = $("scan");
+playbtn.addEventListener("click", () => { resume(); clock.paused ? clock.play() : clock.pause(); });
+seek.addEventListener("input", () => { clock.currentTime = +seek.value; });
+clock.addEventListener("play", () => { playbtn.textContent = "Pause"; });
+clock.addEventListener("pause", () => { playbtn.textContent = "Play"; });
+function drawStill() {
+  const t = clock.currentTime, d = clock.duration || 1;
+  scan.style.left = `calc(${(100 * t / d).toFixed(3)}% - 1px)`;
+  if (document.activeElement !== seek) seek.value = t;
+  clockEl.textContent = `${t.toFixed(1)} s`;
+  seek.setAttribute("aria-valuetext", `${t.toFixed(0)} seconds, ${labelAt(t)}`);
+}
+function useStill(still, url, h) {
+  $("stillbox").hidden = !still; $("stillctl").hidden = !still; video.hidden = still;
+  const want = still ? clock : video;
+  if (want !== v) { v.pause(); v = want; }
+  if (still) {
+    const img = $("img");
+    if (img.getAttribute("src") !== url) img.src = url;
+    img.style.maxHeight = `${h}px`;
+    if (clock.duration !== AUDIO_S) {
+      clock.duration = AUDIO_S; seek.max = AUDIO_S;
+      clock.dispatchEvent(new Event("loadedmetadata"));
+    }
+  } else {
+    if (video.getAttribute("src") !== url) video.src = url;
+    video.style.maxHeight = `${h}px`;
+  }
+}
+
 let last = null, lastChapter = null;
 (function tick() {
+  if (v === clock) { clock.check(); drawStill(); }
   if (!v.paused && !v.seeking) align(cur);
   const l = labelAt(v.currentTime);
   if (l !== last) { lbl.textContent = l; last = l; }          // visual only; screen readers hear pause/seek
@@ -287,9 +374,8 @@ window.addEventListener("message", e => {
   if (!e.data || e.data.type !== "streamlit:render") return;
   const a = e.data.args;
   applyTheme(e.data.theme);
-  if (v.getAttribute("src") !== a.video_url) v.src = a.video_url;
-  v.style.maxHeight = `${a.video_h}px`;
   spans = a.spans; chapters = a.chapters; AUDIO_S = a.audio_s; normalize = a.normalize;
+  useStill(!!a.still, a.video_url, a.video_h);
   buildChapters();
   last = null; lastChapter = null;
   if (a.mix_id !== mixId) { mixId = a.mix_id; mixSpec = a.mix; buildMix(); remix(); }

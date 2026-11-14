@@ -52,8 +52,11 @@ def mix_spec(stems: sonify.Stems, specs: dict[str, sonify.Param], values: dict) 
 
 def live_player(video_url: str, wavs: dict[str, bytes], audio_id: str, mix: dict, mix_id: str, normalize: bool,
                 spans: list[tuple[str, float, float]], audio_s: float, *, aspect: float = 16 / 9,
-                width_px: int = 900, chapters: list[tuple[str, float]] = (), key: str = "live_player") -> dict | None:
+                width_px: int = 900, chapters: list[tuple[str, float]] = (), still: bool = False,
+                key: str = "live_player") -> dict | None:
     """Show the player; returns the level values the user set in it ({PARAM: value}) or None.
+
+    still=True: `video_url` is an image, played as a scan (a line moves across it; play button + slider).
 
     `audio_id` changes when the audio is new (the player then swaps it in at the current time);
     `mix_id` changes when the sliders should reset to `mix` (another script or script defaults).
@@ -63,5 +66,5 @@ def live_player(video_url: str, wavs: dict[str, bytes], audio_id: str, mix: dict
     return _component(
         video_url=video_url, video_h=video_h, audio_id=audio_id, stem_names=names, normalize=normalize,
         mix=mix, mix_id=mix_id, spans=[[l, round(t0, 4), round(t1, 4)] for l, t0, t1 in spans],
-        audio_s=round(audio_s, 4), chapters=[[title, round(t0, 4)] for title, t0 in chapters],
+        audio_s=round(audio_s, 4), chapters=[[title, round(t0, 4)] for title, t0 in chapters], still=still,
         **{f"stem_{i}": wavs[n] for i, n in enumerate(names)}, key=key, default=None)

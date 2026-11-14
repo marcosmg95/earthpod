@@ -40,5 +40,8 @@ If you changed `backend/src/jukebox/mapping.py` or data loaders, re-run `uv run 
   and name the data source in `DESCRIPTION`.
   Pages without numbers (SVS 5196 CO2): per-frame colour features in `jukebox/frames.py` via `ctx.frame_features()`;
   examples of each technique (PMSon, icons, earcons, audification, model-based): `svs5196/co2_*.py`.
+  The other Resources-tab pages (5669, 5533, 5011, 3912, 5425, 4960, 4950): one measuring module each in
+  `jukebox/pages/svs<id>.py`, data via `ctx.page_features()`, rebuilt with `scripts/poc8_page_features.py <id>`.
+  SVS 5450 (GISTEMP) is not on the Resources tab and is not used for the submission.
 - Accessibility is a core requirement: keyboard-only, screen-reader live regions, no autoplay (see `docs/04-accessibility.md`).
 - Credit NASA sources in captions and `source` fields; never imply NASA endorsement.
