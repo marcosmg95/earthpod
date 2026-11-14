@@ -220,6 +220,95 @@ def build_night_track(pct: pd.DataFrame, voices: list[Voice] = NIGHT_VOICES,
     }
 
 
+# --- Earth in layers: temperature + night lights over the years they share ----------------
+# Each layer is one voice; layers are only combined for years where *every* layer was measured.
+# Columns: "global", "barcelona_temp" (degC vs 1951-1980), "barcelona_light", "kyiv_light" (% vs 2012).
+LAYER_VOICES = [
+    Voice("Global temperature", "global", 0.10, TONIC_MIDI, 0.0, "pluck", 0.9),
+    Voice("Barcelona temperature", "barcelona_temp", 0.25, TONIC_MIDI, -0.3, "string", 0.5),
+    Voice("Barcelona lights", "barcelona_light", 2.0, NIGHT_TONIC_MIDI, -0.6, "soft", 0.45),
+    Voice("Kyiv lights", "kyiv_light", 5.0, NIGHT_TONIC_MIDI + 12, 0.6, "soft", 0.45),
+]
+LAYER_UNITS = {"global": "°C", "barcelona_temp": "°C", "barcelona_light": "%", "kyiv_light": "%"}
+
+
+def shared_years(*frames: pd.DataFrame) -> pd.Index:
+    """Years in which every column of every frame has a value (no gap filling)."""
+    idx = None
+    for f in frames:
+        ok = f.dropna(how="any").index
+        idx = ok if idx is None else idx.intersection(ok)
+    return idx.sort_values()
+
+
+def build_layers_track(temp: pd.DataFrame, night: pd.DataFrame, voices: list[Voice] = LAYER_VOICES,
+                       bpm: float = 40.0, alarm_drop_pct: float = 20.0, record_from: int = 1900) -> dict:
+    """temp: index = year, columns 'global' and 'barcelona' (degC anomaly, full history).
+    night: index = year, columns 'barcelona' and 'kyiv' (% light change vs 2012)."""
+    temp = temp[["global", "barcelona"]].astype(float)
+    night = night[["barcelona", "kyiv"]].astype(float)
+    years_ok = shared_years(temp, night)
+    if len(years_ok) == 0:
+        raise ValueError("temperature and night-light layers share no year")
+
+    # Records use the full temperature history, so 2012 is not a "record" just by being first.
+    full = temp.loc[temp.index >= record_from]
+    is_record = {c: full[c] > full[c].cummax().shift(1).fillna(-np.inf) for c in full}
+    level = 1.0 + night / 100.0
+    yoy = (level / level.shift(1) - 1.0) * 100.0
+
+    df = pd.DataFrame({"global": temp["global"], "barcelona_temp": temp["barcelona"],
+                       "barcelona_light": night["barcelona"], "kyiv_light": night["kyiv"]}).loc[years_ok]
+    smoothed = {v.name: ema(df[v.column], v.smooth) for v in voices}
+    beat = 60.0 / bpm
+    years, events, t = [], [], 0.0
+    for year, row in df.iterrows():
+        yi = YearInfo(year=int(year), start=round(t, 3), dur=beat)
+        for v in voices:
+            yi.values[v.name] = round(float(row[v.column]), 2 if LAYER_UNITS[v.column] == "°C" else 1)
+            yi.midi[v.name] = value_to_midi(float(smoothed[v.name].loc[year]), v.step_c, v.tonic_midi)
+        news = []
+        if bool(is_record["global"].get(year, False)):
+            yi.record = True
+            news.append("warmest year so far for the planet")
+        if bool(is_record["barcelona"].get(year, False)):
+            news.append("warmest year so far for the Barcelona region")
+        for city, name in (("barcelona", "Barcelona"), ("kyiv", "Kyiv")):
+            drop = yoy.loc[year, city]
+            if pd.notna(drop) and drop <= -alarm_drop_pct:
+                yi.dissonant = True
+                news.append(f"{name} lost {abs(drop):.0f}% of its night light in one year")
+
+        def light(col, name):
+            val = row[col]
+            return f"{name} {abs(val):.0f}% {'brighter' if val > 0 else 'darker'}" if round(val) else f"{name} as in 2012"
+        yi.description = (f"{yi.year}: planet {row['global']:+.2f} °C, Barcelona region {row['barcelona_temp']:+.1f} °C; "
+                          f"night light vs 2012: {light('barcelona_light', 'Barcelona')}, {light('kyiv_light', 'Kyiv')}"
+                          + ("".join(f". {n[0].upper()}{n[1:]}" for n in news)) + ".")
+        if news:
+            events.append({"year": yi.year, "text": "; ".join(news)})
+        years.append(asdict(yi))
+        t += beat
+
+    first, last = int(years_ok[0]), int(years_ok[-1])
+    text = (f"Earth in layers, {first} to {last}: the only years in which every layer was measured. One year is one chord. "
+            "Pluck: global temperature, one scale step per 0.1 °C. Strings, left: Barcelona region temperature, one step per 0.25 °C. "
+            f"Soft tones: night light seen from space, Barcelona on the left (one step per 2%) and Kyiv on the right (one step per 5%), "
+            f"starting from each city's {first} glow. A bell marks a record warm year for the planet; a clashing note sounds when a city "
+            f"loses more than {alarm_drop_pct:g}% of its light in a single year. Turn layers on and off to hear each one alone.")
+    return {
+        "name": f"Earth in layers ({first}–{last})",
+        "mapping": text,
+        "duration_s": round(t, 3),
+        "voices": [asdict(v) for v in voices],
+        "years": years,
+        "events": events,
+        "caption": ("Data: NASA GISTEMP v4 (global and Barcelona-region temperature) and NASA Black Marble VNP46A4 "
+                    "(Suomi NPP VIIRS yearly night lights; see SVS 5313). Not endorsed by NASA."),
+        "chart_label": f"Line chart of the global temperature anomaly, {first} to {last}",
+    }
+
+
 def score_to_dict(notes, info, duration, voices=DEFAULT_VOICES) -> dict:
     return {
         "mapping": MAPPING_TEXT,

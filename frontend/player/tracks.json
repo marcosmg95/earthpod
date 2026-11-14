@@ -6156,6 +6156,339 @@
    "drone_midi": 50,
    "caption": "Data: NASA Black Marble VNP46A4 (Suomi NPP VIIRS), yearly night lights; see SVS 5313. Not endorsed by NASA.",
    "chart_label": "Line chart of night-light change versus 2012, in percent"
+  },
+  "layers": {
+   "name": "Earth in layers (2012–2023)",
+   "mapping": "Earth in layers, 2012 to 2023: the only years in which every layer was measured. One year is one chord. Pluck: global temperature, one scale step per 0.1 °C. Strings, left: Barcelona region temperature, one step per 0.25 °C. Soft tones: night light seen from space, Barcelona on the left (one step per 2%) and Kyiv on the right (one step per 5%), starting from each city's 2012 glow. A bell marks a record warm year for the planet; a clashing note sounds when a city loses more than 20% of its light in a single year. Turn layers on and off to hear each one alone.",
+   "duration_s": 18.0,
+   "voices": [
+    {
+     "name": "Global temperature",
+     "column": "global",
+     "step_c": 0.1,
+     "tonic_midi": 50,
+     "pan": 0.0,
+     "timbre": "pluck",
+     "gain": 0.9,
+     "smooth": 0.0
+    },
+    {
+     "name": "Barcelona temperature",
+     "column": "barcelona_temp",
+     "step_c": 0.25,
+     "tonic_midi": 50,
+     "pan": -0.3,
+     "timbre": "string",
+     "gain": 0.5,
+     "smooth": 0.0
+    },
+    {
+     "name": "Barcelona lights",
+     "column": "barcelona_light",
+     "step_c": 2.0,
+     "tonic_midi": 62,
+     "pan": -0.6,
+     "timbre": "soft",
+     "gain": 0.45,
+     "smooth": 0.0
+    },
+    {
+     "name": "Kyiv lights",
+     "column": "kyiv_light",
+     "step_c": 5.0,
+     "tonic_midi": 74,
+     "pan": 0.6,
+     "timbre": "soft",
+     "gain": 0.45,
+     "smooth": 0.0
+    }
+   ],
+   "years": [
+    {
+     "year": 2012,
+     "start": 0.0,
+     "dur": 1.5,
+     "values": {
+      "Global temperature": 0.65,
+      "Barcelona temperature": 1.01,
+      "Barcelona lights": 0.0,
+      "Kyiv lights": 0.0
+     },
+     "midi": {
+      "Global temperature": 65,
+      "Barcelona temperature": 60,
+      "Barcelona lights": 62,
+      "Kyiv lights": 74
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2012: planet +0.65 °C, Barcelona region +1.0 °C; night light vs 2012: Barcelona as in 2012, Kyiv as in 2012.",
+     "frame": 789
+    },
+    {
+     "year": 2013,
+     "start": 1.5,
+     "dur": 1.5,
+     "values": {
+      "Global temperature": 0.67,
+      "Barcelona temperature": 0.63,
+      "Barcelona lights": -3.7,
+      "Kyiv lights": -6.8
+     },
+     "midi": {
+      "Global temperature": 67,
+      "Barcelona temperature": 57,
+      "Barcelona lights": 57,
+      "Kyiv lights": 72
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2013: planet +0.67 °C, Barcelona region +0.6 °C; night light vs 2012: Barcelona 4% darker, Kyiv 7% darker.",
+     "frame": 795
+    },
+    {
+     "year": 2014,
+     "start": 3.0,
+     "dur": 1.5,
+     "values": {
+      "Global temperature": 0.75,
+      "Barcelona temperature": 1.42,
+      "Barcelona lights": -6.8,
+      "Kyiv lights": -4.2
+     },
+     "midi": {
+      "Global temperature": 69,
+      "Barcelona temperature": 65,
+      "Barcelona lights": 55,
+      "Kyiv lights": 72
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "2014: planet +0.75 °C, Barcelona region +1.4 °C; night light vs 2012: Barcelona 7% darker, Kyiv 4% darker. Warmest year so far for the planet. Warmest year so far for the Barcelona region.",
+     "frame": 801
+    },
+    {
+     "year": 2015,
+     "start": 4.5,
+     "dur": 1.5,
+     "values": {
+      "Global temperature": 0.89,
+      "Barcelona temperature": 1.41,
+      "Barcelona lights": -7.6,
+      "Kyiv lights": 1.6
+     },
+     "midi": {
+      "Global temperature": 72,
+      "Barcelona temperature": 65,
+      "Barcelona lights": 53,
+      "Kyiv lights": 74
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "2015: planet +0.89 °C, Barcelona region +1.4 °C; night light vs 2012: Barcelona 8% darker, Kyiv 2% brighter. Warmest year so far for the planet.",
+     "frame": 807
+    },
+    {
+     "year": 2016,
+     "start": 6.0,
+     "dur": 1.5,
+     "values": {
+      "Global temperature": 1.01,
+      "Barcelona temperature": 1.32,
+      "Barcelona lights": -9.1,
+      "Kyiv lights": 3.3
+     },
+     "midi": {
+      "Global temperature": 74,
+      "Barcelona temperature": 62,
+      "Barcelona lights": 50,
+      "Kyiv lights": 77
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "2016: planet +1.01 °C, Barcelona region +1.3 °C; night light vs 2012: Barcelona 9% darker, Kyiv 3% brighter. Warmest year so far for the planet.",
+     "frame": 813
+    },
+    {
+     "year": 2017,
+     "start": 7.5,
+     "dur": 1.5,
+     "values": {
+      "Global temperature": 0.91,
+      "Barcelona temperature": 1.42,
+      "Barcelona lights": -8.8,
+      "Kyiv lights": 2.3
+     },
+     "midi": {
+      "Global temperature": 72,
+      "Barcelona temperature": 65,
+      "Barcelona lights": 53,
+      "Kyiv lights": 74
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2017: planet +0.91 °C, Barcelona region +1.4 °C; night light vs 2012: Barcelona 9% darker, Kyiv 2% brighter. Warmest year so far for the Barcelona region.",
+     "frame": 819
+    },
+    {
+     "year": 2018,
+     "start": 9.0,
+     "dur": 1.5,
+     "values": {
+      "Global temperature": 0.85,
+      "Barcelona temperature": 1.31,
+      "Barcelona lights": -10.0,
+      "Kyiv lights": 2.9
+     },
+     "midi": {
+      "Global temperature": 69,
+      "Barcelona temperature": 62,
+      "Barcelona lights": 50,
+      "Kyiv lights": 77
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2018: planet +0.85 °C, Barcelona region +1.3 °C; night light vs 2012: Barcelona 10% darker, Kyiv 3% brighter.",
+     "frame": 825
+    },
+    {
+     "year": 2019,
+     "start": 10.5,
+     "dur": 1.5,
+     "values": {
+      "Global temperature": 0.98,
+      "Barcelona temperature": 1.3,
+      "Barcelona lights": -9.5,
+      "Kyiv lights": 7.0
+     },
+     "midi": {
+      "Global temperature": 74,
+      "Barcelona temperature": 62,
+      "Barcelona lights": 50,
+      "Kyiv lights": 77
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2019: planet +0.98 °C, Barcelona region +1.3 °C; night light vs 2012: Barcelona 10% darker, Kyiv 7% brighter.",
+     "frame": 831
+    },
+    {
+     "year": 2020,
+     "start": 12.0,
+     "dur": 1.5,
+     "values": {
+      "Global temperature": 1.01,
+      "Barcelona temperature": 1.56,
+      "Barcelona lights": -10.6,
+      "Kyiv lights": -10.4
+     },
+     "midi": {
+      "Global temperature": 74,
+      "Barcelona temperature": 65,
+      "Barcelona lights": 50,
+      "Kyiv lights": 69
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2020: planet +1.01 °C, Barcelona region +1.6 °C; night light vs 2012: Barcelona 11% darker, Kyiv 10% darker. Warmest year so far for the Barcelona region.",
+     "frame": 837
+    },
+    {
+     "year": 2021,
+     "start": 13.5,
+     "dur": 1.5,
+     "values": {
+      "Global temperature": 0.85,
+      "Barcelona temperature": 1.25,
+      "Barcelona lights": -11.9,
+      "Kyiv lights": 13.2
+     },
+     "midi": {
+      "Global temperature": 69,
+      "Barcelona temperature": 62,
+      "Barcelona lights": 48,
+      "Kyiv lights": 81
+     },
+     "record": false,
+     "dissonant": false,
+     "description": "2021: planet +0.85 °C, Barcelona region +1.3 °C; night light vs 2012: Barcelona 12% darker, Kyiv 13% brighter.",
+     "frame": 843
+    },
+    {
+     "year": 2022,
+     "start": 15.0,
+     "dur": 1.5,
+     "values": {
+      "Global temperature": 0.89,
+      "Barcelona temperature": 2.11,
+      "Barcelona lights": -10.9,
+      "Kyiv lights": -53.6
+     },
+     "midi": {
+      "Global temperature": 72,
+      "Barcelona temperature": 69,
+      "Barcelona lights": 50,
+      "Kyiv lights": 48
+     },
+     "record": false,
+     "dissonant": true,
+     "description": "2022: planet +0.89 °C, Barcelona region +2.1 °C; night light vs 2012: Barcelona 11% darker, Kyiv 54% darker. Warmest year so far for the Barcelona region. Kyiv lost 59% of its night light in one year.",
+     "frame": 849
+    },
+    {
+     "year": 2023,
+     "start": 16.5,
+     "dur": 1.5,
+     "values": {
+      "Global temperature": 1.17,
+      "Barcelona temperature": 2.06,
+      "Barcelona lights": -9.3,
+      "Kyiv lights": -35.5
+     },
+     "midi": {
+      "Global temperature": 79,
+      "Barcelona temperature": 69,
+      "Barcelona lights": 50,
+      "Kyiv lights": 57
+     },
+     "record": true,
+     "dissonant": false,
+     "description": "2023: planet +1.17 °C, Barcelona region +2.1 °C; night light vs 2012: Barcelona 9% darker, Kyiv 35% darker. Warmest year so far for the planet.",
+     "frame": 855
+    }
+   ],
+   "events": [
+    {
+     "year": 2014,
+     "text": "warmest year so far for the planet; warmest year so far for the Barcelona region"
+    },
+    {
+     "year": 2015,
+     "text": "warmest year so far for the planet"
+    },
+    {
+     "year": 2016,
+     "text": "warmest year so far for the planet"
+    },
+    {
+     "year": 2017,
+     "text": "warmest year so far for the Barcelona region"
+    },
+    {
+     "year": 2020,
+     "text": "warmest year so far for the Barcelona region"
+    },
+    {
+     "year": 2022,
+     "text": "warmest year so far for the Barcelona region; Kyiv lost 59% of its night light in one year"
+    },
+    {
+     "year": 2023,
+     "text": "warmest year so far for the planet"
+    }
+   ],
+   "caption": "Data: NASA GISTEMP v4 (global and Barcelona-region temperature) and NASA Black Marble VNP46A4 (Suomi NPP VIIRS yearly night lights; see SVS 5313). Not endorsed by NASA.",
+   "chart_label": "Line chart of the global temperature anomaly, 2012 to 2023"
   }
  }
 }

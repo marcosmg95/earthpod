@@ -49,6 +49,13 @@ def main():
         out["tracks"]["night"] = mapping.build_night_track(night)
         out["source"] += "; night lights: NASA Black Marble VNP46A4 (SVS 5313)"
 
+    if night is not None and bcn is not None:  # layers: only the years every dataset covers
+        temp = df[["global"]].assign(barcelona=bcn)
+        layers = mapping.build_layers_track(temp, night)
+        for y in layers["years"]:
+            y["frame"] = data.frame_for_year(frames, y["year"]) if frames else None
+        out["tracks"]["layers"] = layers
+
     WEB.mkdir(exist_ok=True)
     path = WEB / "tracks.json"
     path.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")

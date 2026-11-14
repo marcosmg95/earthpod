@@ -9,6 +9,10 @@
 ```powershell
 python -m unittest discover -s backend\tests -v
 ```
+**Keep the AI-use log updated (hackathon requirement).** Space Apps requires disclosing where and how AI was used.
+In the same commit as your change, add a row to `docs/ai-use-log.md` (date, tool, what it was used for, who, human review).
+The submission's AI-use statement is built from it (`docs/07-submission-checklist.md`).
+
 If you changed `backend/jukebox/mapping.py` or data loaders, re-run `python backend\scripts\poc2_export_tracks.py`
 and check that the existing tracks in `frontend/player/tracks.json` are unchanged unless that was the intent.
 

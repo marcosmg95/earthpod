@@ -41,6 +41,8 @@
 
   <fieldset id="trackSet"><legend>Track</legend></fieldset>
 
+  <fieldset id="layerSet"><legend>Layers (keys 1–9 turn one on or off, Shift+number plays it alone)</legend></fieldset>
+
   <p><label for="year" style="display:block">Year</label>
   <input id="year" type="range" min="0" max="0" value="0" step="1"></p>
 
@@ -52,7 +54,7 @@
     <figcaption id="cap" style="color:var(--muted);font-size:14px">Data: NASA GISTEMP v4. Frames: NASA Scientific Visualization Studio (SVS 5450). Not endorsed by NASA.</figcaption>
   </figure>
 
-  <p id="keys">Keys: Space play/pause · ←/→ year · Shift+←/→ decade · R reference tone · D describe · B switch track · M melody only</p>
+  <p id="keys">Keys: Space play/pause · ←/→ year · Shift+←/→ decade · R reference tone · D describe · B switch track · M melody only · 1–9 layer on/off · Shift+1–9 layer alone</p>
 </main>
 <script>
 "use strict";
@@ -86,7 +88,28 @@ function selectTrack(k) {
   $("year").max = track.years.length - 1;
   idx = Math.min(idx, track.years.length - 1);
   document.querySelector(`input[value="${k}"]`).checked = true;
+  buildLayers();
   show(true);
+}
+
+function buildLayers() {          // one checkbox per voice: take the Earth apart, put it back together
+  const set = $("layerSet");
+  set.querySelectorAll("label").forEach(l => l.remove());
+  track.voices.forEach((v, i) => {
+    const l = document.createElement("label"), c = document.createElement("input");
+    c.type = "checkbox"; c.checked = true; c.dataset.voice = i;
+    l.append(c, ` ${i + 1}. ${v.name}`);
+    set.appendChild(l);
+  });
+}
+const layerBoxes = () => [...$("layerSet").querySelectorAll("input")];
+const layerOn = i => { const c = layerBoxes()[i]; return !c || c.checked; };
+function toggleLayer(i, solo) {
+  const bs = layerBoxes(); if (i >= bs.length) return;
+  if (solo) bs.forEach((b, j) => b.checked = j === i); else bs[i].checked = !bs[i].checked;
+  const on = bs.filter(b => b.checked).map(b => track.voices[+b.dataset.voice].name);
+  say(solo ? `Only ${track.voices[i].name}` : on.length ? `Playing: ${on.join(", ")}` : "All layers off");
+  if (!playing) preview();
 }
 
 function show(announce) {
@@ -145,7 +168,7 @@ function voiceNote(midi, t, dur, kind, gain, pan) {
 function scheduleYear(y, t) {
   const lead = $("leadOnly").checked, vs = track.voices;
   vs.forEach((v, i) => {
-    if (y.midi[v.name] == null || (lead && i > 0)) return;
+    if (y.midi[v.name] == null || (lead && i > 0) || !layerOn(i)) return;
     voiceNote(y.midi[v.name], t, y.dur * (i ? 1.6 : 0.9), v.timbre, v.gain * 0.3, v.pan);
   });
   const g = y.midi[vs[0].name];
@@ -159,7 +182,7 @@ function tick() {                // lookahead scheduler
     scheduleYear(y, nextTime);
     const at = nextTime, i = idx;
     setTimeout(() => { if (!playing) return; idx = i; show(false);
-      if (y.record || y.year % 10 === 0) say(y.description); }, Math.max(0, (at - ctx.currentTime) * 1000));
+      if (y.record || y.dissonant || y.year % 10 === 0 || (track.events || []).some(e => e.year === y.year)) say(y.description); }, Math.max(0, (at - ctx.currentTime) * 1000));
     nextTime += y.dur;
     if (idx >= track.years.length - 1) { setTimeout(stop, (nextTime - ctx.currentTime) * 1000 + 1500); clearInterval(timer); break; }
     idx++;
@@ -204,6 +227,7 @@ document.addEventListener("keydown", e => {
   else if (k === "r") refTone();
   else if (k === "d") say(track.years[idx].description);
   else if (k === "m") $("leadOnly").click();
+  else if (/^Digit[1-9]$/.test(e.code)) { e.preventDefault(); toggleLayer(+e.code.slice(5) - 1, e.shiftKey); }
   else if (k === "b") { const ks = Object.keys(DATA.tracks); selectTrack(ks[(ks.indexOf(key) + 1) % ks.length]); }
 });
 init();
