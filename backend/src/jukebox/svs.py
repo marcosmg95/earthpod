@@ -35,6 +35,13 @@ def fetch(viz_id: int, session: requests.Session | None = None) -> dict:
     return r.json()
 
 
+def download_media(url: str) -> bytes:
+    """Download an SVS media file. Raises requests.RequestException on failure."""
+    r = requests.get(url, timeout=300)
+    r.raise_for_status()
+    return r.content
+
+
 def https_url(url: str) -> str:
     # The API returns http:// links; browsers block those as mixed content.
     return "https://" + url[len("http://"):] if url.startswith("http://") else url

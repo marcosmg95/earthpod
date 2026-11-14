@@ -12,6 +12,7 @@ Managed with [uv](https://docs.astral.sh/uv/) — install once with `pip install
 | 3 | `scripts/poc3_validate_inversion.py` | `data/raw/` (run `data/download_data.ps1`) | SVS 5450 frame colours read back into °C match GISTEMP → **r for the Validity slide**; also writes `frontend/player/frames/` |
 | 4 | `scripts/poc4_barcelona.py` | gridded netCDF + `--extra netcdf` | Barcelona-region series → second track ("Listen to Barcelona") |
 | 5 | `scripts/poc5_blackmarble_regions.py` | `data/download_blackmarble.ps1` (Earthdata token) + `--extra blackmarble` | Black Marble night lights (SVS 5313 data) per region/year → `data/derived/blackmarble_annual.*` |
+| 7 | `scripts/poc7_svs5313_features.py` | SVS 5313 EIC movie from `data/download_data.ps1` | Screen-space light features for the night-lights nervous-system sonification |
 | — | `apps/svs_explorer.py` | internet | Streamlit: type any SVS id → metadata, filterable media list, movie/image previews, datasets, linked pages, raw JSON; **Sonify** tab plays a data sonification locked to a movie |
 | — | `scripts/fetch_arcade_images.py` | internet | ~34 public-domain NASA images → `frontend/arcade/images` |
 | — | `scripts/make_voice.py` | Windows TTS | Arcade voice-over clips → `frontend/arcade/voice` |
@@ -28,11 +29,20 @@ In VS Code, the same entry points are in **Run and Debug** (Ctrl+Shift+D, `.vsco
 tests, PoC 1/2, arcade and player web servers, current file. Breakpoints work in the Streamlit app and in sonification scripts.
 
 ### Sonification scripts (`sonifications/`)
-The explorer's **Sonify** tab: pick a movie and a script → **Render** → the video's play/pause/seek/speed drive the audio
-(the `<video>` is the master clock; the audio re-syncs if it drifts by more than 80 ms).
+The explorer's **Sonify** tab: pick a movie and a script; it renders automatically (and again about a second after any
+slider change; the last 6 renders are cached; a toggle switches back to a Render button for slow scripts). The video's
+play/pause/seek/speed drive the audio (the `<video>` is the master clock; the audio re-syncs if it drifts by more than
+80 ms). The player (`apps/live_player.py` + `apps/live_player/index.html`, a Streamlit component) stays mounted: new
+audio swaps in at the current time without stopping the video.
+After rendering, download the sonification as a WAV and optionally prepare a video-only download of the original
+SVS movie; the sonification is not embedded in that video.
+Scripts are grouped by SVS page: `sonifications/svs<id>/` (e.g. `svs5196/` = CO2, `svs5313/` = night lights,
+`svs5450/` = GISTEMP) and the tab only offers the folder of the page you are on, plus any generic script placed
+directly in `sonifications/` (shown for every page). New page → new `svs<id>/` folder.
+Script names are sorted numerically within their text, so `co2_2` appears before `co2_10`.
 The timeline (which data label is on screen at each moment) comes from the page's `time.txt` (one label per frame,
 e.g. SVS 5450) and the frame rate in the frame-folder name (`…_30p`); without a time.txt you give a year range and length.
-A script is a plain `.py` file; copy `sonifications/gistemp_lead.py` to start:
+A script is a plain `.py` file; copy `sonifications/svs5450/gistemp_lead.py` to start:
 ```python
 TITLE = "Short name"
 DESCRIPTION = "What data, what mapping."
@@ -41,6 +51,27 @@ def render(ctx):                  # ctx: jukebox.sonify.SonifyContext
     return ctx.render_notes(notes)  # or any stereo numpy array (n, 2) at ctx.sr; sample 0 = video time 0
 ```
 `ctx.timeline.spans()` gives `(label, t0, t1)` for custom mappings. Scripts are re-imported on every Render, so edit and re-render without restarting.
+
+**Fast iteration (terminal).** The explorer needs a browser round-trip; `jukebox.preview` renders and plays from the terminal instead:
+```powershell
+cd backend
+uv run python -m jukebox.preview co2_15 --start 20 --end 35 --watch      # save the .py -> it re-renders and plays
+uv run python -m jukebox.preview co2_15 --set BREATH_GAIN=0.5            # try a value without editing the file
+```
+`co2_15` is any unique name/prefix (or a path). It renders the whole movie (~1 s for the CO2 scripts), then plays only
+`--start`..`--end` seconds, so loudness is identical to the explorer; the WAV is `backend/out/preview/<script>.wav`.
+`--watch` re-runs when any `.py` in the script's folder is saved (errors are printed and it keeps watching;
+changes under `src/jukebox/` need a restart). Defaults: SVS 5196 orbit movie, 30 fps; `--movie zoom`, `--fps`, `--viz` change that.
+
+**Tunable constants.** List module constants in `PARAMS = {"BREATH_GAIN": (0.0, 1.0)}` (name → (min, max); the constant's value is
+the default). They become sliders in the Sonify tab (with a copy-paste block of the changed values) and `--set NAME=VALUE`
+in the terminal. `render()` must read the constant when it runs, not at import time.
+
+**Stems: live levels without re-rendering.** `render()` may return named layers instead of one array, with
+`STEMS = {"breath": "BREATH_GAIN", ...}` naming the constant that sets each layer's level (plus an optional `OUTPUT_GAIN`).
+The mix is `normalize(sum(level * stem)) * OUTPUT_GAIN` (`sonify.Stems.mix`, also what `sonify.run`, `jukebox.preview` and the
+WAV download produce); the explorer's player redoes it in the browser, so those sliders sit under the video and act at once.
+`render()` must not use the level constants itself. Example: `svs5196/co2_15_lungs_heart_region.py`.
 
 **SVS 5196 (DYAMOND global CO2)** has no time.txt and no downloadable numbers, so its scripts use the movie itself:
 `scripts\poc6_svs5196_features.py` measures every frame (how much of the picture is orange-red = dense CO2, where it is,
@@ -64,6 +95,38 @@ becomes the timeline. Scripts read it with `ctx.frame_features()`; one script pe
 | `co2_12_nervous_system` | Auditory icon | electrical murmur follows orange-red area; faster change makes it shimmer faster |
 
 These four living-body sounds are metaphors derived from the image, not measurements of bodily processes.
+
+**SVS 5313 (Black Marble night lights):** select the `nightlights_flat_series_and_change_wZooms_13_EIC_2160p30_h265.mp4`
+movie. The committed per-frame features give a 1,300-frame timeline at 30 fps. Its labels (year or change map,
+global or zooms) and the player's three section buttons come from `jukebox/nightlights_frames.py`, where the
+scene boundaries and the frames at which each year label appears were read from the movie by hand:
+
+| Section | Frames | Seconds | On screen |
+|---|---|---|---|
+| 1 · Years 2012–2023 | 0–288 | 0–9.6 | global map, one year every ~0.6 s from frame 15 |
+| 2 · Change map | 289–630 | 9.6–21 | purple = "new lights", orange = "lights out" (SVS legend) |
+| 3 · Regional zooms | 631–1299 | 21–43.3 | boxes fade in (frames 668–690) over the years again (from frame 830), then as a change map from frame 1104 |
+
+- `nightlights_three_acts`: every act scans the map left to right (pan = longitude, pitch = latitude with north
+  high, loudness = brightness, pentatonic notes). Act 1 sweeps the world once per year with plucks and adds a bell
+  wherever a place is brighter than in 2012; Act 2 sweeps the change map three times (purple as high bells, orange
+  as low plucks, then both at their true balance); Act 3 tours the four zoom boxes (left to right Western Europe,
+  Eastern Mediterranean, Ukraine, India), sweeps all four every year, and tours the final change map. Each section
+  is set to the same loudness, so the sparse orange pass is boosted; the sweeps come from coarse grids measured
+  from the movie's pictures (`nightlights_frames.extract_grids`), not from the per-frame CSV.
+- `nightlights_nervous_system`: an electrical murmur whose loudness follows bright-pixel intensity, stereo
+  position the bright areas' screen position, and shimmer changes in intensity; it does not tell increases from
+  decreases. The map shows Earth twice side by side, so screen position is only loosely geographic.
+
+The central year label and legend are masked, but other overlays, map details, transitions and zooms still
+influence the sound. These are picture indices, not calibrated radiance or individual cities. Purple/orange are
+classified by hue (gold year-map lights fall outside both ranges). The H.265 movie requires browser support
+for that codec. Other movie versions have not been measured.
+
+To reproduce the features, download the SVS 5313 movie with `data\download_data.ps1`, then run
+`uv run python scripts\poc7_svs5313_features.py` from `backend/`. This writes
+`data\derived\svs5313_eic_frames.csv` and `data\derived\svs5313_eic_grids.npz` (world and zoom-box light grids);
+no Earthdata token is needed (the run decodes the 8K movie, so it takes a few minutes).
 
 Building blocks for new scripts: `synth.band_noise`, `synth.pan_stereo`, `synth.add_at`, `synth.normalize`.
 After `data\download_data.ps1` (~180 MB into `backend\data\raw`, gitignored):
@@ -119,9 +182,11 @@ src/jukebox/blackmarble.py  Black Marble HDF5 tiles -> regional radiance
 src/jukebox/svs.py        NASA SVS API client (fetch, flatten media, credits, linked pages, time.txt, fps)
 src/jukebox/sonify.py     Timeline (frame -> label), SonifyContext, script loader/runner
 apps/svs_explorer.py      Streamlit SVS explorer
-apps/sync_player.py       video-master / audio-follower player (HTML+JS in st.iframe)
+apps/live_player.py       video-master / audio-follower player, live stem mixer (Streamlit component: live_player/index.html)
+apps/sync_player.py       older single-WAV player (HTML+JS in st.iframe); no longer used by the explorer
 src/jukebox/frames.py     per-frame colour features of a movie (SVS 5196 CO2), used by co2_*.py
-sonifications/            sonification scripts shown in the Sonify tab (gistemp_lead.py = demo, co2_*.py = SVS 5196)
+src/jukebox/nightlights_frames.py  per-frame screen-light features of the SVS 5313 EIC movie
+sonifications/svs<id>/    sonification scripts per SVS page (svs5450/gistemp_lead.py = demo, svs5196/co2_*.py, svs5313/)
 scripts/                  PoC entry points (see table above)
 tests/                    unittest: data, mapping, synth, colormap round trip, layers, Black Marble, SVS parsing
 data/                     gistemp/ (committed), derived/, raw/ (downloaded, gitignored) — see data/README.md

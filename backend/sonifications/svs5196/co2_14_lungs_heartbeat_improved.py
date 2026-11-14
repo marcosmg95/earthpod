@@ -9,11 +9,13 @@ TITLE = "Living Earth: lungs and heartbeat"
 DESCRIPTION = ("A centered soft breath with a quiet flowing undertone: more tan haze on screen makes it "
                "louder; the breath grows brighter as the haze increases and darker as it decreases. "
                "Over it, the heartbeat follows the growth and fading of the orange-red area, with its "
-               "position on screen. Data: colours measured from the NASA SVS 5196 movie (GEOS / DYAMOND "
+               "position on screen; it beats strongly when there is little CO2 colour on screen and grows "
+               "faint when there is a lot. Data: colours measured from the NASA SVS 5196 movie (GEOS / DYAMOND "
                "model), not actual breathing, a heartbeat or CO2 in ppm; camera and background affect "
                "these picture indices.")
 
 BREATH_GAIN = 0.07
+PARAMS = {"BREATH_GAIN": (0.0, 0.5)}
 
 
 def render(ctx):
@@ -31,5 +33,5 @@ def render(ctx):
     flow = synth.band_noise(n, 80, 260, sr, seed=93)
     breath = (0.65 * rising * inhale + (1 - rising) * exhale + 0.18 * flow) * level
     breath = synth.normalize(synth.pan_stereo(breath, 0.0))
-    heartbeat = sonify.run(Path(__file__).with_name("co2_7_heartbeat.py"), ctx)
+    heartbeat = sonify.run(Path(__file__).with_name("co2_13_heartbeat_improved.py"), ctx)
     return synth.normalize(BREATH_GAIN * breath + heartbeat)

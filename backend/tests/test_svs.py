@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import Mock, patch
 
 from jukebox import svs
 
@@ -29,6 +30,16 @@ class TestSvs(unittest.TestCase):
     def test_credits_and_links(self):
         self.assertEqual(svs.credits_text(SAMPLE), "Visualizer: A (NASA/GSFC), B")
         self.assertEqual(svs.linked_pages(SAMPLE)[0]["relation"], "recommended_pages")
+
+    @patch("jukebox.svs.requests.get")
+    def test_download_media(self, get):
+        response = Mock()
+        response.content = b"video"
+        get.return_value = response
+
+        self.assertEqual(svs.download_media("https://example.test/movie.mp4"), b"video")
+        get.assert_called_once_with("https://example.test/movie.mp4", timeout=300)
+        response.raise_for_status.assert_called_once_with()
 
 
 if __name__ == "__main__":

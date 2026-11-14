@@ -38,7 +38,7 @@ def tone(freq: float, dur: float, timbre: str, sr: int = SR) -> np.ndarray:
         y = sum(a * np.sin(2 * np.pi * freq * p * t) * np.exp(-2.5 * p ** 0.5 * t) for p, a in partials)
         return y * np.minimum(1.0, t / 0.002)
     spec = TIMBRES.get(timbre, TIMBRES["soft"])
-    vib = 1 + (0.003 * np.sin(2 * np.pi * 5 * t) if timbre == "string" else 0)
+    vib = 1 + (0.003 * np.sin(2 * np.pi * 5 * t) if timbre == "string" else np.zeros(n))  # one value per sample
     phase = 2 * np.pi * freq * np.cumsum(vib) / sr
     y = sum(a * np.sin(k * phase) for k, a in enumerate(spec["h"], start=1) if freq * k < sr / 2)
     return y * _envelope(n, spec["a"], spec["r"], spec["decay"], sr)
