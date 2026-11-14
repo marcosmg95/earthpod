@@ -57,7 +57,7 @@ Add Delhi with tile `h25v06` (the region box already exists in `src/jukebox/blac
 - Smart App Control blocks pandas 3.x and netCDF4 DLLs (“Una directiva de Control de aplicaciones bloqueó este archivo”).
   `pyproject.toml` pins pandas < 3; netCDF4 is only needed to re-run PoC 4.
 - LAADS occasionally returns a transient 404; the download script retries 3 times.
-- Smart App Control also blocks the unsigned `.exe` launchers uv puts in `.venvScripts` (e.g. `streamlit.exe`,
+- Smart App Control also blocks the unsigned `.exe` launchers uv puts in `.venv\Scripts` (e.g. `streamlit.exe`,
   "os error 4551"). Run tools through Python instead: `uv run python -m streamlit ...`, `uv run python -m pip ...`.
 
 ## The mapping (one sentence for the pitch)
