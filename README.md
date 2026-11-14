@@ -26,6 +26,12 @@ committed; `backend/data/download_data.ps1` and the PoC scripts recreate them (s
 > If the official rules (published Fri 13 Nov) require code to be written during the event, treat the code here as
 > reference only and rewrite it there.
 
+## Deploy (CI/CD)
+Every push runs the backend tests (`.github/workflows/ci.yml`). A push to `main` that passes them deploys the static
+frontend to **https://earthpod.earth** with Kamal: `infra/Dockerfile` (nginx) serves `frontend/arcade/` at `/` and
+`frontend/player/` at `/player/`; `config/deploy.yml` targets the VPS, image on ghcr.io, TLS by kamal-proxy.
+Repo secret needed: `VPS8_SSH_KEY`. The Streamlit apps are dev tools and are not deployed.
+
 ## Docs
 | File | Content |
 |---|---|

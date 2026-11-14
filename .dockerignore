@@ -1,0 +1,6 @@
+# The image only needs the static frontend and the nginx config.
+*
+!infra/
+!frontend/arcade/
+!frontend/player/
+frontend/player/frames/
