@@ -14,7 +14,7 @@ import pandas as pd
 import requests
 import streamlit as st
 
-from jukebox import sonify, svs, synth
+from jukebox import frames, sonify, svs, synth
 from sync_player import sync_player  # apps/ is on sys.path when Streamlit runs this file
 
 SONIFICATIONS = Path(__file__).resolve().parents[1] / "sonifications"
@@ -173,6 +173,11 @@ with tab_sonify:
             timeline = sonify.Timeline(labels, fps)
             c2.markdown(f"**Timeline** from [time.txt]({tt_url}): {len(labels)} frames, "
                         f"{labels[0]} … {labels[-1]} → {timeline.duration:.1f} s at {fps:g} fps")
+        elif (feats := frames.load(viz_id, movie.filename)) is not None:
+            labels = feats.table.label.tolist()
+            timeline = sonify.Timeline(labels, fps)
+            c2.markdown(f"**Timeline** from the movie's own frames (measured by `scripts/poc6_svs5196_features.py`): "
+                        f"{len(labels)} frames, {labels[0]} … {labels[-1]} → {timeline.duration:.1f} s at {fps:g} fps")
         else:
             c2.markdown("**Timeline:** this page has no time.txt, so years are spread evenly over the movie.")
             a, b, c = st.columns(3)
@@ -199,7 +204,7 @@ with tab_sonify:
             st.warning(f"Timeline is {timeline.duration:.0f} s; the player handles up to "
                        f"{sonify.MAX_DURATION_S:.0f} s. Raise the fps or shorten the year range.")
         elif mod and st.button("Render sonification", type="primary"):
-            ctx = sonify.SonifyContext(viz_id=viz_id, timeline=timeline, data=data)
+            ctx = sonify.SonifyContext(viz_id=viz_id, timeline=timeline, data=data, movie=movie.filename)
             try:
                 with st.spinner(f"Running {path.name}…"):
                     wav = synth.wav_bytes(sonify.run(path, ctx), ctx.sr)

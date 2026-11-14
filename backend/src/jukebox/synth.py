@@ -66,6 +66,39 @@ def render(notes: list[Note], duration: float, sr: int = SR,
     return out / peak * 10 ** (-6 / 20)
 
 
+# ---- building blocks for sonification scripts (noise, panning, mixing) ----------------------
+
+def band_noise(n: int, lo: float, hi: float, sr: int = SR, seed: int = 0) -> np.ndarray:
+    """n samples of noise limited to lo..hi Hz, peak 1 (same seed -> same sound)."""
+    spec = np.fft.rfft(np.random.default_rng(seed).standard_normal(n))
+    f = np.fft.rfftfreq(n, 1 / sr)
+    edge = lambda x: np.clip(x, 0, 1) ** 2 * (3 - 2 * np.clip(x, 0, 1))   # smooth 0..1 step
+    spec *= edge((f - lo * 0.8) / (lo * 0.2 + 1e-9)) * edge((hi * 1.25 - f) / (hi * 0.25))
+    y = np.fft.irfft(spec, n)
+    return y / (np.max(np.abs(y)) or 1.0)
+
+
+def pan_stereo(mono: np.ndarray, pan) -> np.ndarray:
+    """Equal-power pan; `pan` is -1 (left) .. +1 (right), a number or one value per sample."""
+    theta = (np.clip(pan, -1, 1) + 1) * np.pi / 4
+    return np.column_stack([mono * np.cos(theta), mono * np.sin(theta)])
+
+
+def add_at(out: np.ndarray, y: np.ndarray, t: float, sr: int = SR) -> None:
+    """Mix y (mono or stereo) into the stereo buffer `out`, starting at time t; the end is cut off."""
+    i0 = int(round(t * sr))
+    i1 = min(len(out), i0 + len(y))
+    if i0 < 0 or i1 <= i0:
+        return
+    out[i0:i1] += y[: i1 - i0] if y.ndim == 2 else y[: i1 - i0, None]
+
+
+def normalize(stereo: np.ndarray, db: float = -6.0) -> np.ndarray:
+    """Peak-normalize (silence stays silence)."""
+    peak = np.max(np.abs(stereo)) or 1.0
+    return stereo / peak * 10 ** (db / 20)
+
+
 def _write_pcm(target, stereo: np.ndarray, sr: int) -> None:
     """16-bit stereo PCM to a path or a binary file object."""
     pcm = (np.clip(stereo, -1, 1) * 32767).astype("<i2")

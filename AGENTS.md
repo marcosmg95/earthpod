@@ -35,5 +35,7 @@ If you changed `backend/src/jukebox/mapping.py` or data loaders, re-run `uv run 
   docstring + `backend/README.md` → Sonification scripts; template: `gistemp_lead.py`.
   Reuse `jukebox.mapping` / `jukebox.synth` (via `ctx.notes_from_series`, `ctx.render_notes`) instead of new synth code,
   and name the data source in `DESCRIPTION`.
+  Pages without numbers (SVS 5196 CO2): per-frame colour features in `jukebox/frames.py` via `ctx.frame_features()`;
+  examples of each technique (PMSon, icons, earcons, audification, model-based): `co2_*.py`.
 - Accessibility is a core requirement: keyboard-only, screen-reader live regions, no autoplay (see `docs/04-accessibility.md`).
 - Credit NASA sources in captions and `source` fields; never imply NASA endorsement.

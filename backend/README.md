@@ -41,6 +41,31 @@ def render(ctx):                  # ctx: jukebox.sonify.SonifyContext
     return ctx.render_notes(notes)  # or any stereo numpy array (n, 2) at ctx.sr; sample 0 = video time 0
 ```
 `ctx.timeline.spans()` gives `(label, t0, t1)` for custom mappings. Scripts are re-imported on every Render, so edit and re-render without restarting.
+
+**SVS 5196 (DYAMOND global CO2)** has no time.txt and no downloadable numbers, so its scripts use the movie itself:
+`scripts\poc6_svs5196_features.py` measures every frame (how much of the picture is orange-red = dense CO2, where it is,
+tan haze, a 120-column left-to-right profile) into `data\derived\svs5196_*` (committed; `jukebox/frames.py`). It is an
+index of the picture, not ppm. The orbit movie prints its date (1 frame = 1 model hour, 14 Jan – 3 Mar 2020), which
+becomes the timeline. Scripts read it with `ctx.frame_features()`; one script per sonification technique:
+
+| Script | Technique | What you hear |
+|---|---|---|
+| `co2_1_pulse_melody` | Parameter mapping | pitch = orange-red area, left/right = where on screen, string = daily haze |
+| `co2_2_breath_and_fire` | Auditory icons | in/out breath on the daily pulse, fire crackles, haze wind |
+| `co2_3_calendar_earcons` | Earcons | day tick, week, month, daily peak, record bell |
+| `co2_4_audification` | Audification | each frame's screen profile played directly as the wave (110 cycles/s) |
+| `co2_5_struck_bars` | Model-based | 8 bars = 8 screen strips, tapped once a day; CO2 sets loudness, brightness, ring time |
+| `co2_6_full_mix` | 1 + 3 + 2 layered | melody + markers + quiet breath |
+| `co2_7_heartbeat` | Parameter mapping | one heartbeat per daily pulse: lub = red appears, dub = red fades; louder = bigger pulse |
+| `co2_8_currents` | Parameter mapping | screen height = pitch, horizontal position = pan, horizontal spread = chord width; image indices, not altitude or wind |
+| `co2_9_lungs` | Auditory icon + heartbeat | centered breath and quiet flow follow tan haze; the heartbeat follows the orange-red pulse |
+| `co2_10_blood_flow` | Auditory icon | continuous internal rush follows orange-red area and screen position, without a heartbeat |
+| `co2_11_living_fluid` | Auditory icon | bubbles become more frequent with more orange-red area and follow its screen position |
+| `co2_12_nervous_system` | Auditory icon | electrical murmur follows orange-red area; faster change makes it shimmer faster |
+
+These four living-body sounds are metaphors derived from the image, not measurements of bodily processes.
+
+Building blocks for new scripts: `synth.band_noise`, `synth.pan_stereo`, `synth.add_at`, `synth.normalize`.
 After `data\download_data.ps1` (~180 MB into `backend\data\raw`, gitignored):
 ```powershell
 uv run python scripts\poc3_validate_inversion.py                # r + data\derived\validation_svs5450.* + frontend\player\frames
@@ -95,7 +120,8 @@ src/jukebox/svs.py        NASA SVS API client (fetch, flatten media, credits, li
 src/jukebox/sonify.py     Timeline (frame -> label), SonifyContext, script loader/runner
 apps/svs_explorer.py      Streamlit SVS explorer
 apps/sync_player.py       video-master / audio-follower player (HTML+JS in st.iframe)
-sonifications/            sonification scripts shown in the Sonify tab (gistemp_lead.py = demo)
+src/jukebox/frames.py     per-frame colour features of a movie (SVS 5196 CO2), used by co2_*.py
+sonifications/            sonification scripts shown in the Sonify tab (gistemp_lead.py = demo, co2_*.py = SVS 5196)
 scripts/                  PoC entry points (see table above)
 tests/                    unittest: data, mapping, synth, colormap round trip, layers, Black Marble, SVS parsing
 data/                     gistemp/ (committed), derived/, raw/ (downloaded, gitignored) — see data/README.md

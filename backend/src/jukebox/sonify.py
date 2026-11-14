@@ -18,7 +18,7 @@ from types import ModuleType
 import numpy as np
 import pandas as pd
 
-from . import mapping, synth
+from . import frames, mapping, synth
 
 MAX_DURATION_S = 120.0  # keeps the base64 WAV in the page at a sane size (~20 MB)
 
@@ -68,6 +68,7 @@ class SonifyContext:
     timeline: Timeline
     data: dict = field(default_factory=dict)  # raw SVS JSON of the page
     sr: int = synth.SR
+    movie: str = ""                           # filename of the movie the audio will play with
 
     @property
     def duration(self) -> float:
@@ -76,6 +77,22 @@ class SonifyContext:
     @property
     def n_samples(self) -> int:
         return int(round(self.duration * self.sr))
+
+    @property
+    def frame_times(self) -> np.ndarray:
+        """Video time (s) at which each movie frame appears."""
+        return np.arange(len(self.timeline.labels)) / self.timeline.fps
+
+    def frame_features(self) -> frames.FrameFeatures:
+        """Colour features measured from this movie, one row per frame (see jukebox.frames)."""
+        f = frames.load(self.viz_id, self.movie)
+        if f is None:
+            raise LookupError(f"No frame features for SVS {self.viz_id} movie {self.movie!r}. This script needs "
+                              "one of the SVS 5196 movies measured by scripts/poc6_svs5196_features.py.")
+        if len(f.table) != len(self.timeline.labels):
+            raise ValueError(f"The timeline has {len(self.timeline.labels)} frames but the movie was measured "
+                             f"with {len(f.table)}: use the timeline the explorer builds from the frame features.")
+        return f
 
     def notes_from_series(self, series: pd.Series, voice: mapping.Voice,
                           vel: float | None = None, min_dur: float = 0.12) -> list[mapping.Note]:
