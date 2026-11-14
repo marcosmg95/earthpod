@@ -1,24 +1,22 @@
 """PoC 4 — Barcelona-region annual anomaly from the GISTEMP 2x2 deg grid.
 
 Needs data/raw/gistemp1200_GHCNv4_ERSSTv5.nc.gz (backend/data/download_data.ps1) and
-`pip install netCDF4` (or xarray + netCDF4). Writes data/derived/barcelona_annual.csv,
+`uv sync --extra netcdf`. Writes data/derived/barcelona_annual.csv,
 which backend/scripts/poc2_export_tracks.py picks up as a second track.
 
-    python backend/scripts/poc4_barcelona.py                 # nearest cell to Barcelona
-    python backend/scripts/poc4_barcelona.py --neighbors 1   # 3x3 cells (~600 km, NE Iberia + sea)
+    uv run python scripts/poc4_barcelona.py                 # nearest cell to Barcelona
+    uv run python scripts/poc4_barcelona.py --neighbors 1   # 3x3 cells (~600 km, NE Iberia + sea)
 """
 import argparse
 import gzip
 import shutil
 import sys
-from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-import numpy as np  # noqa: E402
-import pandas as pd  # noqa: E402
+import numpy as np
+import pandas as pd
 
-from jukebox import data  # noqa: E402
+from jukebox import data
 
 BCN = (41.39, 2.17)
 
@@ -41,7 +39,7 @@ def main():
     try:
         import netCDF4
     except ImportError:
-        sys.exit("Install netCDF4 first:  pip install netCDF4")
+        sys.exit("Install netCDF4 first:  uv sync --extra netcdf")
 
     ds = netCDF4.Dataset(nc)
     lat, lon = ds["lat"][:], ds["lon"][:]

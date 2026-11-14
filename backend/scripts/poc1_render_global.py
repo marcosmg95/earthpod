@@ -1,18 +1,16 @@
 """PoC 1 — Render the 'warming planet' track from real GISTEMP numbers to a WAV.
 
-    python backend/scripts/poc1_render_global.py                  # 1880-2025, all voices
-    python backend/scripts/poc1_render_global.py --lead-only      # just the global melody
-    python backend/scripts/poc1_render_global.py --years 1950 2025
+    uv run python scripts/poc1_render_global.py                  # 1880-2025, all voices
+    uv run python scripts/poc1_render_global.py --lead-only      # just the global melody
+    uv run python scripts/poc1_render_global.py --years 1950 2025
 """
 import argparse
-import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-import pandas as pd  # noqa: E402
+import pandas as pd
 
-from jukebox import data, mapping, synth  # noqa: E402
+from jukebox import data, mapping, synth
 
 OUT = Path(__file__).resolve().parents[1] / "out"
 

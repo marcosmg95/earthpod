@@ -7,12 +7,10 @@ mean / median / summed radiance (nW/cm^2/sr) per year plus % change vs the first
 import csv
 import json
 import sys
-from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from jukebox import blackmarble as bm  # noqa: E402
-from jukebox.data import DERIVED_DIR, RAW_DIR  # noqa: E402
+from jukebox import blackmarble as bm
+from jukebox.data import DERIVED_DIR, RAW_DIR
 
 SRC = RAW_DIR / "blackmarble"
 

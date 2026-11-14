@@ -1,11 +1,9 @@
 """Geometry tests for jukebox.blackmarble (no HDF5 files or h5py needed)."""
-import sys
 import unittest
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from jukebox import blackmarble as bm  # noqa: E402
+from jukebox import blackmarble as bm
 
 
 class TestBlackMarble(unittest.TestCase):

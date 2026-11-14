@@ -1,14 +1,11 @@
 """Tests for the 'Earth in layers' track (temperature + night lights, shared years only)."""
-import sys
 import unittest
-from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from jukebox import mapping  # noqa: E402
+from jukebox import mapping
 
 
 def sample():

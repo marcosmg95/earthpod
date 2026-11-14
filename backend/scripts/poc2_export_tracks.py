@@ -6,12 +6,10 @@ frame index. If data/derived/barcelona_annual.csv exists (PoC 4), adds a
 'barcelona' track.
 """
 import json
-import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from jukebox import data, mapping  # noqa: E402
+from jukebox import data, mapping
 
 WEB = Path(__file__).resolve().parents[2] / "frontend" / "player"
 

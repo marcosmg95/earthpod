@@ -8,16 +8,17 @@ Differentiators: scientifically honest mapping, real testing with a blind/low-vi
 
 ## Repository layout
 ```
-backend/     Python: jukebox/ package, PoC scripts/, tests/, data/ (GISTEMP), requirements.txt  -> backend/README.md
+backend/     Python (uv): src/jukebox/ package, apps/ (Streamlit), scripts/, tests/, data/  -> backend/README.md
 frontend/    Static web apps: arcade/ (the experience) and player/ (accessible GISTEMP player) -> frontend/README.md
 docs/        Research, design, task plan, submission checklist, AI-use log
 ```
 
 ## Quick start (Windows, from the repo root)
 ```powershell
-pip install -r backendequirements.txt
-python -m unittest discover -s backend	ests -v
-cd frontendrcade; python -m http.server 8000      # the arcade: open http://localhost:8000
+cd backend; uv sync                                # creates backend\.venv from pyproject.toml + uv.lock
+uv run python -m unittest discover -s tests -v
+uv run streamlit run apps\svs_explorer.py          # browse NASA SVS pages by id
+cd ..\frontend\arcade; python -m http.server 8000  # the arcade: open http://localhost:8000
 ```
 Large inputs (`backend/data/raw`, ~180 MB) and generated outputs (`backend/out`, `frontend/player/frames`) are not
 committed; `backend/data/download_data.ps1` and the PoC scripts recreate them (see backend/README.md).

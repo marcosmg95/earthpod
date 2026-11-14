@@ -19,7 +19,7 @@ Run `download_data.ps1` (PowerShell, from this folder). It fills `raw/` with:
 `download_blackmarble.ps1` fetches NASA Black Marble VNP46A4 (yearly VIIRS night lights, LAADS collection 5200 v002)
 into `raw/blackmarble/`: the data behind SVS 5313. Default: Barcelona tile h18v04, 2012–2023, ~135 MB/tile (~1.6 GB).
 Add Kyiv/Delhi with `-Tiles h18v04,h21v03,h25v06`. Set `$env:EARTHDATA_TOKEN` first (steps in the script header).
-Then `python backend\scripts\poc5_blackmarble_regions.py` writes `derived/blackmarble_annual.csv` + `.json`.
+Then (from `backend/`) `uv run --extra blackmarble python scripts\poc5_blackmarble_regions.py` writes `derived/blackmarble_annual.csv` + `.json`.
 
 After it runs, frames can be extracted at low res, one per year, e.g.:
 `ffmpeg -i raw/svs5450_SOS_4096x2048.mp4 -vf "select=not(mod(n\,6)),scale=360:180" -vsync vfr frames/f%03d.png`
