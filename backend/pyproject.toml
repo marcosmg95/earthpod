@@ -20,7 +20,7 @@ netcdf = ["netCDF4>=1.6"]
 blackmarble = ["h5py>=3.9"]
 
 [dependency-groups]
-# SVS explorer app: uv run streamlit run apps/svs_explorer.py
+# SVS explorer app: uv run python -m streamlit run apps/svs_explorer.py
 explorer = ["streamlit>=1.40"]
 
 [tool.uv]

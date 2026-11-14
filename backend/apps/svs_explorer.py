@@ -1,7 +1,7 @@
 """SVS explorer: type a NASA SVS visualization id, see its metadata, media and linked pages.
 
     cd backend
-    uv run streamlit run apps/svs_explorer.py
+    uv run python -m streamlit run apps/svs_explorer.py
 
 The id is kept in the URL (?id=5450), so a page can be shared or bookmarked.
 """

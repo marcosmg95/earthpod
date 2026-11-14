@@ -22,7 +22,7 @@ uv sync                                          # .venv with deps + jukebox (ed
 uv run python -m unittest discover -s tests -v
 uv run python scripts\poc1_render_global.py      # -> backend\out\earth_jukebox_global.wav
 uv run python scripts\poc2_export_tracks.py      # -> frontend\player\tracks.json
-uv run streamlit run apps\svs_explorer.py        # SVS explorer, http://localhost:8501/?id=5450
+uv run python -m streamlit run apps\svs_explorer.py        # SVS explorer, http://localhost:8501/?id=5450
 ```
 After `data\download_data.ps1` (~180 MB into `backend\data\raw`, gitignored):
 ```powershell
@@ -57,6 +57,8 @@ Add Delhi with tile `h25v06` (the region box already exists in `src/jukebox/blac
 - Smart App Control blocks pandas 3.x and netCDF4 DLLs (“Una directiva de Control de aplicaciones bloqueó este archivo”).
   `pyproject.toml` pins pandas < 3; netCDF4 is only needed to re-run PoC 4.
 - LAADS occasionally returns a transient 404; the download script retries 3 times.
+- Smart App Control also blocks the unsigned `.exe` launchers uv puts in `.venvScripts` (e.g. `streamlit.exe`,
+  "os error 4551"). Run tools through Python instead: `uv run python -m streamlit ...`, `uv run python -m pip ...`.
 
 ## The mapping (one sentence for the pitch)
 One year = one note; each 0.1 °C of global warming raises the melody one step of a D minor pentatonic

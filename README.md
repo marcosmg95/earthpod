@@ -17,7 +17,7 @@ docs/        Research, design, task plan, submission checklist, AI-use log
 ```powershell
 cd backend; uv sync                                # creates backend\.venv from pyproject.toml + uv.lock
 uv run python -m unittest discover -s tests -v
-uv run streamlit run apps\svs_explorer.py          # browse NASA SVS pages by id
+uv run python -m streamlit run apps\svs_explorer.py          # browse NASA SVS pages by id
 cd ..\frontend\arcade; python -m http.server 8000  # the arcade: open http://localhost:8000
 ```
 Large inputs (`backend/data/raw`, ~180 MB) and generated outputs (`backend/out`, `frontend/player/frames`) are not
