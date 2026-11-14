@@ -1,0 +1,30 @@
+service: nasa-arcade
+image: marcosmg95/nasa-arcade
+
+servers:
+  web:
+    hosts:
+      - 187.124.45.150
+    options:
+      memory: 128m
+      cpus: 0.25
+
+proxy:
+  ssl: true
+  hosts:
+    - earthpod.earth
+    - www.earthpod.earth
+  app_port: 80
+  healthcheck:
+    path: /up
+
+registry:
+  server: ghcr.io
+  username: marcosmg95
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+builder:
+  arch: amd64
+  dockerfile: infra/Dockerfile
+  context: .

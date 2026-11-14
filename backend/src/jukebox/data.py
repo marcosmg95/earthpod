@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pandas as pd
 
-BACKEND_DIR = Path(__file__).resolve().parents[1]  # .../backend
+BACKEND_DIR = Path(__file__).resolve().parents[2]  # backend/src/jukebox -> backend
 DATA_DIR = BACKEND_DIR / "data"
 GISTEMP_DIR = DATA_DIR / "gistemp"
 RAW_DIR = DATA_DIR / "raw"

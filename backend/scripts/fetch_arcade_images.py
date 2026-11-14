@@ -7,8 +7,8 @@ Sources (all public domain, no API key):
 
 Writes frontend/arcade/images/*.jpg (max 1280 px) and frontend/arcade/images/manifest.json.
 
-    python backend/scripts/fetch_arcade_images.py            # default set
-    python backend/scripts/fetch_arcade_images.py --per-theme 2
+    uv run python scripts/fetch_arcade_images.py            # default set
+    uv run python scripts/fetch_arcade_images.py --per-theme 2
 """
 from __future__ import annotations
 
@@ -157,7 +157,6 @@ def from_svs_frames(n: int = 3) -> list[dict]:
     frames = sorted((ROOT.parent / "frontend" / "player" / "frames").glob("frame_*.png"))
     if not frames:
         return []
-    sys.path.insert(0, str(ROOT))
     try:
         from jukebox.data import load_frame_years
         years = load_frame_years()

@@ -3,20 +3,19 @@
 Needs data/raw/ from backend/data/download_data.ps1 (SVS 5450 movie, time.txt, colorbar).
 Also writes one low-res frame per year to frontend/player/frames/ for the web player.
 
-    python backend/scripts/poc3_validate_inversion.py
-    python backend/scripts/poc3_validate_inversion.py --flip --max-de 15   # if r is negative / coverage low
+    uv run python scripts/poc3_validate_inversion.py
+    uv run python scripts/poc3_validate_inversion.py --flip --max-de 15   # if r is negative / coverage low
 """
 import argparse
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-import cv2  # noqa: E402
-import numpy as np  # noqa: E402
-import pandas as pd  # noqa: E402
+import cv2
+import numpy as np
+import pandas as pd
 
-from jukebox import colormap, data  # noqa: E402
+from jukebox import colormap, data
 
 POC = Path(__file__).resolve().parents[1]
 

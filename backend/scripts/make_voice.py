@@ -1,6 +1,6 @@
 """Make the arcade voice-over clips (Windows text-to-speech + 80s sampler effect).
 
-    python backend/scripts/make_voice.py
+    uv run python scripts/make_voice.py
 
 Writes frontend/arcade/voice/*.wav. To use your own recordings, save WAVs with the same names there.
 """

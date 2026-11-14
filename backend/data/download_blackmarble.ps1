@@ -55,4 +55,4 @@ foreach ($year in $FirstYear..$LastYear) {
   }
 }
 Write-Host "`nDone. Files in $out"
-Write-Host "Next: python backend\scripts\poc5_blackmarble_regions.py"
+Write-Host "Next (from backend\): uv run --extra blackmarble python scripts\poc5_blackmarble_regions.py"

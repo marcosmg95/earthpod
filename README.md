@@ -8,22 +8,29 @@ Differentiators: scientifically honest mapping, real testing with a blind/low-vi
 
 ## Repository layout
 ```
-backend/     Python: jukebox/ package, PoC scripts/, tests/, data/ (GISTEMP), requirements.txt  -> backend/README.md
+backend/     Python (uv): src/jukebox/ package, apps/ (Streamlit), scripts/, tests/, data/  -> backend/README.md
 frontend/    Static web apps: arcade/ (the experience) and player/ (accessible GISTEMP player) -> frontend/README.md
 docs/        Research, design, task plan, submission checklist, AI-use log
 ```
 
 ## Quick start (Windows, from the repo root)
 ```powershell
-pip install -r backendequirements.txt
-python -m unittest discover -s backend	ests -v
-cd frontendrcade; python -m http.server 8000      # the arcade: open http://localhost:8000
+cd backend; uv sync                                # creates backend\.venv from pyproject.toml + uv.lock
+uv run python -m unittest discover -s tests -v
+uv run python -m streamlit run apps\svs_explorer.py          # browse NASA SVS pages by id
+cd ..\frontend\arcade; python -m http.server 8000  # the arcade: open http://localhost:8000
 ```
 Large inputs (`backend/data/raw`, ~180 MB) and generated outputs (`backend/out`, `frontend/player/frames`) are not
 committed; `backend/data/download_data.ps1` and the PoC scripts recreate them (see backend/README.md).
 
 > If the official rules (published Fri 13 Nov) require code to be written during the event, treat the code here as
 > reference only and rewrite it there.
+
+## Deploy (CI/CD)
+Every push runs the backend tests (`.github/workflows/ci.yml`). A push to `main` that passes them deploys the static
+frontend to **https://earthpod.earth** with Kamal: `infra/Dockerfile` (nginx) serves `frontend/arcade/` at `/` and
+`frontend/player/` at `/player/`; `config/deploy.yml` targets the VPS, image on ghcr.io, TLS by kamal-proxy.
+Repo secret needed: `VPS8_SSH_KEY`. The Streamlit apps are dev tools and are not deployed.
 
 ## Docs
 | File | Content |

@@ -9,8 +9,8 @@ Static web apps, no build step. Serve a folder with `python -m http.server` and 
 
 ## Arcade
 ```powershell
-python backend\scripts\fetch_arcade_images.py        # ~34 public-domain NASA images -> frontend\arcade\images + manifest.json
-python backend\scripts\make_voice.py                 # voice-over clips (Windows TTS + 80s effect) -> frontend\arcade\voice\*.wav
+uv run --project backend python backend\scripts\fetch_arcade_images.py   # ~34 public-domain NASA images -> frontend\arcade\images + manifest.json
+uv run --project backend python backend\scripts\make_voice.py            # voice-over clips (Windows TTS + 80s effect) -> frontend\arcade\voice\*.wav
 cd frontend\arcade; python -m http.server 8000          # open http://localhost:8000  (?debug logs the score, ?debug&coin skips to the track)
 ```
 Image -> sound (all knobs in `frontend/arcade/sonify.js` `MAPPING`): the picture is scanned left to right, 64 columns;
@@ -45,8 +45,8 @@ above the CRT overlay; the record turns slowly (1 turn / 30 s) only while playin
 
 ## Player
 ```powershell
-python backend\scripts\poc2_export_tracks.py       # -> frontend\player\tracks.json
-python backend\scripts\poc3_validate_inversion.py  # -> frontend\player\frames\ (needs backend\data\raw)
+uv run --project backend python backend\scripts\poc2_export_tracks.py       # -> frontend\player\tracks.json
+uv run --project backend python backend\scripts\poc3_validate_inversion.py  # -> frontend\player\frames\ (needs backend\data\raw)
 cd frontend\player; python -m http.server 8000      # open http://localhost:8000
 ```
 Keys: Space, arrows, Shift+arrows, R, D, B, M; aria-live announcements; no autoplay.

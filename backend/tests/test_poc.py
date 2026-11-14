@@ -1,13 +1,10 @@
-"""Run:  python -m unittest discover -s tests -v   (from the poc/ folder)"""
-import sys
+"""Run from backend/:  uv run python -m unittest discover -s tests -v"""
 import unittest
-from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-import numpy as np  # noqa: E402
+import numpy as np
 
-from jukebox import colormap, data, mapping, synth  # noqa: E402
+from jukebox import colormap, data, mapping, synth
 
 
 class TestData(unittest.TestCase):

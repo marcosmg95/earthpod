@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live sonification player</title>
+<!--
+  Streamlit component (live_player.py). The <video> is the master clock; each stem of the sonification is an
+  <audio> element routed through Web Audio (gain per stem -> master volume). New audio from a re-render is
+  swapped in at the current time with a short crossfade; level sliders re-mix in the browser.
+  No autoplay: sound starts only when the user plays the video.
+-->
+<style>
+  :root { --fg:#1b1f24; --muted:#5b6470; --bg:#ffffff; --line:#d0d7de; --accent:#1f6feb; }
+  @media (prefers-color-scheme: dark) { :root { --fg:#e6edf3; --muted:#9aa4af; --bg:#0e1117; --line:#30363d; } }
+  html, body { margin:0; padding:0; }
+  body { font:14px/1.4 system-ui, sans-serif; color:var(--fg); background:var(--bg); }
+  video { width:100%; background:#000; display:block; }
+  .bar { display:flex; flex-wrap:wrap; gap:12px 20px; align-items:center; padding:8px 2px; }
+  .label { font-size:22px; font-weight:600; min-width:7ch; font-variant-numeric:tabular-nums; }
+  .muted { color:var(--muted); }
+  .warn { color:#b35900; }
+  .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+  input[type=range] { vertical-align:middle; accent-color:var(--accent); }
+  nav { display:flex; flex-wrap:wrap; gap:8px; padding:4px 2px 0; }
+  nav button { font:inherit; color:var(--fg); background:var(--bg); border:1px solid var(--line);
+               border-radius:6px; padding:4px 10px; cursor:pointer; }
+  nav button[aria-current="true"] { border-color:var(--fg); font-weight:600; }
+  button:focus-visible, input:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  fieldset { border:1px solid var(--line); border-radius:8px; margin:4px 0 6px; padding:6px 12px 10px; }
+  legend { padding:0 4px; color:var(--muted); }
+  .mix { display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:4px 24px; }
+  .mix label { display:flex; flex-direction:column; gap:2px; }
+  .mix .row { display:flex; gap:8px; align-items:center; }
+  .mix input { flex:1; min-width:0; }
+  .mix output { min-width:4.5ch; text-align:right; font-variant-numeric:tabular-nums; }
+  .status { min-height:1.4em; }
+</style>
+</head>
+<body>
+<video id="v" controls preload="metadata" playsinline
+       aria-label="SVS movie; the data sonification plays in sync with it"></video>
+<nav id="chapters" aria-label="Movie sections" hidden></nav>
+<div class="bar">
+  <span class="label" id="lbl" aria-hidden="true">—</span>
+  <label>Sonification volume
+    <input id="vol" type="range" min="0" max="1" step="0.05" value="0.9"></label>
+  <label><input id="mute" type="checkbox"> Mute sonification</label>
+  <span class="muted" id="dur"></span>
+  <span class="muted status" id="status"></span>
+</div>
+<fieldset id="mixbox" hidden>
+  <legend>Layer levels — live, no re-render</legend>
+  <div class="mix" id="mix"></div>
+</fieldset>
+<div class="sr" id="live" aria-live="polite"></div>
+<script>
+"use strict";
+// ---- Streamlit component protocol (what streamlit-component-lib does, by hand) ----
+function send(type, data) { window.parent.postMessage(Object.assign({ isStreamlitMessage: true, type }, data), "*"); }
+let lastHeight = 0;
+function fitHeight() {
+  const h = Math.ceil(document.documentElement.scrollHeight);
+  if (h !== lastHeight) { lastHeight = h; send("streamlit:setFrameHeight", { height: h }); }
+}
+new ResizeObserver(fitHeight).observe(document.body);
+
+const $ = id => document.getElementById(id);
+const v = $("v"), lbl = $("lbl"), live = $("live"), statusEl = $("status");
+const DRIFT = 0.08, NORM = Math.pow(10, -6 / 20);   // same -6 dB peak as synth.normalize
+
+let spans = [], chapters = [], AUDIO_S = 0, normalize = false;
+let jumpedTo = null;
+
+// ---- audio graph: stems -> per-stem gain -> master (volume / mute) -> speakers ----
+const ac = new (window.AudioContext || window.webkitAudioContext)();   // starts suspended until a gesture
+const master = ac.createGain();
+master.connect(ac.destination);
+const resume = () => { if (ac.state !== "running") ac.resume().catch(() => {}); };
+["pointerdown", "keydown"].forEach(t => document.addEventListener(t, resume, true));
+
+let cur = null, pending = null;              // stem sets: {id, names, els, gains, data, urls}
+const values = {};                            // PARAM -> level shown on the sliders
+let mixSpec = { stems: [], output: null }, mixId = null;
+
+function pcm(u8) {                            // WAV bytes -> Int16Array of interleaved samples
+  const dv = new DataView(u8.buffer, u8.byteOffset, u8.byteLength);
+  let p = 12;
+  while (p + 8 <= u8.byteLength) {
+    const id = String.fromCharCode(u8[p], u8[p + 1], u8[p + 2], u8[p + 3]), size = dv.getUint32(p + 4, true);
+    if (id === "data") {
+      const start = u8.byteOffset + p + 8, end = Math.min(start + size, u8.byteOffset + u8.byteLength);
+      return new Int16Array(u8.buffer.slice(start, end - ((end - start) % 2)));
+    }
+    p += 8 + size + (size % 2);
+  }
+  return new Int16Array(0);
+}
+
+function makeSet(id, names, blobs) {
+  const set = { id, names, els: [], gains: [], data: [], urls: [] };
+  blobs.forEach(u8 => {
+    const url = URL.createObjectURL(new Blob([u8], { type: "audio/wav" }));
+    const el = new Audio();
+    el.preload = "auto"; el.src = url; el.playbackRate = v.playbackRate;
+    const g = ac.createGain();
+    g.gain.value = 0;
+    ac.createMediaElementSource(el).connect(g).connect(master);
+    set.els.push(el); set.gains.push(g); set.urls.push(url); set.data.push(pcm(u8));
+  });
+  return set;
+}
+
+function dropSet(set) {
+  if (!set) return;
+  set.els.forEach(el => { el.pause(); el.removeAttribute("src"); el.load(); });
+  set.gains.forEach(g => g.disconnect());
+  set.urls.forEach(u => URL.revokeObjectURL(u));
+}
+
+function levelOf(set, i) {                    // the slider value for stem i (1 when it has no slider)
+  const s = mixSpec.stems.find(x => x.stem === set.names[i]);
+  return s ? values[s.param] : 1;
+}
+
+function targetGains(set) {                   // = sonify.Stems.mix: normalize(sum gain*stem) * output
+  const g = set.names.map((_, i) => levelOf(set, i));
+  if (!normalize) return g;
+  let peak = 0;
+  const n = set.data.length ? set.data[0].length : 0;
+  for (let j = 0; j < n; j++) {
+    let s = 0;
+    for (let k = 0; k < set.data.length; k++) s += g[k] * set.data[k][j];
+    if (s > peak) peak = s; else if (-s > peak) peak = -s;
+  }
+  const output = mixSpec.output ? values[mixSpec.output.param] : 1;
+  const scale = peak > 0 ? NORM / (peak / 32767) * output : 0;
+  return g.map(x => x * scale);
+}
+
+function applyGains(set, ramp = 0.03) {
+  if (!set) return;
+  const t = ac.currentTime, ticking = ac.state === "running" && t > 0;   // suspended: the clock is frozen
+  targetGains(set).forEach((x, i) => {
+    const p = set.gains[i].gain;
+    if (ticking) p.setTargetAtTime(x, t, ramp);                         // smooth while dragging / crossfading
+    else { p.cancelScheduledValues(0); p.value = x; }
+  });
+}
+
+let remixQueued = false;
+function remix() {                            // at most every ~16 ms while dragging
+  if (remixQueued) return;
+  remixQueued = true;
+  setTimeout(() => { remixQueued = false; applyGains(cur); }, 16);
+}
+
+function seekSet(set) { set.els.forEach(el => { el.currentTime = Math.min(v.currentTime, AUDIO_S); }); }
+function align(set) {
+  if (!set) return;
+  set.els.forEach(el => { if (Math.abs(el.currentTime - v.currentTime) > DRIFT) el.currentTime = Math.min(v.currentTime, AUDIO_S); });
+}
+function playSet(set) { if (set) { resume(); set.els.forEach(el => el.play().catch(() => {})); } }
+function pauseSet(set) { if (set) set.els.forEach(el => el.pause()); }
+
+async function swapIn(set) {
+  await Promise.all(set.els.map(el => el.readyState >= 3 ? null
+    : new Promise(r => el.addEventListener("canplay", r, { once: true }))));
+  if (pending !== set) return;                 // a newer render arrived meanwhile
+  seekSet(set);
+  if (!v.paused) playSet(set);
+  const old = cur;
+  cur = set; pending = null;
+  if (old) {
+    old.gains.forEach(g => g.gain.setTargetAtTime(0, ac.currentTime, 0.03));
+    setTimeout(() => dropSet(old), 300);
+    live.textContent = "Sonification updated.";
+    statusEl.textContent = "audio updated";
+    setTimeout(() => { if (statusEl.textContent === "audio updated") statusEl.textContent = ""; }, 1500);
+  }
+  applyGains(set, old ? 0.03 : 0.001);
+}
+
+// ---- level sliders (stem scripts only) ----
+function buildMix() {
+  const box = $("mix");
+  box.textContent = "";
+  const items = mixSpec.stems.map(s => ({ ...s, title: `${s.stem} level` }));
+  if (mixSpec.output) items.push({ ...mixSpec.output, title: "output level" });
+  items.forEach(s => {
+    values[s.param] = s.value;
+    const label = document.createElement("label");
+    const name = document.createElement("span");
+    name.textContent = `${s.param} `;
+    const hint = document.createElement("span");
+    hint.className = "muted"; hint.textContent = `(${s.title})`;
+    name.appendChild(hint);
+    const row = document.createElement("span"); row.className = "row";
+    const input = document.createElement("input");
+    Object.assign(input, { type: "range", min: s.lo, max: s.hi, step: (s.hi - s.lo) / 200, value: s.value });
+    input.setAttribute("aria-label", `${s.param}, ${s.title}`);
+    const out = document.createElement("output");
+    out.textContent = (+s.value).toFixed(3);
+    input.addEventListener("input", () => { values[s.param] = +input.value; out.textContent = (+input.value).toFixed(3); remix(); });
+    input.addEventListener("change", () => send("streamlit:setComponentValue", { value: { ...values, _mix: mixId }, dataType: "json" }));
+    row.append(input, out); label.append(name, row); box.appendChild(label);
+  });
+  $("mixbox").hidden = !items.length;
+}
+
+// ---- labels, chapters, live region (same behaviour as sync_player) ----
+function labelAt(t) {
+  let lo = 0, hi = spans.length - 1;
+  while (lo <= hi) {
+    const m = (lo + hi) >> 1;
+    if (t < spans[m][1]) hi = m - 1; else if (t >= spans[m][2]) lo = m + 1; else return spans[m][0];
+  }
+  return spans.length && t >= spans[spans.length - 1][2] ? spans[spans.length - 1][0] : "—";
+}
+function announce() {
+  const where = (v.paused ? "Paused at " : "At ") + labelAt(v.currentTime);
+  live.textContent = jumpedTo ? `Section ${jumpedTo}. ${where}` : where;
+  jumpedTo = null;
+}
+let chapterButtons = [], chaptersKey = "";
+function buildChapters() {
+  const key = JSON.stringify(chapters);
+  if (key === chaptersKey) return;
+  chaptersKey = key;
+  const nav = $("chapters");
+  nav.textContent = "";
+  chapterButtons = chapters.map(([title, t0]) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.textContent = title;
+    b.addEventListener("click", () => { jumpedTo = title; v.currentTime = t0; });
+    nav.appendChild(b); return b;
+  });
+  nav.hidden = !chapters.length;
+}
+function chapterAt(t) { let k = -1; chapters.forEach(([, t0], i) => { if (t >= t0) k = i; }); return k; }
+
+v.addEventListener("play",    () => { align(cur); playSet(cur); });
+v.addEventListener("playing", () => { align(cur); playSet(cur); });
+v.addEventListener("waiting", () => pauseSet(cur));           // video buffering: hold the audio
+v.addEventListener("pause",   () => { pauseSet(cur); align(cur); announce(); });
+v.addEventListener("ended",   () => pauseSet(cur));
+v.addEventListener("seeking", () => { if (cur) seekSet(cur); });
+v.addEventListener("seeked",  () => { align(cur); announce(); });
+v.addEventListener("ratechange", () => [cur, pending].forEach(s => s && s.els.forEach(el => { el.playbackRate = v.playbackRate; })));
+function showDuration() {
+  if (!v.duration) return;
+  const d = $("dur"), diff = Math.abs(v.duration - AUDIO_S);
+  d.className = diff > 0.5 ? "warn" : "muted";
+  d.textContent = `movie ${v.duration.toFixed(1)} s · audio ${AUDIO_S.toFixed(1)} s` +
+    (diff > 0.5 ? " — lengths differ: check the fps / timeline" : "");
+}
+v.addEventListener("loadedmetadata", () => { showDuration(); fitHeight(); });
+$("vol").addEventListener("input", e => { master.gain.value = $("mute").checked ? 0 : +e.target.value; });
+$("mute").addEventListener("change", e => { master.gain.value = e.target.checked ? 0 : +$("vol").value; });
+master.gain.value = 0.9;
+
+let last = null, lastChapter = null;
+(function tick() {
+  if (!v.paused && !v.seeking) align(cur);
+  const l = labelAt(v.currentTime);
+  if (l !== last) { lbl.textContent = l; last = l; }          // visual only; screen readers hear pause/seek
+  const c = chapterAt(v.currentTime);
+  if (c !== lastChapter) {
+    chapterButtons.forEach((b, i) => b.setAttribute("aria-current", i === c ? "true" : "false"));
+    lastChapter = c;
+  }
+  requestAnimationFrame(tick);
+})();
+
+// ---- a render message from Python (every Streamlit rerun) ----
+function applyTheme(theme) {
+  if (!theme) return;
+  const r = document.documentElement.style;
+  if (theme.textColor) r.setProperty("--fg", theme.textColor);
+  if (theme.backgroundColor) r.setProperty("--bg", theme.backgroundColor);
+  if (theme.primaryColor) r.setProperty("--accent", theme.primaryColor);
+  if (theme.base === "dark") { r.setProperty("--muted", "#9aa4af"); r.setProperty("--line", "#30363d"); }
+  else if (theme.base === "light") { r.setProperty("--muted", "#5b6470"); r.setProperty("--line", "#d0d7de"); }
+}
+
+window.addEventListener("message", e => {
+  if (!e.data || e.data.type !== "streamlit:render") return;
+  const a = e.data.args;
+  applyTheme(e.data.theme);
+  if (v.getAttribute("src") !== a.video_url) v.src = a.video_url;
+  v.style.maxHeight = `${a.video_h}px`;
+  spans = a.spans; chapters = a.chapters; AUDIO_S = a.audio_s; normalize = a.normalize;
+  buildChapters();
+  last = null; lastChapter = null;
+  if (a.mix_id !== mixId) { mixId = a.mix_id; mixSpec = a.mix; buildMix(); remix(); }
+  else mixSpec = a.mix;
+  const target = pending ? pending.id : cur ? cur.id : null;
+  if (a.audio_id !== target) {
+    dropSet(pending);
+    pending = makeSet(a.audio_id, a.stem_names, a.stem_names.map((_, i) => a[`stem_${i}`]));
+    swapIn(pending);
+  }
+  showDuration();
+  fitHeight();
+});
+
+send("streamlit:componentReady", { apiVersion: 1 });
+</script>
+</body>
+</html>

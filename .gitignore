@@ -23,7 +23,8 @@ frontend/player/frames/
 
 # Editors / OS
 .idea/
-.vscode/
+.vscode/*
+!.vscode/launch.json
 .DS_Store
 Thumbs.db
 
