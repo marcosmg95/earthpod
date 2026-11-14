@@ -28,6 +28,12 @@ If you changed `backend/src/jukebox/mapping.py` or data loaders, re-run `uv run 
 
 ## Where things are
 - Repo overview: `README.md`; backend and how to reproduce every dataset: `backend/README.md`; data notes: `backend/data/README.md`.
-- Windows quirks (Smart App Control blocks some DLLs, pandas pinned < 3): see `backend/README.md` → Windows notes.
+- Windows quirks (Smart App Control blocks some DLLs and the `.venv\Scripts\*.exe` launchers, pandas pinned < 3):
+  see `backend/README.md` → Windows notes. Run tools as `uv run python -m <tool>`; VS Code entry points are in `.vscode/launch.json`.
+- Sonification scripts (audio played in sync with an SVS movie in the explorer's Sonify tab): one `.py` per script in
+  `backend/sonifications/` with `TITLE`, `DESCRIPTION` and `render(ctx) -> stereo np.ndarray`. Contract: `backend/src/jukebox/sonify.py`
+  docstring + `backend/README.md` → Sonification scripts; template: `gistemp_lead.py`.
+  Reuse `jukebox.mapping` / `jukebox.synth` (via `ctx.notes_from_series`, `ctx.render_notes`) instead of new synth code,
+  and name the data source in `DESCRIPTION`.
 - Accessibility is a core requirement: keyboard-only, screen-reader live regions, no autoplay (see `docs/04-accessibility.md`).
 - Credit NASA sources in captions and `source` fields; never imply NASA endorsement.

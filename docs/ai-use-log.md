@@ -11,3 +11,4 @@ Space Apps requires disclosing where and how AI tools were used. Log every use f
 | 2026-11-14 | Claude Code | Refactored backend to a uv project (pyproject.toml + uv.lock, src/jukebox layout, no sys.path hacks); added jukebox.svs API client + Streamlit SVS explorer (apps/svs_explorer.py) and tests; updated READMEs/AGENTS.md | Marcos | Pending team review |
 | 2026-11-14 | Claude Code | Diagnosed Smart App Control blocking the streamlit.exe launcher; switched docs to `uv run python -m streamlit` and added a Windows note | Marcos | Yes |
 | 2026-11-14 | Claude Code | Added .vscode/launch.json (run/debug entry points); built video-locked data sonification in the SVS explorer (time.txt timeline, sonification script contract + GISTEMP demo, synced HTML player), tests and docs | Marcos | Pending team review |
+| 2026-11-14 | Claude Code | Documented sonification scripts and Windows/uv run rules in AGENTS.md | Marcos | Yes |
