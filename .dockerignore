@@ -1,6 +1,11 @@
-# The image only needs the static frontend and the nginx config.
+# The image only needs the web app and the nginx config.
 *
 !infra/
-!frontend/arcade/
-!frontend/player/
-frontend/player/frames/
+!frontend/web/
+**/node_modules
+**/dist
+**/.venv-tts
+**/originals
+**/__pycache__
+**/.DS_Store
+.git
