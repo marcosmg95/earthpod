@@ -159,5 +159,51 @@ class TestContextAndScripts(unittest.TestCase):
                     self.assertTrue(getattr(mod, "TITLE", "") and getattr(mod, "DESCRIPTION", ""))
 
 
+class TestAerosolBands(unittest.TestCase):
+    """svs5669/aerosols_bands follows one rule on any grid (Hermann: systematic, reproducible, other data)."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.m = sonify.load(SONIFICATIONS / "svs5669" / "aerosols_bands.py")
+
+    def grid(self, blobs):
+        """Synthetic (steps, rows) grids: a faint uniform haze plus (type, step0, step1, row0, row1) blobs."""
+        arrays = {t: np.full((svs5669.STEPS, svs5669.ROWS), 0.02) for t in svs5669.TYPES}
+        for t, s0, s1, r0, r1 in blobs:
+            arrays[t][s0:s1, r0:r1] = 0.6
+        return arrays
+
+    def stops(self, arrays):
+        class F:  # what tour() reads from PageFeatures
+            pass
+        f = F()
+        f.arrays = arrays
+        return self.m.tour(f)
+
+    def test_finds_blobs_where_they_are_and_follows_a_shift(self):
+        stops = self.stops(self.grid([("dust", 200, 260, 12, 16), ("sea_salt", 50, 70, 26, 28)]))
+        self.assertEqual([p["type"] for p in stops], ["sea_salt", "dust"])     # scan order
+        self.assertEqual((stops[1]["start"], stops[1]["width"]), (200, 60))
+        self.assertAlmostEqual(stops[1]["lat"], 15, delta=5)
+        shifted = self.stops(self.grid([("dust", 300, 360, 12, 16), ("sea_salt", 50, 70, 26, 28)]))
+        self.assertEqual(shifted[1]["start"], 300)
+
+    def test_uniform_haze_is_silent_and_types_share_one_scale(self):
+        self.assertEqual(self.stops(self.grid([])), [])
+        lv = self.m.levels(self.grid([("dust", 0, 40, 10, 12), ("sulfate", 100, 140, 10, 12)]))
+        self.assertAlmostEqual(lv["dust"].max(), lv["sulfate"].max())
+        self.assertEqual(lv["dust"][:, 0].max(), 0.0)                          # haze level = usual = silent
+
+    def test_plume_across_the_date_line_is_one_stop(self):
+        stops = self.stops(self.grid([("sulfate", 470, 480, 14, 16), ("sulfate", 0, 10, 14, 16)]))
+        self.assertEqual(len(stops), 1)
+        self.assertEqual((stops[0]["start"], stops[0]["width"]), (470, 20))
+
+    def test_same_latitude_same_note_for_every_type(self):
+        midis = self.m.band_midi(18)
+        self.assertEqual(len(set(midis)), 18)
+        self.assertEqual(midis, sorted(midis, reverse=True))                   # north first = highest
+
+
 if __name__ == "__main__":
     unittest.main()

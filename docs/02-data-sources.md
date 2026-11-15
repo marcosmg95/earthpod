@@ -26,7 +26,7 @@ on the challenge's Resources tab"); 13786 is only a sonification example.
 | 13786 | Data Sonification: Caldwell 73 | reference only (luminosity → volume, position → pitch) |
 | 5313 | Change in Night Lights 2012–2023 – EIC Version | EIC movie (32:9, H.265); `svs5313/` scripts; Black Marble VNP46A4 numbers (PoC 5) |
 | 5196 | DYAMOND Global Carbon Dioxide | 1080p movies; `svs5196/co2_*` |
-| 5669 | GEOS Aerosols (2025) | the **still** map (19 Aug 2025 20:00 UTC) scanned west → east; `svs5669/aerosols_scan` |
+| 5669 | GEOS Aerosols (2025) | the **still** map (19 Aug 2025 20:00 UTC) scanned west → east; `svs5669/aerosols_scan`, `svs5669/aerosols_bands` |
 | 5533 | Air Quality Model Runs (GEOS-CF) | `EIC_AirQuality_Preview_3840x1080.mp4`; `svs5533/pollutant_quartet` |
 | 5011 | Lightning Events Detected from the ISS 2017–2023 | SOS map movie (4096x2048, 60 fps); `svs5011/storm_map` |
 | 3912 | Global Sea Surface Currents and Temperature (ECCO2) | `ecco2_sst_flow.mp4` flat map; `svs3912/warm_and_cold_currents` |
