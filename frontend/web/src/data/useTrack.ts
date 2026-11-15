@@ -67,7 +67,7 @@ async function fetchManifest(dir: string): Promise<LoadedTrack> {
   const cues = manifest.descriptions
     ? await fetchVtt(base + manifest.descriptions)
     : [];
-  return { ...manifest, base, cues };
+  return { ...manifest, base, cues, about: "" };
 }
 
 interface TrackState {
