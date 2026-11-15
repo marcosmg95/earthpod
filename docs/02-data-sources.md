@@ -1,5 +1,14 @@
 # 02 — Data sources
 
+## Sources in the production web app
+
+The current web app contains two chapters:
+
+- **The breathing planet:** NASA Scientific Visualization Studio (SVS) 5196, DYAMOND Global Carbon Dioxide, January–March 2020. The sonification follows features measured from the visualization; it is not a calibrated CO₂ dataset.
+- **The night lights:** NASA SVS 5313, Change in Night Lights 2012–2023 — EIC Version. The sonification follows image features and the on-screen sequence; it is not a calibrated radiance product.
+
+EarthPod credits NASA SVS and does not imply NASA endorsement. Other datasets and pages listed below support backend research and demos; they are not all chapters in the production web app.
+
 ## NASA SVS (where EIC visuals live)
 - EIC gallery: https://svs.gsfc.nasa.gov/gallery/earth-information-center/
 - Earth Now dashboard: https://svs.gsfc.nasa.gov/gallery/earth-now-dashboard/

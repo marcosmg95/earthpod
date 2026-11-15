@@ -1,15 +1,16 @@
-# 05 — Concept directions
+# 05 — Concept and delivered experience
 
-| # | Concept | Weekend MVP | Risks |
-|---|---|---|---|
-| A | **"Escolta el teu clima" — Listen to Barcelona** (core) | Global GISTEMP track + Barcelona-region track; SVS 5450 frames synced; toggle planet vs. my city; CA/ES/EN descriptions | Noisy local cell → 5-yr mean; explain grid cell |
-| B | **Accessible jukebox for blind listeners** (merge into A) | Keyboard scrubbing, live-region narration, reference tone, orientation track, transcripts, real user test | Needs tester; screen reader vs audio collisions |
-| C | Decades Duet | 1950s vs 2020s, one per ear; dissonance grows with the gap | Confusing without intro |
-| D | Touch-the-map explorer (stretch) | Hover/drag or keyboard cursor on SST anomaly (SVS 5176) → hear local value via LUT; Mediterranean heatwave story | Inversion errors; touch + screen reader conflicts |
-| E | Curated playlist + live performance | 5 rendered tracks (temp, sea ice, CO₂, sea level, SST) + liner notes; optional Strudel live set | Less "real-time" |
+## Product concept
 
-## Recommendation
-Build **A + B as one product**, **D as stretch**. E's playlist can be a cheap fallback deliverable (render tracks from the same engine).
+EarthPod turns selected NASA Earth visualizations into a guided listening experience. It combines an introductory listening guide, synchronized imagery and sonification, captions, a sound chart, and available time-coded descriptions. The aim is to make the patterns in the visualizations explorable by listening, not to replace the source data or its scientific interpretation.
 
-## Pitch structure
-Problem (EIC is visual-only) → Mapping in one sentence → Validity (inverted pixels vs GISTEMP plot) → User quote → Barcelona story → Demo.
+## What shipped
+
+- An introduction and **How to listen** guide.
+- **The breathing planet**, based on NASA SVS 5196's global CO₂ visualization.
+- **The night lights**, based on NASA SVS 5313's 2012–2023 visualization.
+- A record page and an accessibility statement.
+
+The initial concepts included GISTEMP and a Barcelona-region climate comparison. Those remain in the backend's PoC scripts and are not part of the production web app. Additional concepts such as a touch-the-map explorer and a larger curated playlist were not included in the shipped chapter list.
+
+For current behavior, visit [earthpod.earth](https://earthpod.earth) or see [the root README](../README.md). For chapter mappings and interpretive limitations, see [sonification design](03-sonification-design.md).

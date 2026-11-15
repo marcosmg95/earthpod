@@ -1,31 +1,25 @@
 # 04 — Accessibility
 
-## Must-haves
-- No autoplay. WCAG 2.2 SC 1.4.2: audio only starts on user action; Play/Pause and volume first in tab order.
-- Full keyboard operation with native `<button>` / `<input type="range">`, `aria-label`, `aria-valuetext` (e.g. "1998, +0.61 °C"), visible focus.
-- `aria-live="polite"` region: year, value, one-line description per step. Throttled; never every frame during playback.
-- Meaningful `alt` on each frame; full text transcript per track.
-- Orientation intro (~20 s) explaining the mapping; reference tone for baseline 0 °C.
-- Captions + audio description in the demo video.
-- High contrast, `prefers-reduced-motion`, mono-compatible mix.
+Accessibility is a core design goal of EarthPod. The app's [accessibility statement](https://earthpod.earth/#/accessibility) is the user-facing source for current behavior and limitations.
 
-## Keyboard model (draft)
-| Key | Action |
-|---|---|
-| Space | Play / pause |
-| ← / → | Previous / next year |
-| Shift + ← / → | Jump a decade |
-| ↑ / ↓ | Volume (or latitude band) |
-| D | Speak/announce description |
-| R | Play reference tone |
-| 1–5 | Solo a layer |
-| B | Toggle Planet ↔ Barcelona |
+## Implemented behavior
 
-## Optional
-- Web Speech API narration as opt-in (don't fight the user's screen reader).
-- Haptics: `navigator.vibrate()` — Chromium/Android only, after user tap; never on iOS Safari. Feature-detect; e.g. pulse on record years.
+- Audio does not start until the user presses a control; playback can be paused.
+- Pages and player controls support keyboard use. Player shortcuts include Space, arrow keys, and D, and can be disabled in settings.
+- The introduction has captions and text available to screen readers.
+- The sound chart acts as a position control and announces its date/time; key scene descriptions are announced and can be read in a transcript.
+- Reduced-motion preferences and an in-app motion setting are supported.
+- The app supports browser zoom, text resizing, and high-contrast mode.
 
-## User testing
-- Ask the 42 Barcelona organizers and/or ONCE for a blind/low-vision tester for ~20 min on Sunday morning.
-- Test with NVDA (Windows) and VoiceOver (macOS/iOS) at least once before.
-- Capture one quote (with permission) for the pitch.
+## Known limitations
+
+- The app has not had an independent accessibility audit. Its design target is WCAG 2.2 AA; this is not a claim of conformance.
+- Some scenes do not yet have spoken descriptions, so the corresponding transcript may be empty.
+- JavaScript is required for playback.
+- The sonifications represent visual patterns and not exact scientific measurements.
+
+## Checks reported by the project
+
+The app's accessibility statement reports automated checks and manual checks with a keyboard, VoiceOver on macOS, browser zoom, increased text spacing, reduced motion, and high-contrast mode. The production end-to-end suite uses Playwright and axe. These checks do not replace testing with a broad range of users and assistive technologies.
+
+To report an accessibility issue, use the contact information in the app's accessibility statement.

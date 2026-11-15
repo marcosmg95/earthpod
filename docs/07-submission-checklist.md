@@ -1,23 +1,26 @@
-# 07 — Submission & judging checklist
-(Update after reading the official guides on Fri 13 Nov.)
+# 07 — Release and presentation checklist
 
-## Content
-- [ ] Project page: description, challenge, data & resources used, "hackathon journey"
-- [ ] Demo (historically 30-second video or short slides — confirm 2026 length)
-- [ ] Public repository + live URL
-- [ ] AI-use statement (from docs/ai-use-log.md)
+Use this as a final human check before a public presentation or submission. Repository documentation cannot verify the current state of an external submission form or deployed service.
 
-## Judging criteria coverage
-- [ ] **Impact** — blind/low-vision access; tester quote
-- [ ] **Creativity** — Barcelona local track; musical, not noisy
-- [ ] **Validity** — one-sentence mapping; inverted pixels vs GISTEMP plot
-- [ ] **Relevance** — uses EIC/SVS frames + datasets named on Resources tab
-- [ ] **Presentation** — captioned, audio-described video; clear slides
+## Product and access
 
-## Compliance
-- [ ] Citations: GISTEMP v4, NASA SVS, GIBS acknowledgement
-- [ ] No NASA logo / no implied endorsement
-- [ ] Audio only on user action; pause + volume first in tab order
-- [ ] Full keyboard operation, aria-valuetext, live region, transcripts
-- [ ] Haptics behind feature detection
-- [ ] Submitted with ≥2 h to spare
+- [x] Open [earthpod.earth](https://earthpod.earth) on the presentation device.
+- [x] Play both chapters; verify audio/video synchronization, captions, and controls.
+- [x] Confirm audio starts only after user input.
+- [x] Check keyboard navigation and the relevant screen-reader experience.
+- [x] Confirm the app's accessibility statement and known limitations are accessible.
+
+## Credits and disclosure
+
+- [x] Confirm NASA SVS and other source credits are visible wherever required.
+- [x] Do not use NASA insignia or imply NASA endorsement.
+- [x] Include the AI-use disclosure from [docs/ai-use-log.md](ai-use-log.md) in the submission materials.
+
+## Presentation
+
+- [x] Check the current event submission guide for required fields and media limits.
+- [x] Use captions and audio description for any demo video.
+- [x] Keep an offline copy of presentation media.
+- [x] Recheck the public repository and live URL immediately before sharing.
+
+All checklist items were marked complete at the team's direction.

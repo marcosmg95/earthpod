@@ -1,5 +1,7 @@
 # data/
 
+The checked-in files support backend experiments and reproducibility; they are not all used by the production web app. The two production chapters use NASA SVS 5196 and SVS 5313, with image-derived sound features described in [the project data-source notes](../../docs/02-data-sources.md).
+
 ## Already here
 - `gistemp/GLB.Ts+dSST.csv` — GISTEMP v4 global monthly + annual anomalies (°C vs 1951–1980), 1880–Sep 2026. Downloaded 10 Nov 2026.
 - `gistemp/ZonAnn.Ts+dSST.csv` — annual zonal means (Glob, NHem, SHem, 8 latitude bands), 1880–2025.

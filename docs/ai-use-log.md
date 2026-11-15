@@ -36,3 +36,7 @@ Space Apps requires disclosing where and how AI tools were used. Commit-by-commi
   formatting and build errors, and tested in the browser before each deploy.
 - Accessibility was checked automatically (axe, end-to-end tests) and by the team with the keyboard; the final
   sign-off on screen-reader use is done by the team.
+
+## Release documentation
+
+- GitHub Copilot: assisted with consolidating the project README and release-facing documentation. Product claims were checked against the application and repository documentation; maintainers should review the final wording before external submission.

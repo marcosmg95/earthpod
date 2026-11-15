@@ -1,37 +1,32 @@
 # 03 — Sonification design
 
-## Principle
-"Every note is a measured number, and we can show you which one." One data layer per voice; a one-sentence mapping explanation everywhere (app, video, slides).
+## Design principle
 
-## Mapping table (draft — freeze Sat AM)
-| Data feature | Sound parameter | Guardrail |
-|---|---|---|
-| Global anomaly (°C) | Melody pitch | Quantize to D minor pentatonic / Dorian; 1 step ≈ 0.1 °C; 0 °C = tonic reference drone |
-| Rate of change (Δ/decade) | Tempo / note density | Clamp 60–140 BPM; EMA smoothing α≈0.2 |
-| Zonal bands (Arctic → Antarctic) | Separate string voices | Arctic = highest voice so Arctic amplification is audible |
-| East–west position (scan playhead) | Stereo pan −1…+1 | Tone.Panner per voice; never the only carrier of info (mono-compatible) |
-| % area > +1 °C / extremes | Filter brightness + dissonance (♭9, tritone, detune) | Only beyond threshold |
-| Image brightness/intensity | Volume | Compress; never above −6 dBFS |
-| Record-breaking year | Bell/percussion accent + spoken "record" | Sparse, earcon-style |
+Make the relationship between the source visualization and its sound understandable. EarthPod's chapter sonifications use features measured from the selected visualizations; they are artistic interpretations of those pictures, not substitutes for the underlying scientific datasets.
 
-## Keeping it musical
-- Scale quantization; fixed harmonic bed (I–VI–VII loop that darkens toward minor/diminished as anomalies grow)
-- `rampTo` 50–200 ms on parameters (no zipper noise)
-- Max 6 simultaneous voices
+## Shipped chapters
 
-## Stack
-- Static web app: Vite + TS (or React), deployed on GitHub Pages / Vercel
-- Audio: Tone.js (Transport, PolySynth, Sampler, Panner, filters). AudioContext starts on user gesture.
-- Offline prep in Python: ffmpeg/curl frames → downsample (~360x180); xarray/pandas → `tracks.json` (global, 4 zonal bands, Barcelona, per-frame features)
-- Browser only plays precomputed JSON + low-res frames (keeps risk out of the live demo)
-- Hover mode: Canvas `getImageData` + LUT
-- Offline playlist renders (optional): STRAUSS
-- Avoid generative music models live: MusicGen weights are CC-BY-NC 4.0 and need ~16 GB GPU. At most a pre-rendered, labelled background.
-- VLM for alt text: offline only, human-reviewed, grounded in the computed numbers.
+### The breathing planet
 
-## Prior art to cite / learn from
-- NASA Chandra "A Universe of Sound" — scan metaphor, one layer per instrument, co-designed with blind consultant; evaluation with 3,184 respondents (Arcand et al., Frontiers in Communication 2024). https://chandra.si.edu/sound/
-- "A Song of Our Warming Planet" (Crawford, 2013) — GISTEMP on cello, one note per year, ~0.03 °C per semitone; follow-up "Planetary Bands, Warming World" with one instrument per latitude band.
-- Highcharts Sonification Studio (Georgia Tech Sonification Lab) — accessible audio graphs.
-- Microsoft Chart Reader (CHI 2023) — pitch to relative axis position works for blind users.
-- Review arXiv 2402.16558 — spoken intro + non-speech audio helps; inexperience causes misreadings.
+The chapter uses NASA SVS 5196's global CO₂ visualization. Its sound follows picture features such as the visible orange-red area, position, and tan haze. Heartbeat and breathing sounds are metaphors for visual patterns; they do not represent human physiology or calibrated atmospheric CO₂ concentrations.
+
+### The night lights
+
+The chapter uses NASA SVS 5313's 2012–2023 Earth-at-night visualization. It moves through the yearly maps and change map, where the source visualization uses purple for new lights and orange for lights that dimmed. Sound follows image features and the visualization's sequence; the measurements are not calibrated radiance values or city-level measurements.
+
+The center label, legends, map details, transitions, and zooms can affect image-derived features. They should be understood as visual indices with the limitations described in [the backend guide](../backend/README.md), not as independent measurements of Earth-system variables.
+
+## Interpretability and accessibility
+
+- The listening guide introduces the sound and its controls before the chapters.
+- Chapters provide captions, a sound chart, and available time-coded descriptions and transcripts.
+- Playback begins only after the user activates it; the player exposes keyboard-operable controls.
+- Where a chapter has no spoken descriptions for a moment, the transcript may be empty for that moment. See the [accessibility statement](04-accessibility.md).
+
+## Other research mappings
+
+The repository also contains GISTEMP-based sonification work and exploratory scripts for other NASA SVS pages. These are backend experiments and demos, not additional chapters in the production web app. Detailed implementation notes and reproduction commands are in [backend/README.md](../backend/README.md).
+
+## Credits
+
+The source visualizations are credited to NASA Scientific Visualization Studio (SVS 5196 and SVS 5313). EarthPod is not endorsed by NASA. See [data sources](02-data-sources.md) for citations and source limitations.

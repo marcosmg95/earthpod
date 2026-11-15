@@ -4,11 +4,13 @@ Python: data loading, data → music mapping, numpy synth, the PoC scripts and a
 Managed with [uv](https://docs.astral.sh/uv/) — install once with `pip install uv` (or `winget install astral-sh.uv`).
 **Commands run from `backend/`.**
 
+This directory contains research and data-reproduction tools. The production web experience is `frontend/web/`; the GISTEMP scripts and `frontend/player/` outputs below are legacy demos and are not the chapters served by the production app.
+
 ## What's here
 | PoC | Script | Needs | Proves |
 |---|---|---|---|
 | 1 | `scripts/poc1_render_global.py` | `data/gistemp/` (committed) | Real GISTEMP numbers → a musical, explainable track (WAV) |
-| 2 | `scripts/poc2_export_tracks.py` | same | `frontend/player/tracks.json` for the accessible web player |
+| 2 | `scripts/poc2_export_tracks.py` | same | `frontend/player/tracks.json` for the legacy player demo |
 | 3 | `scripts/poc3_validate_inversion.py` | `data/raw/` (run `data/download_data.ps1`) | SVS 5450 frame colours read back into °C match GISTEMP → **r for the Validity slide**; also writes `frontend/player/frames/` |
 | 4 | `scripts/poc4_barcelona.py` | gridded netCDF + `--extra netcdf` | Barcelona-region series → second track ("Listen to Barcelona") |
 | 5 | `scripts/poc5_blackmarble_regions.py` | `data/download_blackmarble.ps1` (Earthdata token) + `--extra blackmarble` | Black Marble night lights (SVS 5313 data) per region/year → `data/derived/blackmarble_annual.*` |
@@ -136,7 +138,6 @@ for that codec. Other movie versions have not been measured.
 
 To reproduce the features, run `uv run python -m jukebox.measure 5313` from `backend/` (it downloads the
 SVS 5313 movie into `data\raw\` if `data\download_data.ps1` has not). This writes
-aw\` if `data\download_data.ps1` has not). This writes
 `data\derived\svs5313_eic_frames.csv` and `data\derived\svs5313_eic_grids.npz` (world and zoom-box light grids);
 no Earthdata token is needed (the run decodes the 8K movie, so it takes a few minutes).
 
@@ -234,11 +235,12 @@ data/                     gistemp/ (committed), derived/, raw/ (downloaded, giti
 out/                      rendered audio (gitignored)
 ```
 
-## Known limits / next steps
+## Scope and limitations
 - PoC 3 assumes the SOS movie is equirectangular with no overlays; check coverage % it prints. If r < 0 use `--flip`.
 - Movie frames are compressed (H.264); `--max-de` trades coverage vs. accuracy.
-- Player (`frontend/player`): scheduling is basic; for the MVP move to Tone.js (Transport, Sampler) and add transcripts + CA/ES translations.
-- Barcelona: a 2° cell is ~200 km — call it "the Barcelona region"; consider Observatori Fabra / Meteocat station data.
+- The legacy `frontend/player/` is separate from the production app in `frontend/web/`; its scope and limitations should not be mistaken for production-app behavior.
+- Backend image measurements are picture indices, not calibrated physical measurements. Specific caveats for the SVS 5313 script and other pages are documented above.
+- Barcelona PoC: a 2° grid cell is roughly 200 km across, so refer to it as the "Barcelona region," not a city measurement.
 
 Data: GISTEMP Team, 2026: GISS Surface Temperature Analysis (GISTEMP), version 4. NASA GISS.
 Frames: NASA Scientific Visualization Studio, SVS 5450. Not endorsed by NASA.
