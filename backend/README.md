@@ -19,6 +19,7 @@ This directory contains research and data-reproduction tools. The production web
 | — | `scripts/fetch_arcade_images.py` | internet | ~34 public-domain NASA images → `frontend/arcade/images` |
 | — | `scripts/make_voice.py` | Windows TTS | Arcade voice-over clips → `frontend/arcade/voice` |
 | — | `scripts/export_still_scene.py svs5669/aerosols_bands --chapter aerosols` | `data/raw/svs5669/` (`python -m jukebox.measure 5669`) | A still page's sonification as a web scene: full-mix WAV + scan-line MP4 → `frontend/web/public/data/<chapter>/` (write the `.vtt` by hand, then `frontend/web/scripts/make_peaks.py`) |
+| — | `scripts/export_samples.py` | `data/raw/svs5669/`, committed SVS 5313 grids | "How to listen" samples for the aerosols and night-lights scenes → `frontend/web/public/data/samples/sample_<scene>_NN_<id>.wav`, made from the real data with each scene's own script (then `frontend/web/scripts/make_peaks.py`) |
 
 ## Quick start (Windows, from `backend/`)
 ```powershell
