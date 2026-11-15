@@ -47,7 +47,7 @@ The Playwright end-to-end suite builds and serves the production app before runn
 | `docs/` | Research, data-source, accessibility, delivery, and AI-use notes |
 | `infra/` and `config/deploy.yml` | Production image and Kamal deployment configuration |
 
-The backend's GISTEMP and legacy player scripts are retained for reproducibility and experimentation. They are separate from the two chapters in the production web app. See [backend/README.md](backend/README.md) for backend setup, data reproduction, and limitations.
+The backend's GISTEMP scripts are retained for reproducibility and experimentation. They are separate from the two chapters in the production web app. See [backend/README.md](backend/README.md) for backend setup, data reproduction, and limitations.
 
 ## Backend checks
 

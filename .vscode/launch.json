@@ -33,35 +33,6 @@
       "justMyCode": true
     },
     {
-      "name": "PoC 2: export tracks.json",
-      "type": "debugpy",
-      "request": "launch",
-      "program": "${workspaceFolder}/backend/scripts/poc2_export_tracks.py",
-      "python": "${workspaceFolder}/backend/.venv/Scripts/python.exe",
-      "cwd": "${workspaceFolder}/backend",
-      "justMyCode": true
-    },
-    {
-      "name": "Arcade web server (:8000)",
-      "type": "debugpy",
-      "request": "launch",
-      "module": "http.server",
-      "args": ["8000"],
-      "python": "${workspaceFolder}/backend/.venv/Scripts/python.exe",
-      "cwd": "${workspaceFolder}/frontend/arcade",
-      "justMyCode": true
-    },
-    {
-      "name": "Player web server (:8001)",
-      "type": "debugpy",
-      "request": "launch",
-      "module": "http.server",
-      "args": ["8001"],
-      "python": "${workspaceFolder}/backend/.venv/Scripts/python.exe",
-      "cwd": "${workspaceFolder}/frontend/player",
-      "justMyCode": true
-    },
-    {
       "name": "Current Python file",
       "type": "debugpy",
       "request": "launch",

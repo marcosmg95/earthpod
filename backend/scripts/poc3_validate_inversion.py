@@ -1,7 +1,7 @@
 """PoC 3 — Validity check: NASA frame colours -> degC, compared with GISTEMP.
 
 Needs data/raw/ from backend/data/download_data.ps1 (SVS 5450 movie, time.txt, colorbar).
-Also writes one low-res frame per year to frontend/player/frames/ for the web player.
+Writes data/derived/validation_svs5450.csv and .png.
 
     uv run python scripts/poc3_validate_inversion.py
     uv run python scripts/poc3_validate_inversion.py --flip --max-de 15   # if r is negative / coverage low
@@ -17,8 +17,6 @@ import pandas as pd
 
 from jukebox import colormap, data, paths
 
-POC = Path(__file__).resolve().parents[1]
-
 
 def main():
     ap = argparse.ArgumentParser()
@@ -27,7 +25,6 @@ def main():
     ap.add_argument("--flip", action="store_true", help="colorbar runs high->low")
     ap.add_argument("--max-de", type=float, default=12.0, help="max CIELAB distance to accept a pixel")
     ap.add_argument("--analysis-width", type=int, default=360)
-    ap.add_argument("--web-width", type=int, default=960)
     a = ap.parse_args()
 
     years = data.load_frame_years()
@@ -36,8 +33,6 @@ def main():
     lut, t = colormap.lut_from_colorbar(colormap.read_rgb(a.colorbar), flip=a.flip)
     glob = data.load_global_annual()
 
-    frames_dir = POC.parent / "frontend" / "player" / "frames"
-    frames_dir.mkdir(parents=True, exist_ok=True)
     cap = cv2.VideoCapture(a.movie)
     rows = []
     for year in sorted(set(years)):
@@ -47,8 +42,6 @@ def main():
         if not ok:
             continue
         rgb = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)
-        web = cv2.resize(bgr, (a.web_width, a.web_width // 2), interpolation=cv2.INTER_AREA)
-        cv2.imwrite(str(frames_dir / f"frame_{idx:03d}.png"), web)
         small = cv2.resize(rgb, (a.analysis_width, a.analysis_width // 2), interpolation=cv2.INTER_AREA)
         field = colormap.invert(small, lut, t, a.max_de)
         rows.append(dict(Year=year, frame=idx, t_mean=colormap.area_mean(field),
@@ -88,7 +81,7 @@ def main():
         ax.spines[s].set_visible(False)
     fig.tight_layout()
     fig.savefig(out / "validation_svs5450.png")
-    print(f"Wrote {out / 'validation_svs5450.csv'} and .png; frames in {frames_dir}")
+    print(f"Wrote {out / 'validation_svs5450.csv'} and .png")
 
 
 if __name__ == "__main__":

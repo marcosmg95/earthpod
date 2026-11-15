@@ -4,20 +4,17 @@ Python: data loading, data → music mapping, numpy synth, the PoC scripts and a
 Managed with [uv](https://docs.astral.sh/uv/) — install once with `pip install uv` (or `winget install astral-sh.uv`).
 **Commands run from `backend/`.**
 
-This directory contains research and data-reproduction tools. The production web experience is `frontend/web/`; the GISTEMP scripts and `frontend/player/` outputs below are legacy demos and are not the chapters served by the production app.
+This directory contains research and data-reproduction tools. The production web experience is `frontend/web/`; the GISTEMP scripts below are legacy demos and are not the chapters served by the production app.
 
 ## What's here
 | PoC | Script | Needs | Proves |
 |---|---|---|---|
 | 1 | `scripts/poc1_render_global.py` | `data/gistemp/` (committed) | Real GISTEMP numbers → a musical, explainable track (WAV) |
-| 2 | `scripts/poc2_export_tracks.py` | same | `frontend/player/tracks.json` for the legacy player demo |
-| 3 | `scripts/poc3_validate_inversion.py` | `data/raw/` (run `data/download_data.ps1`) | SVS 5450 frame colours read back into °C match GISTEMP → **r for the Validity slide**; also writes `frontend/player/frames/` |
-| 4 | `scripts/poc4_barcelona.py` | gridded netCDF + `--extra netcdf` | Barcelona-region series → second track ("Listen to Barcelona") |
+| 3 | `scripts/poc3_validate_inversion.py` | `data/raw/` (run `data/download_data.ps1`) | SVS 5450 frame colours read back into °C match GISTEMP → **r for the Validity slide** (`data/derived/validation_svs5450.*`) |
+| 4 | `scripts/poc4_barcelona.py` | gridded netCDF + `--extra netcdf` | Barcelona-region annual series → `data/derived/barcelona_annual.csv` |
 | 5 | `scripts/poc5_blackmarble_regions.py` | `data/download_blackmarble.ps1` (Earthdata token) + `--extra blackmarble` | Black Marble night lights (SVS 5313 data) per region/year → `data/derived/blackmarble_annual.*` |
 | — | `python -m jukebox.measure [ids]` | internet (downloads ~3 GB of movies into `data/raw/`, resumable) | Frame measurements of every Resources-tab page the scripts read (5196, 5313, 5669, 5533, 5011, 3912, 5425, 4960, 4950) → `data/derived/svs<id>_*`; `--list` shows what each page downloads and writes |
 | — | `apps/svs_explorer.py` | internet | Streamlit: type any SVS id → metadata, filterable media list, movie/image previews, datasets, linked pages, raw JSON; **Sonify** tab plays a data sonification locked to a movie |
-| — | `scripts/fetch_arcade_images.py` | internet | ~34 public-domain NASA images → `frontend/arcade/images` |
-| — | `scripts/make_voice.py` | Windows TTS | Arcade voice-over clips → `frontend/arcade/voice` |
 | — | `scripts/export_still_scene.py svs5669/aerosols_bands --chapter aerosols` | `data/raw/svs5669/` (`python -m jukebox.measure 5669`) | A still page's sonification as a web scene: full-mix WAV + scan-line MP4 → `frontend/web/public/data/<chapter>/` (write the `.vtt` by hand, then `frontend/web/scripts/make_peaks.py`) |
 | — | `scripts/export_samples.py` | `data/raw/svs5669/`, committed SVS 5313 grids | "How to listen" samples for the aerosols and night-lights scenes → `frontend/web/public/data/samples/sample_<scene>_NN_<id>.wav`, made from the real data with each scene's own script (then `frontend/web/scripts/make_peaks.py`) |
 
@@ -26,11 +23,10 @@ This directory contains research and data-reproduction tools. The production web
 uv sync                                          # .venv with deps + jukebox (editable) + streamlit
 uv run python -m unittest discover -s tests -v
 uv run python scripts\poc1_render_global.py      # -> backend\out\earth_jukebox_global.wav
-uv run python scripts\poc2_export_tracks.py      # -> frontend\player\tracks.json
 uv run python -m streamlit run apps\svs_explorer.py        # SVS explorer, http://localhost:8501/?id=5450
 ```
 In VS Code, the same entry points are in **Run and Debug** (Ctrl+Shift+D, `.vscode/launch.json`): SVS explorer,
-tests, PoC 1/2, arcade and player web servers, current file. Breakpoints work in the Streamlit app and in sonification scripts.
+tests, PoC 1, current file. Breakpoints work in the Streamlit app and in sonification scripts.
 
 ### Sonification scripts (`sonifications/`)
 The explorer's **Sonify** tab: pick a movie and a script; it renders automatically (and again about a second after any
@@ -173,14 +169,13 @@ virtual sun and the exaggerated height, so its forest levels are relative to the
 Building blocks for new scripts: `synth.band_noise`, `synth.pan_stereo`, `synth.add_at`, `synth.normalize`.
 After `data\download_data.ps1` (~180 MB into `backend\data\raw`, gitignored):
 ```powershell
-uv run python scripts\poc3_validate_inversion.py                # r + data\derived\validation_svs5450.* + frontend\player\frames
+uv run python scripts\poc3_validate_inversion.py                # r + data\derived\validation_svs5450.*
 uv run --extra netcdf python scripts\poc4_barcelona.py          # data\derived\barcelona_annual.csv
-uv run python scripts\poc2_export_tracks.py                     # re-export: adds Barcelona track + frames
 ```
 
-### Reproduce the night-lights track (PoC 5, NASA Black Marble / SVS 5313)
-The outputs (`backend\data\derived\blackmarble_annual.*`, the `night` track in `frontend\player\tracks.json`) are
-committed, so this is only needed to rebuild them or add cities.
+### Reproduce the Black Marble numbers (PoC 5, NASA Black Marble / SVS 5313)
+The outputs (`backend\data\derived\blackmarble_annual.*`) are committed, so this is only needed to rebuild them or
+add cities.
 1. Free Earthdata account (https://urs.earthdata.nasa.gov/users/new), then on https://ladsweb.modaps.eosdis.nasa.gov/
    log in → profile → **Generate Token**. Store it once per PC (never commit it, never paste it in chat):
    `[Environment]::SetEnvironmentVariable("EARTHDATA_TOKEN", "<token>", "User")`, then open a new terminal.
@@ -191,11 +186,7 @@ committed, so this is only needed to rebuild them or add cities.
 3. Build:
    ```powershell
    uv run --extra blackmarble python scripts\poc5_blackmarble_regions.py   # -> data\derived\blackmarble_annual.csv/.json
-   uv run python scripts\poc2_export_tracks.py                             # -> tracks.json gains the "night" track
    ```
-   `poc2` also needs `backend\data\raw\svs5450_time.txt` (from `download_data.ps1`, or just
-   `curl -o backend\data\raw\svs5450_time.txt https://svs.gsfc.nasa.gov/vis/a000000/a005400/a005450/time.txt`);
-   without it the temperature tracks lose their frame numbers.
 
 Expected: Barcelona ≈ −10% vs 2012 (31.7 → 28.7 nW/cm²/sr); Kyiv 2022 −59% in one year (15.1 → 6.2).
 Add Delhi with tile `h25v06` (the region box already exists in `src/jukebox/blackmarble.py`).
@@ -240,7 +231,6 @@ out/                      rendered audio (gitignored)
 ## Scope and limitations
 - PoC 3 assumes the SOS movie is equirectangular with no overlays; check coverage % it prints. If r < 0 use `--flip`.
 - Movie frames are compressed (H.264); `--max-de` trades coverage vs. accuracy.
-- The legacy `frontend/player/` is separate from the production app in `frontend/web/`; its scope and limitations should not be mistaken for production-app behavior.
 - Backend image measurements are picture indices, not calibrated physical measurements. Specific caveats for the SVS 5313 script and other pages are documented above.
 - Barcelona PoC: a 2° grid cell is roughly 200 km across, so refer to it as the "Barcelona region," not a city measurement.
 

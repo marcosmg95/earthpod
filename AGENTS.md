@@ -13,9 +13,6 @@ cd backend; uv run python -m unittest discover -s tests -v
 If your change adds a new kind of AI use (new tool, new area), update the summary in `docs/ai-use-log.md` in the same commit.
 The submission's AI-use statement is built from it (`docs/07-submission-checklist.md`).
 
-If you changed `backend/src/jukebox/mapping.py` or data loaders, re-run `uv run python scripts\poc2_export_tracks.py`
-(from `backend/`) and check that the existing tracks in `frontend/player/tracks.json` are unchanged unless that was the intent.
-
 ## Python environment: uv
 - The backend is a uv project: `backend/pyproject.toml` + `backend/uv.lock` (commit it); package code in `backend/src/jukebox/`.
 - Add deps with `uv add <pkg>` (`--optional netcdf|blackmarble` for PoC-only deps, `--group explorer` for the Streamlit app).
@@ -23,7 +20,7 @@ If you changed `backend/src/jukebox/mapping.py` or data loaders, re-run `uv run 
 
 ## Never commit
 - Secrets: `EARTHDATA_TOKEN` lives in the user environment only.
-- Large inputs/outputs: `backend/data/raw/` (GBs of NASA files), `backend/out/`, `frontend/player/frames/` (gitignored).
+- Large inputs/outputs: `backend/data/raw/` (GBs of NASA files), `backend/out/` (gitignored).
 - Small derived results in `backend/data/derived/` *are* committed so the app works without downloads.
 
 ## Where things are

@@ -35,7 +35,7 @@ on the challenge's Resources tab"); 13786 is only a sonification example.
 | 4950 | GEDI Forest Height | `GEDI_global_w_colorbar_1080p60.mp4`; `svs4950/forest_meridian` |
 
 SVS 5450 (GISTEMP temperature anomalies) is **not** on the Resources tab and is no longer used for the submission;
-its demo script and PoCs 1–4 stay in the repo. Other pages we looked at earlier (5176 SST anomaly, sea ice, sea level,
+its demo script and PoCs 1, 3 and 4 stay in the repo. Other pages we looked at earlier (5176 SST anomaly, sea ice, sea level,
 GEOS-FP forecasts 5147–5154) are not on the tab either.
 
 ## Numeric data (drive the sound with this)

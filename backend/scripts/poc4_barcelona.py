@@ -1,8 +1,8 @@
 """PoC 4 — Barcelona-region annual anomaly from the GISTEMP 2x2 deg grid.
 
 Needs data/raw/gistemp1200_GHCNv4_ERSSTv5.nc.gz (backend/data/download_data.ps1) and
-`uv sync --extra netcdf`. Writes data/derived/barcelona_annual.csv,
-which backend/scripts/poc2_export_tracks.py picks up as a second track.
+`uv sync --extra netcdf`. Writes data/derived/barcelona_annual.csv
+(read by jukebox.data.load_barcelona_annual).
 
     uv run python scripts/poc4_barcelona.py                 # nearest cell to Barcelona
     uv run python scripts/poc4_barcelona.py --neighbors 1   # 3x3 cells (~600 km, NE Iberia + sea)

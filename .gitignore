@@ -19,7 +19,6 @@ backend/data/raw/
 
 # Generated outputs (recreate with backend/scripts/*)
 backend/out/
-frontend/player/frames/
 
 # Editors / OS
 .idea/

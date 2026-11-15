@@ -38,7 +38,7 @@ picture features of one movie (or still image) of each page, written by `python 
 `src/jukebox/pages/svs<id>.py`. `derived/svs4960_glyphs.npz` holds the 20 glyph templates (letters, digits, colon,
 labelled by hand from the movie) used to read the dates of the SVS 4960 dates-only movie.
 
-After it runs, frames can be extracted at low res, one per year, e.g.:
+After `download_data.ps1` runs, SVS 5450 frames can be extracted at low res, one per year, e.g.:
 `ffmpeg -i raw/svs5450_SOS_4096x2048.mp4 -vf "select=not(mod(n\,6)),scale=360:180" -vsync vfr frames/f%03d.png`
 (check `time.txt` for the exact frame→year mapping first).
 

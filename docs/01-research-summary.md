@@ -18,6 +18,6 @@ The shipped scope is intentionally narrower than the early research concepts bel
 
 ## Scope decisions
 
-The initial proposal focused on GISTEMP, global temperature, and a Barcelona-region comparison. During implementation, the delivered web experience focused instead on two NASA SVS visualizations: CO₂ patterns and changing night lights. The earlier GISTEMP/player scripts remain useful for data validation and experimentation, but they are not part of the production chapter list.
+The initial proposal focused on GISTEMP, global temperature, and a Barcelona-region comparison. During implementation, the delivered web experience focused instead on two NASA SVS visualizations: CO₂ patterns and changing night lights. The earlier GISTEMP scripts remain useful for data validation and experimentation, but they are not part of the production chapter list.
 
 Early notes about possible datasets, awards, rules, and event logistics were planning assumptions, not verified product claims. For current behavior and source attribution, use [the root README](../README.md), [data sources](02-data-sources.md), and [sonification design](03-sonification-design.md).
