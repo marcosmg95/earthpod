@@ -23,8 +23,11 @@ export function Player({ track }: { track: LoadedTrack }) {
   const label = timeBased
     ? timeLabel(track, time, duration)
     : track.frames[value].label;
+  const position = `${mmss(time)} of ${mmss(duration)}`;
   const valuetext = timeBased
-    ? `${label}. ${mmss(time)} of ${mmss(duration)}`
+    ? label === mmss(time)
+      ? position
+      : `${label}. ${position}`
     : `${label}. Frame ${value + 1} of ${last + 1}`;
   const first = timeBased
     ? timeLabel(track, 0, duration)
@@ -80,14 +83,14 @@ export function Player({ track }: { track: LoadedTrack }) {
             className="options-toggle"
             aria-pressed={settings.captions}
             data-tip={
-              settings.captions ? "Hide descriptions" : "Show descriptions"
+              settings.captions ? "Descriptions on" : "Descriptions off"
             }
             onClick={() => update({ captions: !settings.captions })}
           >
             <span className="cc" aria-hidden="true">
               CC
             </span>
-            <span className="sr-only">Descriptions on the video</span>
+            <span className="sr-only">Descriptions</span>
           </button>
         )}
         <button

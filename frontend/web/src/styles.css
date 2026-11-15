@@ -1890,3 +1890,15 @@ legend {
 [data-motion="reduce"] .film-stars {
   opacity: 0.9;
 }
+
+.reveal:is(button, a):focus-visible,
+.reveal:has(:is(button, a):focus-visible) {
+  animation-delay: 0s;
+  animation-duration: 0.01s;
+}
+
+.site-footer a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}

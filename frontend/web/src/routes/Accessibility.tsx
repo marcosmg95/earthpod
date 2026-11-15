@@ -45,12 +45,14 @@ export function Accessibility() {
         </li>
         <li>
           In the chapters, the sound chart is also the position slider. It says
-          the date and time as you move it, and a short summary describes the
-          shape of the sound.
+          the date, time or position on the map as you move it, and a short
+          summary describes the shape of the sound.
         </li>
         <li>
-          Key moments are announced while a scene plays and listed in a
-          transcript you can read at your own pace.
+          Each scene starts with the sound only. Press D, or “Describe this
+          moment”, to hear what is on screen, or turn on Descriptions to see and
+          hear them as the scene plays. All of them are listed under “Read about
+          this scene”.
         </li>
         <li>
           Keyboard shortcuts work only inside the player (Space, arrow keys, D)
@@ -71,8 +73,8 @@ export function Accessibility() {
       <h2>Known limits</h2>
       <ul>
         <li>
-          Some scenes do not have spoken descriptions yet, so their transcript
-          is empty.
+          The descriptions are written by our team from the pictures and the
+          measured data. NASA has not reviewed them.
         </li>
         <li>EarthPod needs JavaScript to play sound and video.</li>
         <li>

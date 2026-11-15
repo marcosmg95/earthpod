@@ -38,10 +38,20 @@ function Shell() {
       {!intro && (
         <footer className="site-footer">
           <p>
-            Images: NASA Scientific Visualization Studio (SVS 5196, SVS 5313).
-            Not endorsed by NASA.
+            Images: NASA Scientific Visualization Studio (SVS 5196, SVS 5313,
+            SVS 5669); aerosol images created by NASA's Global Modeling and
+            Assimilation Office (GMAO). Not endorsed by NASA.
           </p>
-          <p>NASA Space Apps 2026 · Barcelona</p>
+          <p>
+            <a
+              href="https://github.com/marcosmg95/earthpod"
+              target="_blank"
+              rel="noopener"
+            >
+              Source code on GitHub
+            </a>{" "}
+            · NASA Space Apps 2026 · Barcelona
+          </p>
         </footer>
       )}
     </>

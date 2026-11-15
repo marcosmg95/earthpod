@@ -29,6 +29,7 @@ let state: EngineState = {
 };
 let track: LoadedTrack | null = null;
 let lastCue = -1;
+let describeAlong = false;
 const subs = new Set<() => void>();
 
 function set(patch: Partial<EngineState>): void {
@@ -54,12 +55,14 @@ export function cueAt(cues: readonly Cue[], time: number): number {
   return cues.findIndex((c) => time >= c.start && time < c.end);
 }
 
-function describeTime(time: number): string {
+function describeTime(time: number, withText = describeAlong): string {
   if (!track) return "";
   const f = track.frames[frameAt(track.frames, time)] as Frame | undefined;
   const cue = track.cues[cueAt(track.cues, time)] as Cue | undefined;
   const label = f?.label ?? timeLabel(track, time, state.duration);
-  return [label, f?.description ?? cue?.text].filter(Boolean).join(". ");
+  return [label, withText ? (f?.description ?? cue?.text) : undefined]
+    .filter(Boolean)
+    .join(". ");
 }
 
 const media = new MediaPlayer({
@@ -72,7 +75,7 @@ const media = new MediaPlayer({
     const c = cueAt(track.cues, time);
     if (c !== lastCue) {
       lastCue = c;
-      if (c >= 0 && state.playing) say(track.cues[c].text);
+      if (c >= 0 && state.playing && describeAlong) say(track.cues[c].text);
     }
   },
   onPause: () => {
@@ -176,7 +179,7 @@ function step(n: number): void {
 }
 
 function describe(): void {
-  say(describeTime(state.time), { force: true });
+  say(describeTime(state.time, true), { force: true });
 }
 
 function unlock(): void {
@@ -189,6 +192,10 @@ function setVolume(v: number): void {
 
 function setRate(r: number): void {
   media.setRate(r);
+}
+
+function setDescriptions(on: boolean): void {
+  describeAlong = on;
 }
 
 if ("mediaSession" in navigator) {
@@ -214,6 +221,7 @@ export const engine = {
   unlock,
   setVolume,
   setRate,
+  setDescriptions,
 } as const;
 
 export const useEngine = (): EngineState =>

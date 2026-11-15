@@ -118,7 +118,7 @@ for (const id of ["co2", "nightlights", "aerosols"]) {
     await expect(
       page.getByRole("heading", { name: "What happens" }),
     ).toBeVisible();
-    const cc = page.getByRole("button", { name: "Descriptions on the video" });
+    const cc = page.getByRole("button", { name: "Descriptions", exact: true });
     await expect(cc).toHaveAttribute("aria-pressed", "false");
     await cc.click();
     await expect(cc).toHaveAttribute("aria-pressed", "true");

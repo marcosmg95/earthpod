@@ -20,9 +20,7 @@ export function timeLabel(
     const lon = Math.round(
       track.scan.from + (track.scan.to - track.scan.from) * f,
     );
-    return Math.abs(lon) === 180 || lon === 0
-      ? `${Math.abs(lon)}°`
-      : `${Math.abs(lon)}°${lon < 0 ? "W" : "E"}`;
+    return lon === 0 ? "0°" : `${Math.abs(lon)}°${lon < 0 ? "W" : "E"}`;
   }
   if (!track.dates || duration <= 0) return mmss(t);
   const a = Date.parse(track.dates.start);

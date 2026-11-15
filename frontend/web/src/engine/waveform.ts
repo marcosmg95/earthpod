@@ -8,7 +8,9 @@ const PeaksFile = z.object({
 
 async function fromFile(url: string): Promise<Peaks | null> {
   try {
-    const res = await fetch(url.replace(/\.[^./]+$/, ".peaks.json"));
+    const res = await fetch(url.replace(/\.[^./]+$/, ".peaks.json"), {
+      cache: "no-cache",
+    });
     if (!res.ok || !res.headers.get("content-type")?.includes("json"))
       return null;
     const f = PeaksFile.safeParse(await res.json());

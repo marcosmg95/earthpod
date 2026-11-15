@@ -130,19 +130,19 @@ export const AIR_SAMPLES: Sample[] = [
     "sample_aerosols_02_dust_grains",
     "a-dust",
     "Dust",
-    "sand grains (lilac)",
+    "sand grains (pink on the map)",
   ),
   one(
     "sample_aerosols_03_smoke_crackle",
     "a-smoke",
     "Smoke",
-    "a crackle (red-orange)",
+    "a crackle (orange-red)",
   ),
   one(
     "sample_aerosols_04_sea_salt_surf",
     "a-salt",
     "Sea salt",
-    "surf (grey-blue)",
+    "surf (blue)",
   ),
   one(
     "sample_aerosols_05_plume_chime",

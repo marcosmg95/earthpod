@@ -11,7 +11,7 @@ export interface LoadedTrack extends TrackManifest {
 
 async function fetchText(url: string): Promise<string> {
   try {
-    const res = await fetch(url);
+    const res = await fetch(url, { cache: "no-cache" });
     const type = res.headers.get("content-type") ?? "";
     return res.ok && type.startsWith("text/plain")
       ? (await res.text()).trim()
@@ -24,7 +24,7 @@ async function fetchText(url: string): Promise<string> {
 const cache = new Map<string, Promise<LoadedTrack>>();
 
 async function fetchVtt(url: string): Promise<Cue[]> {
-  const res = await fetch(url);
+  const res = await fetch(url, { cache: "no-cache" });
   const text = res.ok ? await res.text() : "";
   return text.startsWith("WEBVTT") ? parseVtt(text) : [];
 }

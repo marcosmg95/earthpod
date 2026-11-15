@@ -27,19 +27,26 @@ const CO2 = {
   end: "2020-03-02",
   about: "co2/svs5196_nasa_description",
   mapping:
-    "Living Earth: lungs, heartbeat and regions.\n" +
-    "Background: a centred soft breath (more tan haze on screen = louder; brighter while the haze grows, darker while it fades) and the CO₂ heartbeat (daily pulse of the orange-red area, panned by its position).\n" +
-    "Foreground: one instrument per region, entering in pairs as the orbit brings it into view (Asia oboe + Oceania harp, Europe flute + Africa marimba, North America vibraphone + South America cello). Higher register = further north, left/right = west/east. Each instrument's pitch is the orange-red amount in its part of the screen (upper third for the northern region, lower two thirds for the southern one), ranked against that pair's time on screen (higher note = more than usual for that stretch). Timed for the orbit movie.\n" +
-    "Data: colours measured from the NASA SVS 5196 movie (GEOS / DYAMOND model), not actual breathing, a heartbeat or CO₂ in ppm; camera and background affect these picture indices.",
+    "Underneath: a soft breath that grows louder when there is more tan haze on screen, and a heartbeat, one beat per model day, from the densest orange-red areas.\n" +
+    "On top: one instrument per region, entering in pairs as the globe turns: Asia oboe and Oceania harp, then Europe flute and Africa marimba, then North America vibraphone and South America cello. Northern regions sound higher; west and east come from the left and right. A higher note means more orange-red than usual in that region.\n" +
+    "These sounds follow colours measured in NASA's SVS 5196 movie (GEOS / DYAMOND model). They are not real breathing, a real heartbeat or CO₂ measured in ppm.",
 };
 const NIGHT = {
   source: "NASA SVS 5313",
   about: "nightlights/svs5313_nasa_description",
+  mapping:
+    "Years: each year is one left-to-right sweep of soft plucks. Left is west, right is east, higher notes are further north, and louder means brighter. Bells mark places brighter than in 2012.\n" +
+    "Change map: high bells for the purple (new lights), low plucks for the orange (lights out), then both together.\n" +
+    "Zoom boxes: Western Europe, the Eastern Mediterranean, Ukraine and India each have their own instrument and side of the stereo field.\n" +
+    "These sounds follow brightness and colours measured in NASA's SVS 5313 movie (Black Marble, 2012–2023). They are not calibrated light measurements.",
 };
 const AIR = {
   source: "NASA SVS 5669",
   about: "aerosols/svs5669_nasa_description",
-  scan: { from: -180, to: 180 }, // the line runs west → east
+  mapping:
+    "A line scans the map from west to east, and the sound moves from left to right with it. Each 10° band of latitude has its own note, higher further north.\n" +
+    "Each kind of particle has its own sound: sulfate hums, dust sounds like sand grains, smoke crackles and sea salt sounds like surf. Louder means more than usual for that band. A glass chime marks the largest plumes, a soft wind is all the haze together, and a tick sounds every 30° of longitude, deeper at Greenwich.\n" +
+    "These sounds follow colours measured in NASA's SVS 5669 image (GEOS model, 19 August 2025, 20:00 UTC). They are not measured concentrations.",
 };
 
 export const CHAPTERS: readonly Chapter[] = [

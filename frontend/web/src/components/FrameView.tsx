@@ -48,8 +48,8 @@ function VideoPicture({ track }: { track: LoadedTrack }) {
         </p>
       )}
       <p className="sr-only">
-        Moving picture: {track.title}. Its descriptions are announced as it
-        plays, and "Read about this scene", under the player, has them all.
+        Moving picture: {track.title}. Press D to hear what is on screen now, or
+        turn on Descriptions to hear them as the scene plays.
       </p>
       <div className="hud" aria-hidden="true">
         <span>

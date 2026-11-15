@@ -48,6 +48,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     }
     engine.setVolume(settings.sound ? settings.volume : 0);
     engine.setRate(settings.rate);
+    engine.setDescriptions(settings.captions);
   }, [settings]);
 
   useEffect(() => {

@@ -68,7 +68,7 @@ export function SettingsPanel() {
             checked={settings.captions}
             onChange={(e) => update({ captions: e.target.checked })}
           />
-          Show descriptions on the video
+          Descriptions: show on the video and read aloud while playing
         </label>
         <fieldset>
           <legend>Motion</legend>
