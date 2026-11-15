@@ -10,7 +10,7 @@
 cd backend; uv run python -m unittest discover -s tests -v
 ```
 **Keep the AI-use log updated (hackathon requirement).** Space Apps requires disclosing where and how AI was used.
-In the same commit as your change, add a row to `docs/ai-use-log.md` (date, tool, what it was used for, who, human review).
+If your change adds a new kind of AI use (new tool, new area), update the summary in `docs/ai-use-log.md` in the same commit.
 The submission's AI-use statement is built from it (`docs/07-submission-checklist.md`).
 
 If you changed `backend/src/jukebox/mapping.py` or data loaders, re-run `uv run python scripts\poc2_export_tracks.py`
