@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react";
 import { SceneLink } from "../components/SceneLink";
 
+const contactEmail = "marcosmunozgonzalez95@gmail.com";
+
 export function Accessibility() {
   const heading = useRef<HTMLHeadingElement>(null);
 
@@ -90,7 +92,7 @@ export function Accessibility() {
       <p>
         If something does not work for you, please tell us what you were trying
         to do and which device, browser and assistive technology you use. Write
-        to <a href="mailto:[CONTACT EMAIL]">[CONTACT EMAIL]</a>.
+        to <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
       </p>
 
       <p className="statement-date">Last updated: 15 November 2026</p>

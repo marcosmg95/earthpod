@@ -1097,6 +1097,17 @@ legend {
   gap: 1rem;
 }
 
+.scene-about h2 {
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+.scene-about p {
+  max-width: 65ch;
+  margin: 0;
+  color: var(--muted);
+}
+
 .hud {
   position: absolute;
   inset: 1rem 1rem auto;

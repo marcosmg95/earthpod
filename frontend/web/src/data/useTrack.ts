@@ -6,6 +6,19 @@ import { parseVtt, type Cue } from "./vtt";
 export interface LoadedTrack extends TrackManifest {
   base: string;
   cues: Cue[];
+  about: string;
+}
+
+async function fetchText(url: string): Promise<string> {
+  try {
+    const res = await fetch(url);
+    const type = res.headers.get("content-type") ?? "";
+    return res.ok && type.startsWith("text/plain")
+      ? (await res.text()).trim()
+      : "";
+  } catch {
+    return "";
+  }
 }
 
 const cache = new Map<string, Promise<LoadedTrack>>();
@@ -19,12 +32,19 @@ async function fetchVtt(url: string): Promise<Cue[]> {
 async function fetchMedia(ref: TrackRef): Promise<LoadedTrack> {
   const base = "data/";
   const head = await fetch(`${base}${ref.dir}.wav`, { method: "HEAD" });
+
   if (
     !head.ok ||
     !(head.headers.get("content-type") ?? "").startsWith("audio")
   ) {
     throw new Error(`public/data/${ref.dir}.wav was not found.`);
   }
+
+  const [cues, about] = await Promise.all([
+    fetchVtt(`${base}${ref.dir}.vtt`),
+    fetchText(`${base}${ref.dir}.txt`),
+  ]);
+
   return {
     id: ref.dir,
     title: ref.label,
@@ -36,7 +56,8 @@ async function fetchMedia(ref: TrackRef): Promise<LoadedTrack> {
     dates:
       ref.start && ref.end ? { start: ref.start, end: ref.end } : undefined,
     base,
-    cues: await fetchVtt(`${base}${ref.dir}.vtt`),
+    cues,
+    about,
   };
 }
 

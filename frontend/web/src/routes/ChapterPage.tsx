@@ -50,10 +50,9 @@ export function ChapterPage({
   useEffect(() => () => engine.stop(), []);
 
   useEffect(() => {
-    if (chapter)
-      document.title = chapter
-        ? `${chapter.short} · EarthPod`
-        : "Chapter not found · EarthPod";
+    document.title = chapter
+      ? `${chapter.short} · EarthPod`
+      : "Chapter not found · EarthPod";
     heading.current?.focus();
   }, [phase, scene, chapter]);
 
@@ -121,7 +120,7 @@ export function ChapterPage({
   ] as Chapter | undefined;
   const next = nextChapter
     ? { href: `/${nextChapter.id}`, label: `Next: ${nextChapter.short}` }
-    : { href: "/records", label: "Check all the records" };
+    : { href: "/record", label: "See all chapters" };
 
   if (phase === "title") {
     return (
@@ -257,6 +256,17 @@ export function ChapterPage({
             Go to the end of the chapter
           </button>
         </div>
+      )}
+      {loaded?.about && (
+        <section
+          className="scene-controls scene-about"
+          aria-labelledby="about-heading"
+        >
+          <h2 id="about-heading">About this scene</h2>
+          {loaded.about.split(/\n\s*\n/).map((p, i) => (
+            <p key={i}>{p}</p>
+          ))}
+        </section>
       )}
       {!error && !loaded && (
         <p role="status" className="notice scene-controls">
