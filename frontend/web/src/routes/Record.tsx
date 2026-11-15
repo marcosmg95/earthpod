@@ -34,13 +34,12 @@ export function RecordPage() {
   return (
     <section className="page" aria-labelledby="record-title">
       <div className="head-text">
-        <p className="kicker">Your record</p>
         <h1 id="record-title" ref={h1} tabIndex={-1}>
-          Every chapter
+          Record
         </h1>
         <p className="mapping">
-          Open a chapter from its title card, or go straight to one of its
-          scenes.
+          Every chapter, ready to replay. Open one from its title card, or go
+          straight to a scene.
         </p>
       </div>
       <ul className="chapter-cards">
@@ -48,21 +47,28 @@ export function RecordPage() {
           <li key={c.id}>
             <article className="chapter-card" aria-labelledby={`cc-${c.id}`}>
               <Poster track={c.tracks[0]} />
-              <p className="kicker">Chapter {c.num}</p>
-              <h2 id={`cc-${c.id}`}>
-                <SceneLink href={`/${c.id}`}>{c.title}</SceneLink>
-              </h2>
-              <p className="logline">{c.logline}</p>
-              <ol className="scene-links" aria-label={`Scenes of ${c.title}`}>
-                {c.tracks.map((t, i) => (
-                  <li key={t.id}>
-                    <SceneLink href={`/${c.id}/${t.id}`}>
-                      <span className="num">{pad(i + 1)}</span>
-                      {t.label}
-                    </SceneLink>
-                  </li>
-                ))}
-              </ol>
+              <div className="chapter-card-body">
+                <p className="kicker">Chapter {c.num}</p>
+                <h2 id={`cc-${c.id}`}>
+                  <SceneLink href={`/${c.id}`}>{c.title}</SceneLink>
+                </h2>
+                <p className="logline">{c.logline}</p>
+                {c.tracks.length > 1 && (
+                  <ol
+                    className="scene-links"
+                    aria-label={`Scenes of ${c.title}`}
+                  >
+                    {c.tracks.map((t, i) => (
+                      <li key={t.id}>
+                        <SceneLink href={`/${c.id}/${t.id}`}>
+                          <span className="num">{pad(i + 1)}</span>
+                          {t.label}
+                        </SceneLink>
+                      </li>
+                    ))}
+                  </ol>
+                )}
+              </div>
             </article>
           </li>
         ))}

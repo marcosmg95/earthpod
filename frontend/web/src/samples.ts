@@ -54,3 +54,112 @@ export const CONTINENTS: Sample[] = [
   continent("05", "africa", "Africa", "Marimba", 20, 5),
   continent("03", "oceania", "Oceania", "Harp", 135, -25),
 ];
+
+const one = (
+  file: string,
+  id: string,
+  title: string,
+  meaning: string,
+): Sample => ({
+  id,
+  file: `${base}${file}.wav`,
+  title,
+  instrument: title,
+  meaning,
+});
+
+export const NIGHT_SAMPLES: Sample[] = [
+  one(
+    "sample_nightlights_01_city_lights_plucks",
+    "n-city",
+    "City lights",
+    "soft plucks, one sweep across the map per year",
+  ),
+  one(
+    "sample_nightlights_02_brighter_than_2012_bells",
+    "n-brighter",
+    "Brighter than in 2012",
+    "bells on top of the plucks",
+  ),
+  one(
+    "sample_nightlights_03_new_lights_high_bells",
+    "n-new",
+    "New lights",
+    "high bells for the purple on the change map",
+  ),
+  one(
+    "sample_nightlights_04_lights_out_low_plucks",
+    "n-out",
+    "Lights out",
+    "low plucks for the orange on the change map",
+  ),
+  one(
+    "sample_nightlights_05_weur_pluck",
+    "n-weur",
+    "Western Europe",
+    "a pluck for its zoom box",
+  ),
+  one(
+    "sample_nightlights_06_emed_soft",
+    "n-emed",
+    "Eastern Mediterranean",
+    "a soft tone for its zoom box",
+  ),
+  one(
+    "sample_nightlights_07_ukr_bell",
+    "n-ukr",
+    "Ukraine",
+    "a bell for its zoom box",
+  ),
+  one(
+    "sample_nightlights_08_ind_pluck",
+    "n-ind",
+    "India",
+    "a pluck for its zoom box",
+  ),
+];
+
+export const AIR_SAMPLES: Sample[] = [
+  one(
+    "sample_aerosols_01_sulfate_hum",
+    "a-sulfate",
+    "Sulfate",
+    "a smooth hum (green on the map)",
+  ),
+  one(
+    "sample_aerosols_02_dust_grains",
+    "a-dust",
+    "Dust",
+    "sand grains (lilac)",
+  ),
+  one(
+    "sample_aerosols_03_smoke_crackle",
+    "a-smoke",
+    "Smoke",
+    "a crackle (red-orange)",
+  ),
+  one(
+    "sample_aerosols_04_sea_salt_surf",
+    "a-salt",
+    "Sea salt",
+    "surf (grey-blue)",
+  ),
+  one(
+    "sample_aerosols_05_plume_chime",
+    "a-chime",
+    "Big plume",
+    "a glass chime where a large plume begins",
+  ),
+  one(
+    "sample_aerosols_06_haze_wind",
+    "a-wind",
+    "Haze",
+    "a soft wind under everything",
+  ),
+  one(
+    "sample_aerosols_07_meridian_ticks",
+    "a-ticks",
+    "Longitude",
+    "a tick every 30°, deeper at Greenwich",
+  ),
+];

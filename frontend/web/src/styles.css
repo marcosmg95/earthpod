@@ -900,8 +900,7 @@ legend {
   left: 79.1%;
 }
 
-.pin-button,
-.body-button {
+.pin-button {
   display: flex;
   align-items: center;
   gap: 0.875rem;
@@ -919,13 +918,11 @@ legend {
   width: 100%;
 }
 
-.pin-button:hover,
-.body-button:hover {
+.pin-button:hover {
   border-color: var(--teal);
 }
 
-.pin-button[aria-pressed="true"],
-.body-button[aria-pressed="true"] {
+.pin-button[aria-pressed="true"] {
   background: var(--teal);
   border-color: var(--teal);
   color: var(--bg);
@@ -941,38 +938,45 @@ legend {
   font-weight: 500;
 }
 
-.pin-instrument,
-.body-meaning {
+.pin-instrument {
   font-size: 0.875rem;
   color: var(--muted);
 }
 
-[aria-pressed="true"] .pin-instrument,
-[aria-pressed="true"] .body-meaning {
+[aria-pressed="true"] .pin-instrument {
   color: inherit;
 }
 
-.body-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.75rem 1rem;
-  margin-top: 2.5rem;
-  padding-top: 1.75rem;
+.body-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.guide-chapter {
+  margin-top: 3.5rem;
+  padding-top: 2rem;
   border-top: 1px solid var(--line);
 }
 
-.body-row .guide-sub {
-  margin: 0 1rem 0 0;
+.guide-chapter .guide-sub {
+  margin: 0 0 0.5rem;
 }
 
-.guide-note {
-  margin-top: 1.5rem;
+.guide-sub .num {
+  margin-right: 0.75rem;
+  font-family: var(--mono);
+  color: var(--berry-text);
+}
+
+.guide-small {
+  margin: 1.5rem 0 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
   color: var(--muted);
-}
-
-.body-button {
-  min-height: 3rem;
 }
 
 @media (max-width: 60rem) {
@@ -1110,19 +1114,19 @@ legend {
   gap: 1rem;
 }
 
-.scene-about h2 {
+.scene-text h2 {
   font-size: 1.125rem;
   font-weight: 500;
 }
 
-.scene-about p {
+.scene-text p {
   max-width: 65ch;
   margin: 0;
   color: var(--muted);
   margin-top: 0.75rem;
 }
 
-.scene-about summary {
+.scene-text summary {
   min-height: 2.75rem;
   display: flex;
   align-items: center;
@@ -1208,8 +1212,8 @@ legend {
 .captions span {
   max-width: 46rem;
   padding: 0.5rem 0.9rem;
-  background: rgba(0, 0, 0, 0.82);
-  font-size: clamp(1rem, 1.6vw, 1.375rem);
+  background: rgba(0, 0, 0, 0.2);
+  font-size: clamp(1rem, 1.2vw, 1rem);
   line-height: 1.4;
   text-align: center;
   animation: caption-in 0.5s ease both;
@@ -1232,6 +1236,24 @@ legend {
   column-gap: 2rem;
   row-gap: 0.75rem;
   align-items: start;
+}
+
+.player-tools {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 12px;
+}
+.player-tools .options-toggle {
+  margin-top: 0;
+}
+.options-toggle[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--bg);
+}
+.cc {
+  font: 600 0.8125rem var(--mono);
+  letter-spacing: 0.05em;
 }
 
 .play {
@@ -1452,7 +1474,7 @@ legend {
     grid-template-columns: auto minmax(0, 1fr);
   }
 
-  .options-toggle {
+  .player-tools {
     grid-column: 2;
     justify-self: end;
     margin-top: 0;
@@ -1513,15 +1535,6 @@ legend {
   color: var(--dim);
 }
 
-.options-transcript {
-  padding-top: 0.875rem;
-  border-top: 1px solid var(--line);
-}
-
-.options-transcript summary {
-  font-size: 0.9375rem;
-}
-
 .next {
   justify-self: end;
   display: inline-flex;
@@ -1536,6 +1549,17 @@ legend {
 
 .next svg {
   color: var(--teal);
+}
+
+.scene-text h2 {
+  margin-top: 1.5rem;
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+.scene-text section p {
+  max-width: 65ch;
+  margin: 0.75rem 0 0;
+  color: var(--muted);
 }
 
 /* ---------- explore ---------- */
@@ -1675,14 +1699,13 @@ legend {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
   align-items: center;
-  gap: 0.75rem 2rem;
+  gap: 2rem;
   padding: 1.25rem;
   background: var(--panel);
   border: 1px solid var(--line);
 }
 
 .chapter-card .poster {
-  grid-row: span 4;
   aspect-ratio: 16 / 9;
   overflow: hidden;
   background: #000;
@@ -1715,6 +1738,21 @@ legend {
   text-decoration: underline;
 }
 
+.chapter-card-body {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.chapter-card .logline {
+  font-size: 1.0625rem;
+}
+
+.scene-links .num {
+  margin-right: 0.5rem;
+  font: 500 0.75rem var(--mono);
+  color: var(--dim);
+}
+
 .scene-links {
   display: flex;
   flex-wrap: wrap;
@@ -1733,10 +1771,6 @@ legend {
 @media (max-width: 48rem) {
   .chapter-card {
     grid-template-columns: 1fr;
-  }
-
-  .chapter-card .poster {
-    grid-row: auto;
   }
 }
 
@@ -1804,7 +1838,7 @@ legend {
   .menu[open] > summary,
   .options-toggle[aria-expanded="true"],
   .pin-button[aria-pressed="true"],
-  .body-button[aria-pressed="true"] {
+  .options-toggle[aria-pressed="true"] {
     forced-color-adjust: none;
     background: Highlight;
     border-color: Highlight;

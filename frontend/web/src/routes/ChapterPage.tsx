@@ -8,10 +8,10 @@ import { FrameView } from "../components/FrameView";
 import { Icon } from "../components/Icon";
 import { Player } from "../components/Player";
 import { SceneLink } from "../components/SceneLink";
-import { Transcript } from "../components/Transcript";
 import { useTrack } from "../data/useTrack";
 import { engine, useEngine } from "../engine/store";
 import { useSettings } from "../settings/context";
+import { Transcript } from "../components/Transcript";
 
 type Phase = "title" | "scene" | "between" | "end";
 
@@ -271,20 +271,37 @@ export function ChapterPage({
                 <span>Scene {scene + 1}</span>
                 {view.label}
               </p>
-              <Captions track={loaded} />
+              {settings.captions && <Captions track={loaded} />}
             </FrameView>
           </div>
           <div ref={playerRef} className="scene-controls">
-            <Player track={loaded}>
-              <Transcript track={loaded} />
-            </Player>
+            <Player track={loaded} />
           </div>
-          {loaded.about && (
-            <details className="scene-controls scene-about">
-              <summary>About this visualization, from NASA</summary>
-              {loaded.about.split(/\n+/).map((p, i) => (
-                <p key={i}>{p}</p>
-              ))}
+          {(loaded.cues.length > 0 || loaded.about || loaded.mapping) && (
+            <details className="scene-controls scene-text">
+              <summary>Read about this scene</summary>
+              {loaded.mapping && (
+                <section aria-labelledby="sound-heading">
+                  <h2 id="sound-heading">How this scene sounds</h2>
+                  {loaded.mapping.split(/\n+/).map((p, i) => (
+                    <p key={i}>{p}</p>
+                  ))}
+                </section>
+              )}
+              {loaded.cues.length > 0 && (
+                <section aria-labelledby="happens-heading">
+                  <h2 id="happens-heading">What happens</h2>
+                  <Transcript track={loaded} />
+                </section>
+              )}
+              {loaded.about && (
+                <section aria-labelledby="nasa-heading">
+                  <h2 id="nasa-heading">About this visualization, from NASA</h2>
+                  {loaded.about.split(/\n+/).map((p, i) => (
+                    <p key={i}>{p}</p>
+                  ))}
+                </section>
+              )}
             </details>
           )}
         </>

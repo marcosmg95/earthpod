@@ -15,6 +15,15 @@ export function timeLabel(
   t: number,
   duration: number,
 ): string {
+  if (track.scan && duration > 0) {
+    const f = Math.min(1, Math.max(0, t / duration));
+    const lon = Math.round(
+      track.scan.from + (track.scan.to - track.scan.from) * f,
+    );
+    return Math.abs(lon) === 180 || lon === 0
+      ? `${Math.abs(lon)}°`
+      : `${Math.abs(lon)}°${lon < 0 ? "W" : "E"}`;
+  }
   if (!track.dates || duration <= 0) return mmss(t);
   const a = Date.parse(track.dates.start);
   const b = Date.parse(track.dates.end);

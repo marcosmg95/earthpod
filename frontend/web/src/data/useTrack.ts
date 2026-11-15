@@ -58,6 +58,7 @@ async function fetchMedia(ref: TrackRef): Promise<LoadedTrack> {
     base,
     cues,
     about,
+    scan: ref.scan,
   };
 }
 

@@ -8,6 +8,7 @@ export interface Settings {
   rate: number;
   shortcuts: boolean;
   motion: MotionPref;
+  captions: boolean;
 }
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -16,6 +17,7 @@ export const DEFAULT_SETTINGS: Settings = {
   rate: 1,
   shortcuts: true,
   motion: "system",
+  captions: false,
 };
 
 export interface SettingsApi {

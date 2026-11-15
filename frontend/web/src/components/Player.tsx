@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { useState } from "react";
 import { mmss, timeLabel } from "../data/time";
 import type { LoadedTrack } from "../data/useTrack";
 import { engine, useEngine } from "../engine/store";
@@ -8,13 +8,7 @@ import { SoundChart } from "./SoundChart";
 
 const SPEEDS = [0.5, 0.75, 1];
 
-export function Player({
-  track,
-  children,
-}: {
-  track: LoadedTrack;
-  children?: ReactNode;
-}) {
+export function Player({ track }: { track: LoadedTrack }) {
   const { playing, frame, time, duration } = useEngine();
   const { settings, update } = useSettings();
   const [open, setOpen] = useState(false);
@@ -79,17 +73,35 @@ export function Player({
         </div>
       </div>
 
-      <button
-        type="button"
-        className="options-toggle"
-        aria-expanded={open}
-        aria-controls="player-options"
-        data-tip="Options"
-        onClick={() => setOpen((o) => !o)}
-      >
-        <Icon name="sliders" size={22} />
-        <span className="sr-only">Options</span>
-      </button>
+      <div className="player-tools">
+        {hasMoments && (
+          <button
+            type="button"
+            className="options-toggle"
+            aria-pressed={settings.captions}
+            data-tip={
+              settings.captions ? "Hide descriptions" : "Show descriptions"
+            }
+            onClick={() => update({ captions: !settings.captions })}
+          >
+            <span className="cc" aria-hidden="true">
+              CC
+            </span>
+            <span className="sr-only">Descriptions on the video</span>
+          </button>
+        )}
+        <button
+          type="button"
+          className="options-toggle"
+          aria-expanded={open}
+          aria-controls="player-options"
+          data-tip="Options"
+          onClick={() => setOpen((o) => !o)}
+        >
+          <Icon name="sliders" size={22} />
+          <span className="sr-only">Options</span>
+        </button>
+      </div>
 
       <div id="player-options" className="options-panel" hidden={!open}>
         <div className="options-row">
@@ -131,14 +143,10 @@ export function Player({
           </span>
           {hasMoments && (
             <span className="key-item">
-              <i className="key-moment" aria-hidden="true" /> key moment
+              <i className="key-moment" aria-hidden="true" /> described moment
             </span>
           )}
         </div>
-
-        {hasMoments && children && (
-          <div className="options-transcript">{children}</div>
-        )}
       </div>
     </section>
   );

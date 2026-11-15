@@ -46,6 +46,7 @@ export const TrackManifest = z.object({
   dates: z.object({ start: z.string(), end: z.string() }).optional(),
   regions: z.array(Region).optional(),
   grid: Grid.optional(),
+  scan: z.object({ from: z.number(), to: z.number() }).optional(),
 });
 
 export type Frame = z.infer<typeof Frame>;

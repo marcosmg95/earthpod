@@ -62,6 +62,14 @@ export function SettingsPanel() {
           />
           Single-key shortcuts in the player
         </label>
+        <label className="check">
+          <input
+            type="checkbox"
+            checked={settings.captions}
+            onChange={(e) => update({ captions: e.target.checked })}
+          />
+          Show descriptions on the video
+        </label>
         <fieldset>
           <legend>Motion</legend>
           {MOTION.map((m) => (

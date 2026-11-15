@@ -5,7 +5,13 @@ import { EarthGlobe } from "../components/EarthGlobe";
 import { Icon } from "../components/Icon";
 import { SceneLink } from "../components/SceneLink";
 import { engine } from "../engine/store";
-import { BODY, CONTINENTS, type Sample } from "../samples";
+import {
+  AIR_SAMPLES,
+  BODY,
+  CONTINENTS,
+  NIGHT_SAMPLES,
+  type Sample,
+} from "../samples";
 import { useSettings } from "../settings/context";
 
 type Phase = "title" | "guide";
@@ -81,6 +87,26 @@ export function HowToListen() {
     a.play().catch(() => setPlaying(null));
   };
 
+  const sampleButton = (s: Sample) => {
+    const on = playing === s.id;
+    return (
+      <li key={s.id}>
+        <button
+          type="button"
+          className="pin-button"
+          aria-pressed={on}
+          onClick={() => toggle(s)}
+        >
+          <Icon name={on ? "pause" : "play"} size={16} />
+          <span className="pin-text">
+            <span className="pin-title">{s.title}</span>
+            <span className="pin-instrument">{s.meaning}</span>
+          </span>
+        </button>
+      </li>
+    );
+  };
+
   const first = CHAPTERS[0];
   const focused = CONTINENTS.find((s) => s.id === playing);
 
@@ -128,97 +154,119 @@ export function HowToListen() {
           >
             Meet the instruments
           </h1>
+          <p className="lede reveal" style={delay(0.2)}>
+            Sonification is turning data into sound so you can hear patterns
+            that are hard to see. Instead of looking at a graph, a video or an
+            image, you listen to changes in pitch, volume or rhythm to
+            understand the information.
+          </p>
           <p className="lede reveal" style={delay(0.3)}>
-            In chapter 01, each part of the world has its own instrument. When
-            it comes into view, you hear it.
+            Each chapter has its own sounds. Play each one once: you will hear
+            them again in the chapter.
           </p>
 
-          <h2 className="sr-only">Six continents, six instruments</h2>
-          <p id="continents-note" className="sr-only">
-            Each instrument plays while its continent is on screen. Higher notes
-            mean more dense CO₂ there.
-          </p>
-          <div className="pins reveal" style={delay(0.5)}>
-            <div className="pins-globe" aria-hidden="true">
-              <EarthGlobe
-                spinning={false}
-                focusLon={focused?.lon}
-                focusLat={focused?.lat}
-                instant={reducedMotion}
-              />
-            </div>
-            <svg
-              className="pins-lines"
-              viewBox={`0 0 ${W} ${H}`}
-              aria-hidden="true"
-            >
-              {CONTINENTS.map((s, i) => {
-                const l = leader(i, s.id === playing);
-                return (
-                  <g
-                    key={s.id}
-                    className={s.id === playing ? "is-on" : undefined}
-                  >
-                    <line {...l} />
-                    <rect x={l.x2 - 4} y={l.y2 - 4} width={8} height={8} />
-                  </g>
-                );
-              })}
-            </svg>
-            <ul className="pins-list">
-              {CONTINENTS.map((s, i) => {
-                const on = playing === s.id;
-                return (
-                  <li
-                    key={s.id}
-                    className={`pin pin-${SLOTS[i].side}`}
-                    style={
-                      { "--y": `${(SLOTS[i].y / H) * 100}%` } as CSSProperties
-                    }
-                  >
-                    <button
-                      type="button"
-                      className="pin-button"
-                      aria-pressed={on}
-                      aria-describedby="continents-note"
-                      onClick={() => toggle(s)}
+          <section
+            className="guide-chapter reveal"
+            style={delay(0.5)}
+            aria-labelledby="g01"
+          >
+            <h2 id="g01" className="guide-sub">
+              <span className="num">01</span> {CHAPTERS[0].title}
+            </h2>
+            <p id="continents-note" className="guide-note">
+              Each continent has its own instrument and plays while it is on
+              screen. Higher notes mean more dense CO₂ there.
+            </p>
+            <div className="pins">
+              <div className="pins-globe" aria-hidden="true">
+                <EarthGlobe
+                  spinning={false}
+                  focusLon={focused?.lon}
+                  focusLat={focused?.lat}
+                  instant={reducedMotion}
+                />
+              </div>
+              <svg
+                className="pins-lines"
+                viewBox={`0 0 ${W} ${H}`}
+                aria-hidden="true"
+              >
+                {CONTINENTS.map((s, i) => {
+                  const l = leader(i, s.id === playing);
+                  return (
+                    <g
+                      key={s.id}
+                      className={s.id === playing ? "is-on" : undefined}
                     >
-                      <Icon name={on ? "pause" : "play"} size={16} />
-                      <span className="pin-text">
-                        <span className="pin-title">{s.title}</span>
-                        <span className="pin-instrument">{s.instrument}</span>
-                      </span>
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+                      <line {...l} />
+                      <rect x={l.x2 - 4} y={l.y2 - 4} width={8} height={8} />
+                    </g>
+                  );
+                })}
+              </svg>
+              <ul className="pins-list">
+                {CONTINENTS.map((s, i) => {
+                  const on = playing === s.id;
+                  return (
+                    <li
+                      key={s.id}
+                      className={`pin pin-${SLOTS[i].side}`}
+                      style={
+                        { "--y": `${(SLOTS[i].y / H) * 100}%` } as CSSProperties
+                      }
+                    >
+                      <button
+                        type="button"
+                        className="pin-button"
+                        aria-pressed={on}
+                        aria-describedby="continents-note"
+                        onClick={() => toggle(s)}
+                      >
+                        <Icon name={on ? "pause" : "play"} size={16} />
+                        <span className="pin-text">
+                          <span className="pin-title">{s.title}</span>
+                          <span className="pin-instrument">{s.instrument}</span>
+                        </span>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+            <h3 className="guide-small">Underneath the whole chapter</h3>
+            <ul className="body-list">{BODY.map(sampleButton)}</ul>
+          </section>
 
-          <div className="body-row reveal" style={delay(0.8)}>
-            <h2 className="guide-sub">Underneath chapter 01</h2>
-            {BODY.map((s) => {
-              const on = playing === s.id;
-              return (
-                <button
-                  key={s.id}
-                  type="button"
-                  className="body-button"
-                  aria-pressed={on}
-                  onClick={() => toggle(s)}
-                >
-                  <Icon name={on ? "pause" : "play"} size={16} />
-                  {s.title} <span className="body-meaning">· {s.meaning}</span>
-                </button>
-              );
-            })}
-          </div>
-          <p className="guide-note reveal" style={delay(0.9)}>
-            Chapter 02 has its own sounds: soft plucks for city lights, and
-            bells where places grew brighter.
-          </p>
+          <section
+            className="guide-chapter reveal"
+            style={delay(0.7)}
+            aria-labelledby="g02"
+          >
+            <h2 id="g02" className="guide-sub">
+              <span className="num">02</span> {CHAPTERS[1].title}
+            </h2>
+            <p className="guide-note">
+              Left is west, right is east, and higher notes are further north.
+            </p>
+            <ul className="body-list">{NIGHT_SAMPLES.map(sampleButton)}</ul>
+          </section>
 
-          <div className="end-actions reveal" style={delay(1)}>
+          <section
+            className="guide-chapter reveal"
+            style={delay(0.9)}
+            aria-labelledby="g03"
+          >
+            <h2 id="g03" className="guide-sub">
+              <span className="num">03</span> {CHAPTERS[2].title}
+            </h2>
+            <p className="guide-note">
+              A line scans the map from west to east. Each band of latitude has
+              its own note, higher further north.
+            </p>
+            <ul className="body-list">{AIR_SAMPLES.map(sampleButton)}</ul>
+          </section>
+
+          <div className="end-actions reveal" style={delay(1.1)}>
             <SceneLink href={`/${FIRST_CHAPTER}`} className="primary">
               Next: {first.num} {first.short} <Icon name="arrow" size={18} />
             </SceneLink>

@@ -69,7 +69,10 @@ test("00 How to listen: the instruments are toggle buttons", async ({
   await expect(h1(page)).toHaveText("Meet the instruments");
   await expect(h1(page)).toBeFocused();
 
-  const europe = page.getByRole("button", { name: /Europe/ });
+  const europe = page.getByRole("button", {
+    name: "Europe Flute",
+    exact: true,
+  });
   await expect(europe).toHaveAttribute("aria-pressed", "false");
   await europe.click();
   await expect(europe).toHaveAttribute("aria-pressed", "true");
@@ -78,7 +81,7 @@ test("00 How to listen: the instruments are toggle buttons", async ({
   await expect(europe).toHaveAttribute("aria-pressed", "false");
 });
 
-for (const id of ["co2", "nightlights"]) {
+for (const id of ["co2", "nightlights", "aerosols"]) {
   test(`chapter ${id}: title card, scene, keyboard and options`, async ({
     page,
   }) => {
@@ -109,8 +112,16 @@ for (const id of ["co2", "nightlights"]) {
     await expect(options).toHaveAttribute("aria-expanded", "true");
     await expect(page.getByRole("group", { name: "Speed" })).toBeVisible();
     await expect(
-      page.getByText("Transcript: key moments as text"),
+      page.getByRole("button", { name: /Describe this moment/ }),
     ).toBeVisible();
+    await page.locator("summary", { hasText: "Read about this scene" }).click();
+    await expect(
+      page.getByRole("heading", { name: "What happens" }),
+    ).toBeVisible();
+    const cc = page.getByRole("button", { name: "Descriptions on the video" });
+    await expect(cc).toHaveAttribute("aria-pressed", "false");
+    await cc.click();
+    await expect(cc).toHaveAttribute("aria-pressed", "true");
     await expectNoAxeViolations(page);
   });
 }
@@ -134,7 +145,7 @@ test("skip link and menu work from the keyboard", async ({ page }) => {
 });
 
 for (const [path, heading, title] of [
-  ["/#/record", "Every chapter", "Record · EarthPod"],
+  ["/#/record", "Record", "Record · EarthPod"],
   ["/#/accessibility", "Accessibility", "Accessibility · EarthPod"],
   ["/#/nowhere", "Chapter not found", "Chapter not found · EarthPod"],
 ]) {
