@@ -138,12 +138,7 @@ export const AIR_SAMPLES: Sample[] = [
     "Smoke",
     "a crackle (orange-red)",
   ),
-  one(
-    "sample_aerosols_04_sea_salt_surf",
-    "a-salt",
-    "Sea salt",
-    "surf (blue)",
-  ),
+  one("sample_aerosols_04_sea_salt_surf", "a-salt", "Sea salt", "surf (blue)"),
   one(
     "sample_aerosols_05_plume_chime",
     "a-chime",

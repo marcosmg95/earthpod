@@ -1351,6 +1351,7 @@ legend {
 
 .options-toggle::after {
   content: attr(data-tip);
+  content: attr(data-tip) / "";
   position: absolute;
   bottom: calc(100% + 8px);
   right: 0;
