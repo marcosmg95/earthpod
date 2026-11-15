@@ -3,10 +3,12 @@
 Space Apps requires disclosing where and how AI tools were used. Commit-by-commit detail is in the git history.
 
 ## Planning and research
+
 - Claude (Anthropic): early research on the challenge, NASA data sources and prior art; drafts of the planning docs and pitch deck skeleton.
 - The CCLab team chose the challenge angle, the datasets and the concept (Earth in layers, same-period rule, event stories), and edited the drafts.
 
 ## Backend (backend/)
+
 - Claude Code (Anthropic; Claude Opus 5.5, Sonnet 5.5, Fable 5.2) and GitHub Copilot: wrote most of the Python code under the CCLab team's direction —
   data loaders and NASA SVS client, frame and page measurements from the SVS movies, the synth and instrument models,
   the sonification scripts, the Streamlit explorer and live player, the `jukebox.preview` and `jukebox.measure` tools,
@@ -19,5 +21,18 @@ Space Apps requires disclosing where and how AI tools were used. Commit-by-commi
   contact sheets of the movies), but the final listening and sign-off on the audio is done by the team.
 
 ## Frontend (frontend/web)
-- Claude (Anthropic): help with stack choice, code, UI design and accessibility review. All code reviewed and tested by the team.
-- Kokoro-82M (Apache-2.0): text-to-speech voice for the intro narration.
+
+- Claude (Anthropic; claude.ai, Claude Opus 5.5): helped choose the stack (Vite, React, TypeScript, wouter, zod) and
+  wrote most of the frontend code under the team's direction: the ESLint/Prettier setup (jsx-a11y strict, custom rules
+  against autoplay and unthrottled live regions), the intro film, chapter flow, player, sound chart, audio/video sync,
+  dot-matrix globe (d3-geo, Natural Earth), 00 How to listen, header menu, the accessibility statement draft,
+  the Playwright + axe end-to-end tests, the waveform script, the app icon, and the Dockerfile/nginx/CI changes.
+  It also made the UI mockups on design canvases and reviewed the repo, the live site (axe scans, 400% zoom and
+  text-spacing checks) and the texts against the NASA SVS 5196 and 5313 pages.
+- Kokoro-82M (open-weight text-to-speech, Apache-2.0): the synthetic voice of the intro narration, generated with
+  `scripts/make_narration_kokoro.py` (lower pitch and room reverb with ffmpeg). The words are the team's own.
+- The CCLab team directed the work: chose the concept, the cinematic flow, the palette, font and layouts (picking
+  between mockups), the narration text and voice, and what to simplify; reviewed and ran every change, fixed
+  formatting and build errors, and tested in the browser before each deploy.
+- Accessibility was checked automatically (axe, end-to-end tests) and by the team with the keyboard; the final
+  sign-off on screen-reader use is done by the team.

@@ -1284,10 +1284,6 @@ legend {
   outline-offset: 4px;
 }
 
-.sound-chart {
-  --ink-playhead: var(--berry);
-}
-
 .slate span,
 .kicker,
 .menu-list a[aria-current="page"],
@@ -1296,10 +1292,7 @@ legend {
 }
 
 .captions span {
-  border-top: 2px solid var(-berry);
-}
-
-.title-card:has(.title-num) [data-chapter="nightlights"] {
+  border-top: 2px solid var(--berry);
 }
 
 .ends {
