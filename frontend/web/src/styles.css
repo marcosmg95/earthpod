@@ -94,6 +94,21 @@ main:focus {
   white-space: nowrap;
 }
 
+.static-fallback {
+  min-height: 100dvh;
+  display: grid;
+  place-content: center;
+  gap: 1rem;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  background: #000;
+}
+
+.static-fallback p {
+  margin: 0;
+  color: var(--muted);
+}
+
 /* ---------- controls ---------- */
 button,
 select {
@@ -536,6 +551,17 @@ legend {
   color: var(--muted);
 }
 
+.intro-body > .intro-hint {
+  opacity: 1;
+  animation-name: intro-hint-rise;
+}
+
+@keyframes intro-hint-rise {
+  from {
+    transform: translateY(14px);
+  }
+}
+
 .intro-skip {
   position: fixed;
   top: 1rem;
@@ -759,8 +785,8 @@ legend {
   color: var(--muted);
 }
 
-.interlude h2,
-.end-card h2 {
+.interlude h1,
+.end-card h1 {
   font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 200;
 }
@@ -1390,6 +1416,22 @@ legend {
   }
 }
 
+@media (max-width: 30rem) {
+  .options-panel {
+    padding: 1rem;
+  }
+  .speed {
+    flex-wrap: wrap;
+  }
+  .speed legend {
+    float: none;
+    line-height: 1.6;
+  }
+  .speed-group .seg {
+    min-width: 3.25rem;
+  }
+}
+
 /* ---------- transcript ---------- */
 .transcript summary {
   display: flex;
@@ -1653,6 +1695,32 @@ legend {
   .chapter-card .poster {
     grid-row: auto;
   }
+}
+
+.statement {
+  max-width: 44rem;
+}
+
+.statement h2 {
+  margin-top: 1.5rem;
+  font-size: 1.375rem;
+  font-weight: 500;
+}
+
+.statement p,
+.statement li {
+  max-width: 65ch;
+}
+
+.statement ul {
+  display: grid;
+  gap: 0.5rem;
+  padding-left: 1.25rem;
+}
+
+.statement-date {
+  color: var(--dim);
+  font-size: 0.875rem;
 }
 
 /* ---------- footer ---------- */

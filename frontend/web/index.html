@@ -8,18 +8,39 @@
     <link rel="manifest" href="/manifest.webmanifest" />
     <meta name="theme-color" content="#15151b" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Listen to the Earth: NASA Earth imagery turned into sound, built for screen readers and keyboards first."
+    />
     <script>
       try {
-        var s = JSON.parse(localStorage.getItem("ej:settings") || "{}")
-        var m = s.motion || "system"
-        var reduce = m === "reduce" || (m === "system" && matchMedia("(prefers-reduced-motion: reduce)").matches)
-        document.documentElement.dataset.motion = reduce ? "reduce" : "full"
+        var s = JSON.parse(localStorage.getItem("ej:settings") || "{}");
+        var m = s.motion || "system";
+        var reduce =
+          m === "reduce" ||
+          (m === "system" &&
+            matchMedia("(prefers-reduced-motion: reduce)").matches);
+        document.documentElement.dataset.motion = reduce ? "reduce" : "full";
       } catch (e) {}
     </script>
     <title>EarthPod</title>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <main class="static-fallback">
+        <h1>Listen to the Earth</h1>
+        <p>
+          EarthPod turns NASA Earth imagery into sound. It works with screen
+          readers, keyboards and captions.
+        </p>
+        <noscript>
+          <p>
+            EarthPod needs JavaScript to play its sound and video. Please turn
+            JavaScript on and reload the page.
+          </p>
+        </noscript>
+      </main>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

@@ -50,7 +50,10 @@ export function ChapterPage({
   useEffect(() => () => engine.stop(), []);
 
   useEffect(() => {
-    if (chapter) document.title = `${chapter.short} · EarthPod`;
+    if (chapter)
+      document.title = chapter
+        ? `${chapter.short} · EarthPod`
+        : "Chapter not found · EarthPod";
     heading.current?.focus();
   }, [phase, scene, chapter]);
 
@@ -173,7 +176,7 @@ export function ChapterPage({
     const upcoming = chapter.tracks[scene + 1];
     return (
       <section className="interlude" aria-labelledby="between-heading">
-        <h2
+        <h1
           id="between-heading"
           ref={heading}
           tabIndex={-1}
@@ -184,7 +187,7 @@ export function ChapterPage({
             Scene {scene + 1} of {total} complete.{" "}
           </span>
           Next: {upcoming.label}
-        </h2>
+        </h1>
         <button
           type="button"
           className="primary reveal"
@@ -211,7 +214,7 @@ export function ChapterPage({
     );
     return (
       <section className="end-card" aria-labelledby="end-heading">
-        <h2
+        <h1
           id="end-heading"
           ref={heading}
           tabIndex={-1}
@@ -220,7 +223,7 @@ export function ChapterPage({
         >
           <span className="sr-only">End of chapter {chapter.num}: </span>
           {chapter.title}
-        </h2>
+        </h1>
         <div className="end-actions reveal" style={delay(0.6)}>
           <SceneLink href={next.href} className="primary">
             {next.label} <Icon name="arrow" size={18} />
@@ -238,9 +241,9 @@ export function ChapterPage({
 
   return (
     <section className="scene" aria-labelledby="scene-heading">
-      <h2 id="scene-heading" ref={heading} tabIndex={-1} className="sr-only">
+      <h1 id="scene-heading" ref={heading} tabIndex={-1} className="sr-only">
         Scene {scene + 1} of {total}: {view.label}
-      </h2>
+      </h1>
       {error && (
         <div className="scene-controls">
           <p role="alert" className="notice">

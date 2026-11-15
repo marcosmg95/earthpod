@@ -6,6 +6,7 @@ import { HowToListen } from "./routes/HowToListen";
 import { Intro } from "./routes/Intro";
 import { RecordPage } from "./routes/Record";
 import { SettingsProvider } from "./settings/SettingsProvider";
+import { Accessibility } from "./routes/Accessibility";
 
 function Shell() {
   const [location] = useLocation();
@@ -22,6 +23,7 @@ function Shell() {
             <RecordPage />
           </Route>
           <Route path="/listen" component={HowToListen} />
+          <Route path="/accessibility" component={Accessibility} />
           <Route path="/:chapter/:track?">
             {(p) => (
               <ChapterPage
