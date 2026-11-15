@@ -1,7 +1,6 @@
 """Live sonification player: the <video> is the master clock, the sonification's stems follow it.
 
-Unlike sync_player (an st.iframe rebuilt on every change), this is a Streamlit component that stays
-mounted: when a re-render sends new audio, it swaps in at the current position without stopping the
+It is a Streamlit component that stays mounted (not an st.iframe rebuilt on every change): when a re-render sends new audio, it swaps in at the current position without stopping the
 video, and the level sliders of a stem script (STEMS / OUTPUT_GAIN) mix the stems in the browser at
 once. The frontend is plain HTML/JS in live_player/index.html (no build step).
 """

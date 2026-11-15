@@ -25,13 +25,13 @@ Then (from `backend/`) `uv run --extra blackmarble python scripts\poc5_blackmarb
 The separate `derived/svs5313_eic_frames.csv` contains picture features, not radiance (per frame: overall
 bright-pixel level `light` and its centroid `x`, its purple/orange change-map parts, and the same three values inside
 each zoom box `weur_*`, `emed_*`, `ukr_*`, `ind_*`; see `jukebox/nightlights_frames.py`): rebuild it from the
-SVS 5313 EIC H.265 movie downloaded by `download_data.ps1`, using
-`uv run python scripts\poc7_svs5313_features.py` from `backend/`. No Earthdata token is needed. The same script writes
+SVS 5313 EIC H.265 movie (downloaded by `download_data.ps1`, or by the command itself) with
+`uv run python -m jukebox.measure 5313` from `backend/`. No Earthdata token is needed. The same command writes
 `derived/svs5313_eic_grids.npz`: coarse light grids (world 15x64 per year, purple/orange change maps, and each zoom box
 15x20) that the `nightlights_three_acts` sonification scans.
 
 `derived/svs<id>_frames.csv` + `derived/svs<id>_arrays.npz` for SVS 5669, 5533, 5011, 3912, 5425, 4960 and 4950:
-picture features of one movie (or still image) of each page, written by `scripts\poc8_page_features.py` (it downloads
+picture features of one movie (or still image) of each page, written by `python -m jukebox.measure` (it downloads
 ~2.6 GB of movies into `raw/svs<id>/` first, resuming broken downloads). Columns and arrays are documented in
 `src/jukebox/pages/svs<id>.py`. `derived/svs4960_glyphs.npz` holds the 20 glyph templates (letters, digits, colon,
 labelled by hand from the movie) used to read the dates of the SVS 4960 dates-only movie.

@@ -3,7 +3,7 @@
 Each page module measures one movie (or one still image) of its SVS page and says how to label its frames:
 
     MOVIE    filename of the measured movie / image on the SVS page (what the explorer's selector shows)
-    URL      where to download it (scripts/poc8_page_features.py puts it in data/raw/svs<id>/)
+    URL      where to download it (`python -m jukebox.measure` puts it in data/raw/svs<id>/)
     FPS      the movie's frame rate; for a still image, scan steps per second (see STILL)
     STILL    True for a still image: the "movie" is a left-to-right scan of it, one table row per step,
              and the explorer shows the image with a moving scan line instead of a video
@@ -12,8 +12,9 @@ Each page module measures one movie (or one still image) of its SVS page and say
     def extract(path) -> (table, arrays)     table: one row per frame (no frame/label columns),
                                               arrays: name -> np.ndarray with frames first
     def labels(table) -> list[str]           one label per frame of the measured table (dates, longitudes, ...)
+    EXTRA    {filename: url} other files extract() needs, downloaded next to MOVIE (optional)
 
-scripts/poc8_page_features.py runs extract() and writes data/derived/svs<id>_frames.csv + svs<id>_arrays.npz
+`python -m jukebox.measure` runs extract() and writes data/derived/svs<id>_frames.csv + svs<id>_arrays.npz
 (committed, small), which load() reads back for the sonification scripts (ctx.page_features()).
 All measurements are indices of the picture (colour share, brightness, screen position), not physical values.
 """
@@ -27,16 +28,29 @@ from types import ModuleType
 import numpy as np
 import pandas as pd
 
-from ..data import DERIVED_DIR, RAW_DIR
+from ..paths import DERIVED_DIR, RAW_DIR
 
 PAGES = (5669, 5533, 4950, 5011, 3912, 5425, 4960)   # the challenge's Resources tab, besides 5196 / 5313
+REQUIRED = {"MOVIE": str, "URL": str, "FPS": (int, float), "NOTES": str}   # + callables extract(), labels()
+
+
+def check(mod: ModuleType) -> ModuleType:
+    """A page module that follows the contract above, or TypeError naming what is missing or wrong."""
+    problems = [f"{name} must be a {kind.__name__ if isinstance(kind, type) else 'number'}"
+                for name, kind in REQUIRED.items() if not isinstance(getattr(mod, name, None), kind)]
+    problems += [f"{name}() is missing" for name in ("extract", "labels") if not callable(getattr(mod, name, None))]
+    if not isinstance(getattr(mod, "EXTRA", {}), dict):
+        problems.append("EXTRA must be a dict {filename: url}")
+    if problems:
+        raise TypeError(f"{mod.__name__}: " + "; ".join(problems))
+    return mod
 
 
 def module(viz_id: int) -> ModuleType | None:
-    """The measuring module of an SVS page, or None if this project has none."""
+    """The measuring module of an SVS page (checked against the contract), or None if this project has none."""
     if int(viz_id) not in PAGES:
         return None
-    return importlib.import_module(f"{__name__}.svs{int(viz_id)}")
+    return check(importlib.import_module(f"{__name__}.svs{int(viz_id)}"))
 
 
 def spec_for(viz_id: int, filename: str) -> ModuleType | None:

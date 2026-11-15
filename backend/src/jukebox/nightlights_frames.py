@@ -21,9 +21,11 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from .data import DERIVED_DIR
+from .paths import DERIVED_DIR, RAW_DIR
 
 MOVIE = "nightlights_flat_series_and_change_wZooms_13_EIC_2160p30_h265.mp4"
+URL = "https://svs.gsfc.nasa.gov/vis/a000000/a005300/a005313/" + MOVIE
+RAW_PATH = RAW_DIR / "svs5313_EIC_2160p30_h265.mp4"   # the name data/download_data.ps1 gives it
 FPS = 30.0
 FRAME_COUNT = 1300
 SIZE = (960, 270)
@@ -185,7 +187,7 @@ def load_grids(viz_id: int, movie: str) -> dict[str, np.ndarray] | None:
     with np.load(GRIDS_PATH) as z:
         missing = [k for k in GRID_KEYS if k not in z]
         if missing:
-            raise ValueError(f"{GRIDS_PATH.name} lacks {missing}: re-run scripts/poc7_svs5313_features.py")
+            raise ValueError(f"{GRIDS_PATH.name} lacks {missing}: re-run python -m jukebox.measure 5313")
         return {k: z[k].astype(float) for k in GRID_KEYS}
 
 
@@ -285,5 +287,5 @@ def load(viz_id: int, movie: str) -> NightLightsFeatures | None:
         raise ValueError(f"Invalid frame sequence in {FEATURES_PATH}")
     missing = [c for c in COLUMNS if c not in table]
     if missing:
-        raise ValueError(f"{FEATURES_PATH.name} lacks {missing}: re-run scripts/poc7_svs5313_features.py")
+        raise ValueError(f"{FEATURES_PATH.name} lacks {missing}: re-run python -m jukebox.measure 5313")
     return NightLightsFeatures(table)

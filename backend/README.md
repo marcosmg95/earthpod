@@ -12,8 +12,7 @@ Managed with [uv](https://docs.astral.sh/uv/) — install once with `pip install
 | 3 | `scripts/poc3_validate_inversion.py` | `data/raw/` (run `data/download_data.ps1`) | SVS 5450 frame colours read back into °C match GISTEMP → **r for the Validity slide**; also writes `frontend/player/frames/` |
 | 4 | `scripts/poc4_barcelona.py` | gridded netCDF + `--extra netcdf` | Barcelona-region series → second track ("Listen to Barcelona") |
 | 5 | `scripts/poc5_blackmarble_regions.py` | `data/download_blackmarble.ps1` (Earthdata token) + `--extra blackmarble` | Black Marble night lights (SVS 5313 data) per region/year → `data/derived/blackmarble_annual.*` |
-| 7 | `scripts/poc7_svs5313_features.py` | SVS 5313 EIC movie from `data/download_data.ps1` | Screen-space light features for the night-lights nervous-system sonification |
-| 8 | `scripts/poc8_page_features.py [ids]` | internet (downloads ~2.6 GB of movies into `data/raw/`, resumable) | Frame measurements of the other Resources-tab pages (5669, 5533, 5011, 3912, 5425, 4960, 4950) → `data/derived/svs<id>_*` |
+| — | `python -m jukebox.measure [ids]` | internet (downloads ~3 GB of movies into `data/raw/`, resumable) | Frame measurements of every Resources-tab page the scripts read (5196, 5313, 5669, 5533, 5011, 3912, 5425, 4960, 4950) → `data/derived/svs<id>_*`; `--list` shows what each page downloads and writes |
 | — | `apps/svs_explorer.py` | internet | Streamlit: type any SVS id → metadata, filterable media list, movie/image previews, datasets, linked pages, raw JSON; **Sonify** tab plays a data sonification locked to a movie |
 | — | `scripts/fetch_arcade_images.py` | internet | ~34 public-domain NASA images → `frontend/arcade/images` |
 | — | `scripts/make_voice.py` | Windows TTS | Arcade voice-over clips → `frontend/arcade/voice` |
@@ -75,7 +74,7 @@ WAV download produce); the explorer's player redoes it in the browser, so those 
 `render()` must not use the level constants itself. Example: `svs5196/co2_15_lungs_heart_region.py`.
 
 **SVS 5196 (DYAMOND global CO2)** has no time.txt and no downloadable numbers, so its scripts use the movie itself:
-`scripts\poc6_svs5196_features.py` measures every frame (how much of the picture is orange-red = dense CO2, where it is,
+`uv run python -m jukebox.measure 5196` measures every frame (how much of the picture is orange-red = dense CO2, where it is,
 tan haze, a 120-column left-to-right profile) into `data\derived\svs5196_*` (committed; `jukebox/frames.py`). It is an
 index of the picture, not ppm. The orbit movie prints its date (1 frame = 1 model hour, 14 Jan – 3 Mar 2020), which
 becomes the timeline. Scripts read it with `ctx.frame_features()`; one script per sonification technique:
@@ -135,14 +134,15 @@ influence the sound. These are picture indices, not calibrated radiance or indiv
 classified by hue (gold year-map lights fall outside both ranges). The H.265 movie requires browser support
 for that codec. Other movie versions have not been measured.
 
-To reproduce the features, download the SVS 5313 movie with `data\download_data.ps1`, then run
-`uv run python scripts\poc7_svs5313_features.py` from `backend/`. This writes
+To reproduce the features, run `uv run python -m jukebox.measure 5313` from `backend/` (it downloads the
+SVS 5313 movie into `data\raw\` if `data\download_data.ps1` has not). This writes
+aw\` if `data\download_data.ps1` has not). This writes
 `data\derived\svs5313_eic_frames.csv` and `data\derived\svs5313_eic_grids.npz` (world and zoom-box light grids);
 no Earthdata token is needed (the run decodes the 8K movie, so it takes a few minutes).
 
 **The other pages on the challenge's Resources tab** (besides 5196 and 5313) are measured by one module each in
 `src/jukebox/pages/svs<id>.py` (same contract: `MOVIE`, `URL`, `FPS`, `extract(path)`, `labels(table)`, optional
-`CHAPTERS`; the docstring lists every column). `scripts\poc8_page_features.py` downloads the movie, measures it and
+`CHAPTERS`, `EXTRA`; the docstring lists every column; `pages.module()` checks it). `python -m jukebox.measure` downloads the movie, measures it and
 writes `data\derived\svs<id>_frames.csv` + `svs<id>_arrays.npz` (committed, < 1 MB each). Scripts read them with
 `ctx.page_features()`: `.table` (one row per frame), `.arrays` (grids / profiles, frames first),
 `.column(name, n, sr, smooth)` (a column stretched to audio samples). The explorer and `jukebox.preview` take the
@@ -213,7 +213,8 @@ All parameters live in `src/jukebox/mapping.py` (`DEFAULT_VOICES`, `SCALE`, `TON
 ## Layout
 ```
 pyproject.toml            uv project: deps, extras (netcdf, blackmarble), group explorer (streamlit); uv.lock committed
-src/jukebox/data.py       GISTEMP loaders, frame<->year (time.txt); reads backend/data/
+src/jukebox/paths.py      where the backend keeps its files (data/raw, data/derived, sonifications, out)
+src/jukebox/data.py       GISTEMP loaders, frame<->year (time.txt)
 src/jukebox/mapping.py    data -> notes (scale quantization, tempo, dissonance, records, descriptions)
 src/jukebox/synth.py      numpy synth -> stereo WAV (no audio libraries)
 src/jukebox/colormap.py   colorbar LUT (CIELAB), frame inversion, cos(lat) area mean
@@ -222,10 +223,10 @@ src/jukebox/svs.py        NASA SVS API client (fetch, flatten media, credits, li
 src/jukebox/sonify.py     Timeline (frame -> label), SonifyContext, script loader/runner
 apps/svs_explorer.py      Streamlit SVS explorer
 apps/live_player.py       video-master / audio-follower player, live stem mixer (Streamlit component: live_player/index.html)
-apps/sync_player.py       older single-WAV player (HTML+JS in st.iframe); no longer used by the explorer
 src/jukebox/frames.py     per-frame colour features of a movie (SVS 5196 CO2), used by co2_*.py
 src/jukebox/nightlights_frames.py  per-frame screen-light features of the SVS 5313 EIC movie
 src/jukebox/pages/        one module per other Resources-tab page (svs5669.py ...): measures its movie / still image
+src/jukebox/measure.py    python -m jukebox.measure: download + measure every measured page into data/derived/
 sonifications/svs<id>/    sonification scripts per SVS page (svs5450/gistemp_lead.py = demo, svs5196/co2_*.py, svs5313/)
 scripts/                  PoC entry points (see table above)
 tests/                    unittest: data, mapping, synth, colormap round trip, layers, Black Marble, SVS parsing

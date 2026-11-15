@@ -108,7 +108,7 @@ class SonifyContext:
         f = frames.load(self.viz_id, self.movie)
         if f is None:
             raise LookupError(f"No frame features for SVS {self.viz_id} movie {self.movie!r}. This script needs "
-                              "one of the SVS 5196 movies measured by scripts/poc6_svs5196_features.py.")
+                              "one of the SVS 5196 movies measured by python -m jukebox.measure 5196.")
         if len(f.table) != len(self.timeline.labels):
             raise ValueError(f"The timeline has {len(self.timeline.labels)} frames but the movie was measured "
                              f"with {len(f.table)}: use the timeline the explorer builds from the frame features.")
@@ -124,7 +124,7 @@ class SonifyContext:
         return f
 
     def page_features(self) -> pages.PageFeatures:
-        """Measurements of this page's movie / still image (jukebox.pages, scripts/poc8_page_features.py)."""
+        """Measurements of this page's movie / still image (jukebox.pages, python -m jukebox.measure)."""
         f = pages.load(self.viz_id, self.movie)
         if f is None:
             mod = pages.module(self.viz_id)
@@ -140,7 +140,7 @@ class SonifyContext:
         """Coarse world / zoom-box light grids of the measured SVS 5313 EIC movie (nightlights_frames.GRID_KEYS)."""
         g = nightlights_frames.load_grids(self.viz_id, self.movie)
         if g is None:
-            raise LookupError("Night-lights grids require the SVS 5313 EIC movie: run scripts/poc7_svs5313_features.py.")
+            raise LookupError("Night-lights grids require the SVS 5313 EIC movie: run python -m jukebox.measure 5313.")
         return g
 
     def notes_from_series(self, series: pd.Series, voice: mapping.Voice,

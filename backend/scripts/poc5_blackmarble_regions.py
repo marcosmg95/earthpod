@@ -10,7 +10,7 @@ import sys
 
 
 from jukebox import blackmarble as bm
-from jukebox.data import DERIVED_DIR, RAW_DIR
+from jukebox.paths import DERIVED_DIR, RAW_DIR
 
 SRC = RAW_DIR / "blackmarble"
 

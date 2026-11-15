@@ -16,7 +16,7 @@ import sys
 import numpy as np
 import pandas as pd
 
-from jukebox import data
+from jukebox import paths
 
 BCN = (41.39, 2.17)
 
@@ -29,7 +29,7 @@ def main():
     ap.add_argument("--min-months", type=int, default=10)
     a = ap.parse_args()
 
-    gz = data.RAW_DIR / "gistemp1200_GHCNv4_ERSSTv5.nc.gz"
+    gz = paths.RAW_DIR / "gistemp1200_GHCNv4_ERSSTv5.nc.gz"
     nc = gz.with_suffix("")
     if not nc.exists():
         if not gz.exists():
@@ -53,7 +53,7 @@ def main():
     g = m.groupby(m.index.year)
     annual = g.mean()[g.count() >= a.min_months]
 
-    out = data.DERIVED_DIR / "barcelona_annual.csv"
+    out = paths.DERIVED_DIR / "barcelona_annual.csv"
     out.parent.mkdir(parents=True, exist_ok=True)
     pd.DataFrame({"Year": annual.index, "anomaly": annual.round(3).values}).to_csv(out, index=False)
     print(f"Cell centre(s) around {float(lat[i]):.0f}N {float(lon[j]):.0f}E (+-{k} cells)")

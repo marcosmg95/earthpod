@@ -470,28 +470,6 @@ class TestLivePlayer(unittest.TestCase):
         self.assertEqual(spec["output"]["value"], 0.8)
 
 
-class TestSyncPlayer(unittest.TestCase):
-    @staticmethod
-    def _module():
-        import importlib.util
-        path = Path(__file__).resolve().parents[1] / "apps" / "sync_player.py"
-        spec = importlib.util.spec_from_file_location("sync_player", path)
-        mod = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(mod)
-        return mod
-
-    def test_chapters_are_embedded_safely(self):
-        html = self._module().player_html("https://x/movie.mp4", b"RIFF", [("2012", 0.0, 1.0)], 1.0, 300,
-                                          chapters=[("1 · Years", 0.0), ("</script>", 9.6333)])
-        self.assertIn('const chapters = [["1 \\u00b7 Years", 0.0], ["\\u003c/script>", 9.6333]];', html)
-        self.assertNotIn("__CHAPTERS__", html)
-        self.assertEqual(html.count("</script>"), 1)
-
-    def test_no_chapters_hides_the_nav(self):
-        html = self._module().player_html("https://x/movie.mp4", b"RIFF", [], 1.0, 300)
-        self.assertIn("const chapters = [];", html)
-
-
 class TestCo2Scripts(unittest.TestCase):
     """SVS 5196 scripts run on the committed frame features (data/derived/svs5196_*)."""
     MOVIE = "dyamondPointCloud_12-1-2023b_dyamond_co2_anim_globe_orbit_1080p30_h265.mp4"
@@ -503,6 +481,8 @@ class TestCo2Scripts(unittest.TestCase):
         self.assertEqual(frames.movie_tag("x_dyamond_co2_anim_globe_zoomwest_3x3hyperwall_1080p30_2.mp4"), "zoomwest")
         self.assertIsNone(frames.movie_tag("x_dyamond_co2_anim_globe_zoom_5x3_1080p30.mp4"))
         self.assertIsNone(frames.load(5450, self.MOVIE))
+        self.assertEqual({t: frames.movie_tag(m) for t, m in frames.MOVIES.items()}, {t: t for t in frames.MOVIES})
+        self.assertEqual(frames.MOVIES["orbit"], self.MOVIE)
 
     def test_orbit_features(self):
         f = frames.load(5196, self.MOVIE)

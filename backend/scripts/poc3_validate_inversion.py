@@ -15,15 +15,15 @@ import cv2
 import numpy as np
 import pandas as pd
 
-from jukebox import colormap, data
+from jukebox import colormap, data, paths
 
 POC = Path(__file__).resolve().parents[1]
 
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--movie", default=str(data.RAW_DIR / "svs5450_SOS_4096x2048.mp4"))
-    ap.add_argument("--colorbar", default=str(data.RAW_DIR / "svs5450_cbar_1000px.png"))
+    ap.add_argument("--movie", default=str(paths.RAW_DIR / "svs5450_SOS_4096x2048.mp4"))
+    ap.add_argument("--colorbar", default=str(paths.RAW_DIR / "svs5450_cbar_1000px.png"))
     ap.add_argument("--flip", action="store_true", help="colorbar runs high->low")
     ap.add_argument("--max-de", type=float, default=12.0, help="max CIELAB distance to accept a pixel")
     ap.add_argument("--analysis-width", type=int, default=360)
@@ -64,7 +64,7 @@ def main():
     slope, icpt = np.polyfit(ok["t_mean"], ok["gistemp"], 1)
     df["inverted_c"] = df["t_mean"] * slope + icpt
 
-    out = data.DERIVED_DIR
+    out = paths.DERIVED_DIR
     out.mkdir(parents=True, exist_ok=True)
     df.to_csv(out / "validation_svs5450.csv")
     print(f"\nYears: {len(ok)} · mean coverage {ok['coverage'].mean():.0%}")

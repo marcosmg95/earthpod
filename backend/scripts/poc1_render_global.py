@@ -7,9 +7,6 @@
 import argparse
 from pathlib import Path
 
-
-import pandas as pd
-
 from jukebox import data, mapping, synth
 
 OUT = Path(__file__).resolve().parents[1] / "out"

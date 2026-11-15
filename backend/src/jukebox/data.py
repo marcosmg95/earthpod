@@ -5,11 +5,9 @@ from pathlib import Path
 
 import pandas as pd
 
-BACKEND_DIR = Path(__file__).resolve().parents[2]  # backend/src/jukebox -> backend
-DATA_DIR = BACKEND_DIR / "data"
+from .paths import DATA_DIR, DERIVED_DIR, RAW_DIR
+
 GISTEMP_DIR = DATA_DIR / "gistemp"
-RAW_DIR = DATA_DIR / "raw"
-DERIVED_DIR = DATA_DIR / "derived"
 
 # ZonAnn column -> friendly voice name
 ZONES = {

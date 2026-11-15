@@ -26,7 +26,7 @@ import numpy as np
 import pandas as pd
 
 from . import block_mean, frames, hsv, raw_path
-from ..data import DERIVED_DIR
+from ..paths import DERIVED_DIR
 
 MOVIE = "atmos_river_HD.mp4"
 URL = "https://svs.gsfc.nasa.gov/vis/a000000/a004900/a004960/" + MOVIE
@@ -137,7 +137,7 @@ def extract(path) -> tuple[pd.DataFrame, dict[str, np.ndarray]]:
 
     dates_path = raw_path(4960).with_name(DATES_MOVIE)
     if not dates_path.exists():
-        raise FileNotFoundError(f"{dates_path} is missing: scripts/poc8_page_features.py downloads it (EXTRA)")
+        raise FileNotFoundError(f"{dates_path} is missing: python -m jukebox.measure 4960 downloads it (EXTRA)")
     days = read_dates(dates_path)
     w = SIZE[0]
     rows, grids, prev = [], [], None

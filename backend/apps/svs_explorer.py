@@ -9,17 +9,18 @@ from __future__ import annotations
 
 import hashlib
 import json
-from dataclasses import replace
+from dataclasses import dataclass, replace
 from pathlib import Path
+from types import ModuleType
 
 import pandas as pd
 import requests
 import streamlit as st
 
-from jukebox import pages, sonify, svs, video
+from jukebox import pages, paths, sonify, svs, video
 import live_player  # apps/ is on sys.path when Streamlit runs this file
 
-SONIFICATIONS = Path(__file__).resolve().parents[1] / "sonifications"
+SONIFICATIONS = paths.SONIFICATIONS_DIR
 
 # SVS pages the project already uses (handy starting points).
 KNOWN = {
@@ -160,12 +161,197 @@ with tab_media:
                 cols[n % 3].image(row.url, caption=row.filename, width="stretch")
 
 # ---- sonify: data audio locked to a movie -----------------------------------
-with tab_sonify:
+
+def sonify_movies(viz_id: int, items: list[svs.MediaItem]) -> list[svs.MediaItem]:
+    """The page's movies, the measured one first (a measured still image is played as a scan)."""
     movie_items = [i for i in items if i.ext in ("mp4", "webm", "mov")]
     page_mod = pages.module(viz_id)
-    if page_mod is not None:      # the measured movie first; a measured still image is played as a scan
+    if page_mod is not None:
         measured = [i for i in items if i.filename == page_mod.MOVIE]
         movie_items = measured[:1] + [i for i in movie_items if i.filename != page_mod.MOVIE]
+    return movie_items
+
+
+def pick_timeline(viz_id: int, movie: svs.MediaItem, items: list[svs.MediaItem]):
+    """1. Which data label is on screen at each video time -> (timeline, fps, chapters, still)."""
+    c1, c2 = st.columns([1, 3])
+    fps = c1.number_input("Frames per second", min_value=1.0, max_value=120.0, step=1.0,
+                          value=svs.fps_from_frames(items) or sonify.DEFAULT_FPS, key=f"son_fps_{viz_id}",
+                          help="From the frame-folder name (…_30p) when available.")
+    measured = sonify.measured_timeline(viz_id, movie.filename, fps)   # committed measurements come first
+    if measured:
+        timeline = measured.timeline
+        labels = timeline.labels
+        if measured.origin == "page":
+            what = (f"a left-to-right scan of the image in {len(labels)} steps at {timeline.fps:g} per second"
+                    if measured.still else f"{len(labels)} frames at {timeline.fps:g} fps (the movie's own)")
+            c2.markdown(f"**Timeline** from the measured movie (`python -m jukebox.measure {viz_id}`): {what} → "
+                        f"{timeline.duration:.1f} s, {labels[0]} … {labels[-1]}.")
+        elif measured.origin == "nightlights":
+            c2.markdown(f"**Timeline** from the measured SVS 5313 movie: {len(labels)} frames "
+                        f"→ {timeline.duration:.1f} s at {fps:g} fps (movie: 30 fps), in "
+                        f"{len(measured.chapters)} sections; year labels read from the movie.")
+        else:
+            c2.markdown(f"**Timeline** from the movie's own frames (measured by `python -m jukebox.measure "
+                        f"{viz_id}`): {len(labels)} frames, {labels[0]} … {labels[-1]} → "
+                        f"{timeline.duration:.1f} s at {fps:g} fps")
+        return timeline, fps, measured.chapters, measured.still
+    if tt := load_time_txt(viz_id):
+        tt_url, labels = tt
+        timeline = sonify.Timeline(labels, fps)
+        c2.markdown(f"**Timeline** from [time.txt]({tt_url}): {len(labels)} frames, "
+                    f"{labels[0]} … {labels[-1]} → {timeline.duration:.1f} s at {fps:g} fps")
+        return timeline, fps, [], False
+    c2.markdown("**Timeline:** this page has no time.txt, so years are spread evenly over the movie.")
+    a, b, c = st.columns(3)
+    y0 = a.number_input("First year", value=1880, step=1, key=f"son_y0_{viz_id}")
+    y1 = b.number_input("Last year", value=2024, step=1, key=f"son_y1_{viz_id}")
+    secs = c.number_input("Movie length (s)", min_value=1.0, value=30.0, step=1.0, key=f"son_len_{viz_id}")
+    return sonify.Timeline.linear(int(y0), int(y1), secs, fps), fps, [], False
+
+
+def load_script(path: Path, name: str) -> ModuleType | None:
+    """2. The script with its title and description; its errors are shown instead of crashing the explorer."""
+    try:
+        mod = sonify.load(path)
+    except Exception as e:
+        st.exception(e)
+        return None
+    st.markdown(f"**{getattr(mod, 'TITLE', name)}** — {getattr(mod, 'DESCRIPTION', '')}")
+    return mod
+
+
+@dataclass
+class Tuning:
+    """The script's PARAMS as the sliders set them."""
+    specs: dict[str, sonify.Param]   # every tunable constant
+    live: set[str]                   # level constants (STEMS / OUTPUT_GAIN): mixed live in the player
+    overrides: dict                  # values of the other constants: changing one re-renders
+    levels: dict                     # live levels the player last reported
+    mix_id: str                      # the script and defaults those levels belong to
+    player_key: str
+
+
+def tune(viz_id: int, name: str, mod: ModuleType | None) -> Tuning:
+    """2b. Sliders for the constants the script lists in PARAMS (no code edit needed).
+
+    Level constants of a stem script are sliders in the player instead: the browser re-mixes them live.
+    """
+    try:
+        specs = sonify.params_of(mod) if mod else {}
+    except AttributeError as e:
+        st.error(str(e))
+        specs = {}
+    live = sonify.mix_params(mod) & set(specs) if mod else set()
+    player_key = f"son_player_{viz_id}"
+    mix_id = json.dumps([name, {k: specs[k].default for k in sorted(live)}])
+    levels = st.session_state.get(player_key) or {}
+    levels = {k: v for k, v in levels.items() if k in live} if levels.get("_mix") == mix_id else {}
+    render_specs = {k: p for k, p in specs.items() if k not in live}
+    overrides = {}
+    if specs:
+        with st.expander(f"Tune {len(specs)} parameters", expanded=True):
+            if live:
+                st.caption(f"Layer levels ({', '.join(sorted(live))}) are live sliders under the video. "
+                           "The sliders here re-render the audio (it swaps in without stopping the video).")
+            cols = st.columns(min(max(len(render_specs), 1), 3))
+            for n, (pname, p) in enumerate(render_specs.items()):
+                kind = int if isinstance(p.default, int) else float  # st.slider wants one number type
+                overrides[pname] = cols[n % len(cols)].slider(
+                    pname, kind(p.lo), kind(p.hi), kind(p.default), kind(p.step),
+                    key=f"son_param_{viz_id}_{name}_{pname}")
+            changed = {k: v for k, v in {**overrides, **levels}.items() if v != specs[k].default}
+            if changed:
+                st.caption("To keep these values, set them in the script:")
+                st.code("\n".join(f"{k} = {v:g}" for k, v in changed.items()), language="python")
+    return Tuning(specs, live, overrides, levels, mix_id, player_key)
+
+
+def render(viz_id: int, movie: svs.MediaItem, name: str, path: Path, mod: ModuleType | None,
+           timeline: sonify.Timeline, fps: float, tuning: Tuning) -> tuple[dict | None, bool]:
+    """3. Render the script (automatically, cached by every setting) -> (render or None, auto re-render on)."""
+    key = (viz_id, movie.url, name, path.stat().st_mtime, fps,
+           len(timeline.labels), timeline.labels[0], timeline.labels[-1], tuple(sorted(tuning.overrides.items())))
+    cache = st.session_state.setdefault("son_cache", {})
+    auto = st.toggle("Re-render automatically when a setting changes", value=True, key="son_auto",
+                     help="About a second for the CO2 scripts. Turn off for slow scripts and use the button.")
+    status = st.empty()
+    if timeline.duration > sonify.MAX_DURATION_S:
+        status.warning(f"Timeline is {timeline.duration:.0f} s; the player handles up to "
+                       f"{sonify.MAX_DURATION_S:.0f} s. Raise the fps or shorten the year range.")
+    elif mod and key not in cache and (auto or status.button("Render sonification", type="primary")):
+        ctx = sonify.context_for(viz_id, timeline, movie.filename, data=data, params=tuning.overrides)
+        try:
+            status.caption(f"Rendering {path.name}…")
+            stems = sonify.render_stems(path, ctx)
+            cache[key] = {"wavs": live_player.stem_wavs(stems, ctx.sr), "meta": replace(stems, audio={}),
+                          "spans": timeline.spans(), "secs": timeline.duration, "sr": ctx.sr,
+                          "id": hashlib.sha1(repr(key).encode()).hexdigest()[:16]}
+            while len(cache) > CACHE_RENDERS:          # each entry holds the stems as WAVs (~7 MB each)
+                cache.pop(next(iter(cache)))
+            status.empty()
+        except Exception as e:
+            status.exception(e)
+    return cache.get(key), auto
+
+
+def play(viz_id: int, movie: svs.MediaItem, name: str, son: dict, tuning: Tuning,
+         chapters: list[tuple[str, float]], still: bool) -> None:
+    """The locked player (video or still-image scan) with its live level sliders, and the WAV download."""
+    meta, specs = son["meta"], tuning.specs
+    aspect = movie.width / movie.height if movie.width and movie.height else 16 / 9
+    got = live_player.live_player(
+        movie.url, son["wavs"], son["id"], live_player.mix_spec(meta, specs, tuning.levels), tuning.mix_id,
+        meta.normalize, son["spans"], son["secs"], aspect=aspect, chapters=chapters, still=still,
+        key=tuning.player_key)
+    levels = tuning.levels
+    if got and got.get("_mix") == tuning.mix_id:
+        levels = {k: v for k, v in got.items() if k in tuning.live}
+    gains = {stem: levels.get(p, specs[p].default if p in specs else meta.gains[stem])
+             for stem, p in meta.params.items()}
+    output = levels.get("OUTPUT_GAIN", meta.output)
+    st.download_button("Download sonification (.wav)",
+                       lambda: live_player.mix_wav(son["wavs"], gains, output, meta.normalize, son["sr"]),
+                       f"svs{viz_id}_{name}.wav", mime="audio/wav",
+                       help="The mix you hear, with the current levels.")
+    video_only_download(viz_id, movie, still)
+    st.caption("Press play on the scan: the line shows where the sound is reading the image." if still else
+               "Press play on the video: pause, seek and speed changes carry the audio with it.")
+
+
+def video_only_download(viz_id: int, movie: svs.MediaItem, still: bool) -> None:
+    """The movie re-encoded to H.264 without audio, prepared on request (a still image has nothing to re-encode)."""
+    video_key = (viz_id, movie.url)
+    video_download = st.session_state.get("son_video_download")
+    if video_download and video_download["key"] != video_key:
+        del st.session_state["son_video_download"]
+        video_download = None
+    if not still and st.button("Prepare video-only download (H.264)", key=f"prepare_video_{viz_id}"):
+        try:
+            with st.spinner("Downloading the movie from NASA SVS…"):
+                video_bytes = svs.download_media(movie.url)
+            with st.spinner("Re-encoding to H.264 MP4 (can take a minute for 4K movies)…"):
+                video_bytes = video.to_h264(video_bytes)
+        except requests.RequestException as e:
+            st.error(f"Could not download the movie: {e}")
+        except RuntimeError as e:
+            st.error(str(e))
+        else:
+            video_download = {"key": video_key, "data": video_bytes}
+            st.session_state["son_video_download"] = video_download
+    if video_download and video_download["key"] == video_key:
+        st.download_button(
+            "Download video only (H.264 .mp4)",
+            video_download["data"],
+            video.h264_filename(movie.filename),
+            mime="video/mp4",
+            help=f"H.264 MP4, no audio, at most {video.MAX_WIDTH} px wide. The sonification is "
+                 "not included; it remains available as a separate WAV.",
+        )
+
+
+with tab_sonify:
+    movie_items = sonify_movies(viz_id, items)
     scripts = sonify.discover_for(SONIFICATIONS, viz_id)
     script_dir = sonify.folder_for(SONIFICATIONS, viz_id)
     if not movie_items:
@@ -176,158 +362,16 @@ with tab_sonify:
     else:
         names = [m.filename for m in movie_items]
         movie = movie_items[names.index(st.selectbox("Movie", names, key=f"son_movie_{viz_id}"))]
-
-        # 1. timeline: which data label is on screen at each video time
-        c1, c2 = st.columns([1, 3])
-        fps = c1.number_input("Frames per second", min_value=1.0, max_value=120.0, step=1.0,
-                              value=svs.fps_from_frames(items) or sonify.DEFAULT_FPS, key=f"son_fps_{viz_id}",
-                              help="From the frame-folder name (…_30p) when available.")
-        measured = sonify.measured_timeline(viz_id, movie.filename, fps)   # committed measurements come first
-        tt = None if measured else load_time_txt(viz_id)
-        chapters = measured.chapters if measured else []
-        is_still = bool(measured and measured.still)
-        if measured:
-            timeline = measured.timeline
-            labels = timeline.labels
-        if measured and measured.origin == "page":
-            what = (f"a left-to-right scan of the image in {len(labels)} steps at {timeline.fps:g} per second"
-                    if is_still else f"{len(labels)} frames at {timeline.fps:g} fps (the movie's own)")
-            c2.markdown(f"**Timeline** from the measured movie (`scripts/poc8_page_features.py`): {what} → "
-                        f"{timeline.duration:.1f} s, {labels[0]} … {labels[-1]}.")
-        elif measured and measured.origin == "nightlights":
-            c2.markdown(f"**Timeline** from the measured SVS 5313 movie: {len(labels)} frames "
-                        f"→ {timeline.duration:.1f} s at {fps:g} fps (movie: 30 fps), in "
-                        f"{len(chapters)} sections; year labels read from the movie.")
-        elif measured:
-            c2.markdown(f"**Timeline** from the movie's own frames (measured by `scripts/poc6_svs5196_features.py`): "
-                        f"{len(labels)} frames, {labels[0]} … {labels[-1]} → {timeline.duration:.1f} s at {fps:g} fps")
-        elif tt:
-            tt_url, labels = tt
-            timeline = sonify.Timeline(labels, fps)
-            c2.markdown(f"**Timeline** from [time.txt]({tt_url}): {len(labels)} frames, "
-                        f"{labels[0]} … {labels[-1]} → {timeline.duration:.1f} s at {fps:g} fps")
-        else:
-            c2.markdown("**Timeline:** this page has no time.txt, so years are spread evenly over the movie.")
-            a, b, c = st.columns(3)
-            y0 = a.number_input("First year", value=1880, step=1, key=f"son_y0_{viz_id}")
-            y1 = b.number_input("Last year", value=2024, step=1, key=f"son_y1_{viz_id}")
-            secs = c.number_input("Movie length (s)", min_value=1.0, value=30.0, step=1.0, key=f"son_len_{viz_id}")
-            timeline = sonify.Timeline.linear(int(y0), int(y1), secs, fps)
-
-        # 2. script
+        timeline, fps, chapters, still = pick_timeline(viz_id, movie, items)
         name = st.selectbox("Sonification script", list(scripts), key=f"son_script_{viz_id}",
                             help=f"Python files in {SONIFICATIONS.name}/{script_dir.name}/ (plus generic ones in "
                                  f"{SONIFICATIONS.name}/) — edit one and it re-renders.")
         path = scripts[name]
-        try:
-            mod = sonify.load(path)
-            st.markdown(f"**{getattr(mod, 'TITLE', name)}** — {getattr(mod, 'DESCRIPTION', '')}")
-        except Exception as e:  # show script errors instead of crashing the explorer
-            st.exception(e)
-            mod = None
-
-        # 2b. tunable constants the script lists in PARAMS (no code edit needed). Level constants of a stem
-        # script (STEMS / OUTPUT_GAIN) are sliders in the player instead: the browser re-mixes them live.
-        overrides = {}
-        try:
-            specs = sonify.params_of(mod) if mod else {}
-        except AttributeError as e:
-            st.error(str(e))
-            specs = {}
-        live = sonify.mix_params(mod) & set(specs) if mod else set()
-        player_key = f"son_player_{viz_id}"
-        mix_id = json.dumps([name, {k: specs[k].default for k in sorted(live)}])
-        levels = st.session_state.get(player_key) or {}
-        levels = {k: v for k, v in levels.items() if k in live} if levels.get("_mix") == mix_id else {}
-        render_specs = {k: p for k, p in specs.items() if k not in live}
-        if specs:
-            with st.expander(f"Tune {len(specs)} parameters", expanded=True):
-                if live:
-                    st.caption(f"Layer levels ({', '.join(sorted(live))}) are live sliders under the video. "
-                               "The sliders here re-render the audio (it swaps in without stopping the video).")
-                cols = st.columns(min(max(len(render_specs), 1), 3))
-                for n, (pname, p) in enumerate(render_specs.items()):
-                    kind = int if isinstance(p.default, int) else float  # st.slider wants one number type
-                    overrides[pname] = cols[n % len(cols)].slider(
-                        pname, kind(p.lo), kind(p.hi), kind(p.default), kind(p.step),
-                        key=f"son_param_{viz_id}_{name}_{pname}")
-                changed = {k: v for k, v in {**overrides, **levels}.items() if v != specs[k].default}
-                if changed:
-                    st.caption("To keep these values, set them in the script:")
-                    st.code("\n".join(f"{k} = {v:g}" for k, v in changed.items()), language="python")
-
-        # 3. render (automatic, cached) + locked player
-        key = (viz_id, movie.url, name, path.stat().st_mtime, fps,
-               len(timeline.labels), timeline.labels[0], timeline.labels[-1], tuple(sorted(overrides.items())))
-        cache = st.session_state.setdefault("son_cache", {})
-        auto = st.toggle("Re-render automatically when a setting changes", value=True, key="son_auto",
-                         help="About a second for the CO2 scripts. Turn off for slow scripts and use the button.")
-        status = st.empty()
-        if timeline.duration > sonify.MAX_DURATION_S:
-            status.warning(f"Timeline is {timeline.duration:.0f} s; the player handles up to "
-                           f"{sonify.MAX_DURATION_S:.0f} s. Raise the fps or shorten the year range.")
-        elif mod and key not in cache and (auto or status.button("Render sonification", type="primary")):
-            ctx = sonify.context_for(viz_id, timeline, movie.filename, data=data, params=overrides)
-            try:
-                status.caption(f"Rendering {path.name}…")
-                stems = sonify.render_stems(path, ctx)
-                cache[key] = {"wavs": live_player.stem_wavs(stems, ctx.sr), "meta": replace(stems, audio={}),
-                              "spans": timeline.spans(), "secs": timeline.duration, "sr": ctx.sr,
-                              "id": hashlib.sha1(repr(key).encode()).hexdigest()[:16]}
-                while len(cache) > CACHE_RENDERS:          # each entry holds the stems as WAVs (~7 MB each)
-                    cache.pop(next(iter(cache)))
-                status.empty()
-            except Exception as e:
-                status.exception(e)
-
-        son = cache.get(key)
+        mod = load_script(path, name)
+        tuning = tune(viz_id, name, mod)
+        son, auto = render(viz_id, movie, name, path, mod, timeline, fps, tuning)
         if son:
-            meta = son["meta"]
-            aspect = movie.width / movie.height if movie.width and movie.height else 16 / 9
-            got = live_player.live_player(
-                movie.url, son["wavs"], son["id"], live_player.mix_spec(meta, specs, levels), mix_id,
-                meta.normalize, son["spans"], son["secs"], aspect=aspect, chapters=chapters,
-                still=is_still, key=player_key)
-            if got and got.get("_mix") == mix_id:
-                levels = {k: v for k, v in got.items() if k in live}
-            gains = {stem: levels.get(p, specs[p].default if p in specs else meta.gains[stem])
-                     for stem, p in meta.params.items()}
-            output = levels.get("OUTPUT_GAIN", meta.output)
-            st.download_button("Download sonification (.wav)",
-                               lambda: live_player.mix_wav(son["wavs"], gains, output, meta.normalize, son["sr"]),
-                               f"svs{viz_id}_{name}.wav", mime="audio/wav",
-                               help="The mix you hear, with the current levels.")
-            video_key = (viz_id, movie.url)
-            video_download = st.session_state.get("son_video_download")
-            if video_download and video_download["key"] != video_key:
-                del st.session_state["son_video_download"]
-                video_download = None
-            if not is_still and st.button(           # a still image has nothing to re-encode
-"Prepare video-only download (H.264)", key=f"prepare_video_{viz_id}"):
-                try:
-                    with st.spinner("Downloading the movie from NASA SVS…"):
-                        video_bytes = svs.download_media(movie.url)
-                    with st.spinner("Re-encoding to H.264 MP4 (can take a minute for 4K movies)…"):
-                        video_bytes = video.to_h264(video_bytes)
-                except requests.RequestException as e:
-                    st.error(f"Could not download the movie: {e}")
-                except RuntimeError as e:
-                    st.error(str(e))
-                else:
-                    video_download = {"key": video_key, "data": video_bytes}
-                    st.session_state["son_video_download"] = video_download
-            if video_download and video_download["key"] == video_key:
-                st.download_button(
-                    "Download video only (H.264 .mp4)",
-                    video_download["data"],
-                    video.h264_filename(movie.filename),
-                    mime="video/mp4",
-                    help=f"H.264 MP4, no audio, at most {video.MAX_WIDTH} px wide. The sonification is "
-                         "not included; it remains available as a separate WAV.",
-                )
-            st.caption("Press play on the scan: the line shows where the sound is reading the image."
-                       if is_still else
-                       "Press play on the video: pause, seek and speed changes carry the audio with it.")
+            play(viz_id, movie, name, son, tuning, chapters, still)
         elif not auto and mod:
             st.caption("Settings or script changed — press Render again.")
 

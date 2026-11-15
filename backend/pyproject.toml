@@ -22,7 +22,10 @@ blackmarble = ["h5py>=3.9"]
 
 [dependency-groups]
 # SVS explorer app: uv run python -m streamlit run apps/svs_explorer.py
-explorer = ["streamlit>=1.40"]
+explorer = [
+    "pyarrow<26", # streamlit's dep; 26.0.1 DLLs blocked by Windows Smart App Control (pandas then fails to import)
+    "streamlit>=1.40",
+]
 
 [tool.uv]
 default-groups = ["explorer"]

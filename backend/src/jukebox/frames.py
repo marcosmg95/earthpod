@@ -12,7 +12,7 @@ colour bar (the densest CO2) and where on screen it is. One row per movie frame.
 
 `profiles` (frames x PROFILE_COLS, uint8) is the orange-red amount in each screen column,
 left to right: the raw material for audification and model-based scripts.
-Built by scripts/poc6_svs5196_features.py; the results are committed in data/derived/.
+Built by `python -m jukebox.measure 5196`; the results are committed in data/derived/.
 """
 from __future__ import annotations
 
@@ -23,7 +23,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from .data import DERIVED_DIR
+from .paths import DERIVED_DIR
 
 ANALYSIS_SIZE = (480, 270)      # width, height
 PROFILE_COLS = 120             # must divide the analysis width
@@ -38,6 +38,15 @@ SVS5196_MOVIES = {
     "zoom": ("globe_zoom_", None, None),       # eastern United States (16:9 versions)
     "tilt": ("globe_tilt", None, None),
 }
+# The 1080p file of each camera move that was measured (downloaded into data/raw/svs5196/); orbit is the default.
+BASE_URL = "https://svs.gsfc.nasa.gov/vis/a000000/a005100/a005196/"
+MOVIES = {
+    "orbit": "dyamondPointCloud_12-1-2023b_dyamond_co2_anim_globe_orbit_1080p30_h265.mp4",
+    "zoom": "dyamondPointCloud_3-29-2023a_dyamond_co2_anim_globe_zoom_1080p30.mp4",
+    "zoomwest": "dyamondPointCloud_1-22-2025a_dyamond_co2_anim_globe_zoomwest_3x3hyperwall_1080p30_2.mp4",
+    "tilt": "dyamondPointCloud_12-4-2023b_dyamond_co2_anim_globe_tilt_1080p30.mp4",
+}
+PROFILES_PATH = DERIVED_DIR / "svs5196_profiles.npz"
 
 
 def movie_tag(filename: str) -> str | None:
@@ -124,6 +133,6 @@ def load(viz_id: int, movie_filename: str) -> FrameFeatures | None:
     if tag is None or not path_for(viz_id, tag).exists():
         return None
     table = pd.read_csv(path_for(viz_id, tag))
-    with np.load(DERIVED_DIR / f"svs{viz_id}_profiles.npz") as z:
+    with np.load(PROFILES_PATH) as z:
         profiles = z[tag].astype(float) / 255
     return FrameFeatures(tag, table, profiles)
