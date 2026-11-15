@@ -32,6 +32,8 @@ Space Apps requires disclosing where and how AI tools were used. Commit-by-commi
   For the SVS 5669 aerosols scene, Claude Code also drafted the scene descriptions (`.vtt`) from the measured
   data and the NASA page, and exported the scan-line video and audio with `backend/scripts/export_still_scene.py`, and the "How to listen"
   samples for the aerosols and night-lights scenes with `backend/scripts/export_samples.py`.
+  It later shortened the cue text of all three scene `.vtt` files (about 3 words per second, same timings) so that
+  captions can be read and screen readers can keep up.
 - Kokoro-82M (open-weight text-to-speech, Apache-2.0): the synthetic voice of the intro narration, generated with
   `scripts/make_narration_kokoro.py` (lower pitch and room reverb with ffmpeg). The words are the team's own.
 - The CCLab team directed the work: chose the concept, the cinematic flow, the palette, font and layouts (picking
