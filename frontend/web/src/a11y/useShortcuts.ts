@@ -35,7 +35,7 @@ export function useShortcuts(
         e.preventDefault();
         engine.toggle();
       } else if (key === "arrowleft" || key === "arrowright") {
-        if (onRange && !e.shiftKey) return; // the slider moves itself one frame
+        if (onRange && !e.shiftKey) return;
         e.preventDefault();
         engine.step((key === "arrowright" ? 1 : -1) * (e.shiftKey ? 10 : 1));
       } else if (key === "d") {

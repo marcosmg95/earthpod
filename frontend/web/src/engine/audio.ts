@@ -14,5 +14,3 @@ export function audioContext(): AudioContext {
 }
 
 export const existingAudioContext = (): AudioContext | null => ctx;
-
-export const midiHz = (m: number): number => 440 * 2 ** ((m - 69) / 12);

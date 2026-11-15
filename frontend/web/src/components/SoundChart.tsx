@@ -5,22 +5,30 @@ import { engine, useEngine } from "../engine/store";
 import { describePeaks, loadPeaks, type Peaks } from "../engine/waveform";
 
 type RGB = [number, number, number];
-const rgb = (hex: string): RGB => {
-  const h = hex.replace("#", "");
-  return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16)) as RGB;
-};
+
+function toRgb(
+  ctx: CanvasRenderingContext2D,
+  color: string,
+  fallback: string,
+): RGB {
+  ctx.fillStyle = fallback;
+  ctx.fillStyle = color;
+  const s = String(ctx.fillStyle);
+  if (s.startsWith("#"))
+    return [1, 3, 5].map((i) => parseInt(s.slice(i, i + 2), 16)) as RGB;
+  const n = s.match(/[\d.]+/g)?.map(Number) ?? [0, 0, 0];
+  return [n[0], n[1], n[2]];
+}
+
 const mix = (a: RGB, b: RGB, t: number): string =>
   `rgb(${a.map((x, i) => Math.round(x + (b[i] - x) * t)).join(",")})`;
 
 interface Props {
   track: LoadedTrack;
-  /** id of the sentence that describes the chart; the slider points to it */
   descriptionId: string;
-  /** the real slider, laid over the chart */
   children: ReactNode;
 }
 
-/** A picture of the sound: height = loudness, colour = how high it sounds, marks = key moments. */
 export function SoundChart({ track, descriptionId, children }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { duration } = useEngine();
@@ -37,7 +45,7 @@ export function SoundChart({ track, descriptionId, children }: Props) {
       .then((p) => {
         if (alive) setState({ src, peaks: p });
       })
-      .catch(() => undefined); // no chart: the slider still works
+      .catch(() => undefined);
     return () => {
       alive = false;
     };
@@ -50,8 +58,8 @@ export function SoundChart({ track, descriptionId, children }: Props) {
     const css = getComputedStyle(canvas);
     const v = (name: string, fallback: string) =>
       css.getPropertyValue(name).trim() || fallback;
-    const teal = rgb(v("--teal", "#4fb3b3"));
-    const yellow = rgb(v("--yellow", "#eeaa11"));
+    const teal = toRgb(ctx, v("--teal", "#4fb3b3"), "#4fb3b3");
+    const yellow = toRgb(ctx, v("--yellow", "#eeaa11"), "#eeaa11");
     const ink = v("--ink", "#e7e4de");
     const berry = v("--berry", "#bb3381");
     const colors = peaks
@@ -89,7 +97,7 @@ export function SoundChart({ track, descriptionId, children }: Props) {
         for (let i = 0; i < n; i++) {
           const x = i * step;
           const amp = Math.max(1, peaks.level[i] * (mid - 2));
-          ctx.globalAlpha = x + barW <= px ? 1 : 0.3; // played part bright, the rest dim
+          ctx.globalAlpha = x + barW <= px ? 1 : 0.3;
           ctx.fillStyle = colors[i];
           ctx.fillRect(x, mid - amp, barW, amp * 2);
         }
@@ -99,11 +107,11 @@ export function SoundChart({ track, descriptionId, children }: Props) {
         ctx.fillRect(0, mid - 1, w, 2);
       }
       ctx.globalAlpha = 1;
-      ctx.fillStyle = berry; // key moments from the descriptions
+      ctx.fillStyle = berry;
       if (total > 0)
         for (const c of track.cues)
           ctx.fillRect((c.start / total) * w - 1, 0, 2, 8);
-      ctx.fillStyle = ink; // playhead
+      ctx.fillStyle = ink;
       ctx.fillRect(px - 1, 0, 2, h);
     };
 

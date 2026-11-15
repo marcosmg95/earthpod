@@ -15,5 +15,5 @@ export function say(
   if (!force && now - last < 1500) return;
   last = now;
   announce(text, "polite");
-  ducker?.(Math.min(4, 0.8 + text.length * 0.06)); // about 15 characters per second of speech
+  ducker?.(Math.min(4, 0.8 + text.length * 0.06));
 }

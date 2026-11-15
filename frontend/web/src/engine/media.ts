@@ -32,7 +32,7 @@ export class MediaPlayer {
     this.cb = callbacks;
     const el = new Audio();
     el.preload = "auto";
-    el.preservesPitch = true; // slower playback keeps the same notes
+    el.preservesPitch = true;
     el.addEventListener("loadedmetadata", () => this.cb.onReady?.(el.duration));
     el.addEventListener("seeked", () => this.cb.onTime?.(el.currentTime));
     el.addEventListener("pause", () => {

@@ -6,12 +6,9 @@ import landUrl from "world-atlas/land-110m.json?url";
 
 type Props = {
   spinning?: boolean;
-  /** degrees per second */
   speed?: number;
-  /** turn to face this place, then rest */
   focusLon?: number;
   focusLat?: number;
-  /** no easing (reduced motion) */
   instant?: boolean;
   className?: string;
 };
@@ -23,15 +20,13 @@ const MASK_W = 1024;
 const MASK_H = 512;
 const LEVELS = 6;
 
-/** shared by every globe, so the intro's Earth and the chapters' Earth line up */
 const rotation = { current: 0 };
 const tilt = { current: TILT };
 
-type Points = { land: Float32Array; sea: Float32Array }; // [cosLat, sinLat, lon] triples
+type Points = { land: Float32Array; sea: Float32Array };
 
 let pointsPromise: Promise<Points> | null = null;
 
-/** Real coastlines → a land mask → evenly spaced land and sea dots. Built once, shared. */
 function loadPoints(): Promise<Points> {
   pointsPromise ??= (async () => {
     const res = await fetch(landUrl);
@@ -84,13 +79,11 @@ function parseRgb(color: string): [number, number, number] {
   return [n[0] * scale, n[1] * scale, n[2] * scale];
 }
 
-/** shortest signed angle from a to b */
 const turn = (a: number, b: number): number => {
   const d = (b - a) % (2 * Math.PI);
   return d > Math.PI ? d - 2 * Math.PI : d < -Math.PI ? d + 2 * Math.PI : d;
 };
 
-/** Decorative globe. Its colour comes from the CSS `color` of the canvas. */
 export function EarthGlobe({
   spinning = true,
   speed = 12,
@@ -239,7 +232,7 @@ export function EarthGlobe({
         points = p;
         start();
       })
-      .catch(() => start()); // no map data: still draws the glowing sphere
+      .catch(() => start());
 
     const observer = new ResizeObserver(() => {
       rgb = parseRgb(getComputedStyle(canvas).color);

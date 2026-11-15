@@ -23,7 +23,7 @@ Use Node 22. Prettier formats on save in VS Code (see `.vscode/settings.json`).
 ## Where things are
 ```
 src/
-  routes/       Intro, HowToListen, ChapterPage, Record, Explore
+  routes/       Intro, HowToListen, ChapterPage, Record
   components/   Header (menu), Player, SoundChart, FrameView (video sync), Captions, Transcript, EarthGlobe
   engine/       Audio: media player, store, waveform analysis, probe tone (the only place allowed to touch Web Audio)
   a11y/         Announcements (live region), shortcuts, view transitions

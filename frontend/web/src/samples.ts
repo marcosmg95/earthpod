@@ -3,9 +3,7 @@ export type Sample = {
   file: string;
   title: string;
   instrument: string;
-  /** one short sentence: what this sound means in the chapters */
   meaning: string;
-  /** where the globe turns while it plays */
   lon?: number;
   lat?: number;
 };
@@ -48,10 +46,12 @@ const continent = (
 });
 
 export const CONTINENTS: Sample[] = [
+  // left column, top to bottom
   continent("04", "europe", "Europe", "Flute", 15, 50),
-  continent("05", "africa", "Africa", "Marimba", 20, 5),
-  continent("02", "asia", "Asia", "Oboe", 90, 40),
-  continent("03", "oceania", "Oceania", "Harp", 135, -25),
   continent("06", "north_america", "North America", "Vibraphone", -100, 45),
   continent("07", "south_america", "South America", "Cello", -60, -15),
-];
+  // right column, top to bottom
+  continent("02", "asia", "Asia", "Oboe", 90, 40),
+  continent("05", "africa", "Africa", "Marimba", 20, 5),
+  continent("03", "oceania", "Oceania", "Harp", 135, -25),
+]

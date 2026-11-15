@@ -2,7 +2,6 @@ import { Route, Router, Switch, useLocation } from "wouter";
 import { useHashLocation } from "wouter/use-hash-location";
 import { Header } from "./components/Header";
 import { ChapterPage } from "./routes/ChapterPage";
-import { ExplorePage } from "./routes/Explore";
 import { HowToListen } from "./routes/HowToListen";
 import { Intro } from "./routes/Intro";
 import { RecordPage } from "./routes/Record";
@@ -18,9 +17,6 @@ function Shell() {
         <Switch>
           <Route path="/">
             <Intro />
-          </Route>
-          <Route path="/explore">
-            <ExplorePage />
           </Route>
           <Route path="/record">
             <RecordPage />
