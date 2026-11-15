@@ -70,6 +70,17 @@ The app's [accessibility statement](https://earthpod.earth/#/accessibility) desc
 
 Imagery: NASA Scientific Visualization Studio (SVS 5196 and SVS 5313). Data and visualizations remain credited to their sources. EarthPod is not endorsed by NASA. See [docs/02-data-sources.md](docs/02-data-sources.md) for source details and [docs/ai-use-log.md](docs/ai-use-log.md) for AI-use disclosure.
 
+## License
+
+- **Code** (everything in `backend/`, `frontend/`, `infra/`, `config/` and the scripts): [MIT](LICENSE).
+- **Original content** (documentation in `docs/`, the generated sonifications and narration audio, and the derived
+  data in `backend/data/derived/`): [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Please credit "EarthPod".
+- **NASA data, imagery and visualizations** (SVS movies and frames, GISTEMP, Black Marble and other sources) are not
+  covered by these licenses. They stay under their original terms; see the
+  [NASA Images and Media Usage Guidelines](https://www.nasa.gov/nasa-brand-center/images-and-media/) and
+  [docs/02-data-sources.md](docs/02-data-sources.md). EarthPod is not endorsed by NASA.
+- Third-party libraries and the Kokoro-82M voice model (Apache-2.0) keep their own licenses.
+
 ## Documentation
 
 | Document | What it covers |
