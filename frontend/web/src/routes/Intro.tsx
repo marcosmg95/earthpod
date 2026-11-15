@@ -7,7 +7,6 @@ import { parseVtt, type Cue } from "../data/vtt";
 import { engine } from "../engine/store";
 import { useSettings } from "../settings/context";
 
-/** What the Earth says. Keep in step with scripts/make_narration_kokoro.py. */
 const NARRATION = [
   "I was born 4.54 billion years ago.",
   "300,000 years ago, I provided shelter to humans.",
@@ -56,7 +55,6 @@ export function Intro() {
     else a.pause();
   }, []);
 
-  // subtitles: the same captions file the <track> gives the browser
   useEffect(() => {
     let alive = true;
     fetch("intro/narration.vtt")
@@ -70,7 +68,6 @@ export function Intro() {
     };
   }, []);
 
-  // the Earth comes closer as the narration goes on (and stops when it is paused)
   useEffect(() => {
     if (phase !== "film") return;
     filmHeading.current?.focus();
@@ -89,7 +86,6 @@ export function Intro() {
     return () => cancelAnimationFrame(raf);
   }, [phase]);
 
-  // keys while the film plays: Space pauses or resumes, Escape skips
   useEffect(() => {
     if (phase !== "film") return;
     const onKey = (e: KeyboardEvent) => {
@@ -105,7 +101,6 @@ export function Intro() {
     return () => window.removeEventListener("keydown", onKey);
   }, [phase, finish, toggle]);
 
-  // moving the mouse or tapping shows the controls for a moment; keyboard focus shows them too (CSS)
   useEffect(() => {
     if (phase !== "film") return;
     let t = 0;
@@ -125,10 +120,10 @@ export function Intro() {
 
   const begin = () => {
     update({ sound: true });
-    engine.unlock(); // this click is the user gesture browsers need for sound
+    engine.unlock();
     const a = audio.current;
     if (!a || failed) {
-      finish(); // no narration file: go straight to the chapters
+      finish();
       return;
     }
     a.muted = false;

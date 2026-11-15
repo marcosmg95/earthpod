@@ -76,7 +76,6 @@ export const CHAPTER_NAV = [
 ];
 
 export const MORE_NAV: readonly NavItem[] = [
-  { id: "explore", short: "Explore", href: "/explore" },
   { id: "record", short: "Record", href: "/record" },
 ];
 

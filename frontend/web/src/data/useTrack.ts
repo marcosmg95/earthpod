@@ -13,7 +13,7 @@ const cache = new Map<string, Promise<LoadedTrack>>();
 async function fetchVtt(url: string): Promise<Cue[]> {
   const res = await fetch(url);
   const text = res.ok ? await res.text() : "";
-  return text.startsWith("WEBVTT") ? parseVtt(text) : []; // the dev server answers missing files with index.html
+  return text.startsWith("WEBVTT") ? parseVtt(text) : [];
 }
 
 async function fetchMedia(ref: TrackRef): Promise<LoadedTrack> {
@@ -73,7 +73,7 @@ export function useTrack(ref: TrackRef | null): TrackState {
     p.then((track) => {
       if (alive) setS({ dir: ref.dir, track, error: null });
     }).catch((e: unknown) => {
-      cache.delete(ref.dir); // try again next time
+      cache.delete(ref.dir);
       if (alive)
         setS({
           dir: ref.dir,

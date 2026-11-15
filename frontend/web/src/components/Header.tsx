@@ -13,12 +13,10 @@ export function Header() {
   const { settings, update } = useSettings();
   const menu = useRef<HTMLDetailsElement>(null);
 
-  // a new page closes the menu
   useEffect(() => {
     if (menu.current) menu.current.open = false;
   }, [location]);
 
-  // Escape closes it and returns focus to the button; so does a click outside it
   useEffect(() => {
     const el = menu.current;
     if (!el) return;
@@ -39,7 +37,6 @@ export function Header() {
     };
   }, []);
 
-  // With hash routing, href="#main" would change the route, so the skip link moves focus itself.
   const skip = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     document.getElementById("main")?.focus();

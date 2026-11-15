@@ -13,7 +13,6 @@ import { useTrack } from "../data/useTrack";
 import { engine, useEngine } from "../engine/store";
 import { useSettings } from "../settings/context";
 
-/** title card → scene → interlude → scene … → end card */
 type Phase = "title" | "scene" | "between" | "end";
 
 const delay = (s: number): CSSProperties =>
@@ -48,21 +47,18 @@ export function ChapterPage({
     if (track && view) engine.load(view.dir, track);
   }, [track, view]);
 
-  useEffect(() => () => engine.stop(), []); // leaving the chapter: silence
+  useEffect(() => () => engine.stop(), []);
 
-  // every phase is a new "page": its heading takes focus, so screen readers hear where they are
   useEffect(() => {
     if (chapter) document.title = `${chapter.short} · EarthPod`;
     heading.current?.focus();
   }, [phase, scene, chapter]);
 
-  // the globe on the title card turns for under 5 s, then rests (WCAG 2.2.2)
   useEffect(() => {
     const t = window.setTimeout(() => setGlobeTurning(false), 4500);
     return () => window.clearTimeout(t);
   }, []);
 
-  // the next scene starts as soon as its files are ready
   useEffect(() => {
     if (phase === "scene" && loaded && playWhenLoaded.current) {
       playWhenLoaded.current = false;
@@ -70,7 +66,6 @@ export function ChapterPage({
     }
   }, [phase, loaded]);
 
-  // a scene that ends leads to the interlude, or to the end card after the last scene
   useEffect(() => {
     if (phase !== "scene" || !loaded || !ended) return;
     withTransition(() => setPhase(scene + 1 < total ? "between" : "end"));
@@ -96,7 +91,7 @@ export function ChapterPage({
 
   const start = () => {
     if (!loaded) return;
-    engine.unlock(); // this click is the user gesture browsers need for sound
+    engine.unlock();
     if (engine.get().ended) engine.seekTime(0, false);
     engine.play();
     withTransition(() => setPhase("scene"));
@@ -123,7 +118,7 @@ export function ChapterPage({
   ] as Chapter | undefined;
   const next = nextChapter
     ? { href: `/${nextChapter.id}`, label: `Next: ${nextChapter.short}` }
-    : { href: "/explore", label: "Explore the pictures" };
+    : { href: "/records", label: "Check all the records" };
 
   if (phase === "title") {
     return (
@@ -241,7 +236,6 @@ export function ChapterPage({
     );
   }
 
-  // phase === "scene"
   return (
     <section className="scene" aria-labelledby="scene-heading">
       <h2 id="scene-heading" ref={heading} tabIndex={-1} className="sr-only">

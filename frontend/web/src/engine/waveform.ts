@@ -1,9 +1,30 @@
-// Turns an audio file into a small summary to draw: how loud and how bright the sound is over time.
+import { z } from "zod";
+
+const PeaksFile = z.object({
+  duration: z.number().positive(),
+  level: z.array(z.number()).min(1),
+  bright: z.array(z.number()).min(1),
+});
+
+async function fromFile(url: string): Promise<Peaks | null> {
+  try {
+    const res = await fetch(url.replace(/\.[^./]+$/, ".peaks.json"));
+    if (!res.ok || !res.headers.get("content-type")?.includes("json"))
+      return null;
+    const f = PeaksFile.safeParse(await res.json());
+    if (!f.success || f.data.level.length !== f.data.bright.length) return null;
+    return {
+      level: Float32Array.from(f.data.level),
+      bright: Float32Array.from(f.data.bright),
+      duration: f.data.duration,
+    };
+  } catch {
+    return null;
+  }
+}
 
 export interface Peaks {
-  /** loudness per bin, 0..1 */
   level: Float32Array;
-  /** brightness per bin, 0..1: how often the wave crosses zero, a rough measure of how high it sounds */
   bright: Float32Array;
   duration: number;
 }
@@ -23,7 +44,6 @@ function normalise(a: Float32Array, p: number): void {
 async function analyse(url: string): Promise<Peaks> {
   const res = await fetch(url);
   if (!res.ok) throw new Error(`${url}: ${res.status}`);
-  // an offline context decodes without asking for sound permission
   const buf = await new OfflineAudioContext(1, 1, 44100).decodeAudioData(
     await res.arrayBuffer(),
   );
@@ -61,14 +81,13 @@ async function analyse(url: string): Promise<Peaks> {
 export function loadPeaks(url: string): Promise<Peaks> {
   let p = cache.get(url);
   if (!p) {
-    p = analyse(url);
+    p = fromFile(url).then((f) => f ?? analyse(url));
     cache.set(url, p);
     p.catch(() => cache.delete(url));
   }
   return p;
 }
 
-/** One sentence for screen readers: the text version of the chart. */
 export function describePeaks(p: Peaks, label: (t: number) => string): string {
   const at = (i: number) => label(((i + 0.5) / p.level.length) * p.duration);
   let loud = 0;

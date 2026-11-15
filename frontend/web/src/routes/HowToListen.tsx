@@ -13,6 +13,35 @@ type Phase = "title" | "guide";
 const delay = (s: number): CSSProperties =>
   ({ "--d": `${s}s` }) as CSSProperties;
 
+const W = 1100;
+const H = 620;
+const CX = 550;
+const CY = 310;
+const R = 220;
+
+const SLOTS = [
+  { side: "left", y: 130 },
+  { side: "left", y: 310 },
+  { side: "left", y: 490 },
+  { side: "right", y: 130 },
+  { side: "right", y: 310 },
+  { side: "right", y: 490 },
+] as const;
+
+function leader(i: number, on: boolean) {
+  const { side, y } = SLOTS[i];
+  const sx = side === "left" ? 240 : 860;
+  const dx = CX - sx;
+  const dy = CY - y;
+  const d = Math.hypot(dx, dy);
+  return {
+    x1: sx,
+    y1: y,
+    x2: on ? CX : CX - (R * dx) / d,
+    y2: on ? CY : CY - (R * dy) / d,
+  };
+}
+
 export function HowToListen() {
   const [phase, setPhase] = useState<Phase>("title");
   const [playing, setPlaying] = useState<string | null>(null);
@@ -27,13 +56,11 @@ export function HowToListen() {
     heading.current?.focus();
   }, [phase]);
 
-  // the title-card globe turns for under 5 s, then rests (WCAG 2.2.2)
   useEffect(() => {
     const t = window.setTimeout(() => setGlobeTurning(false), 4500);
     return () => window.clearTimeout(t);
   }, []);
 
-  // leaving the page: silence
   useEffect(() => {
     const a = audio.current;
     return () => a?.pause();
@@ -46,46 +73,12 @@ export function HowToListen() {
       a.pause();
       return;
     }
-    engine.stop(); // never two sounds at once
+    engine.stop();
     if (!settings.sound) update({ sound: true });
     wanted.current = s.id;
     a.src = s.file;
     a.volume = settings.volume;
     a.play().catch(() => setPlaying(null));
-  };
-
-  const card = (s: Sample) => {
-    const on = playing === s.id;
-    return (
-      <li key={s.id} className={`sample${on ? " is-playing" : ""}`}>
-        <button
-          type="button"
-          className="sample-button"
-          aria-pressed={on}
-          aria-describedby={`${s.id}-meaning`}
-          onClick={() => toggle(s)}
-        >
-          <span className="sample-icon" aria-hidden="true">
-            <Icon name={on ? "pause" : "play"} size={20} />
-          </span>
-          <span className="sample-text">
-            <span className="sample-title">{s.title}</span>
-            {s.instrument !== s.title && (
-              <span className="sample-instrument">{s.instrument}</span>
-            )}
-          </span>
-          <span className="sample-bars" aria-hidden="true">
-            <i />
-            <i />
-            <i />
-            <i />
-          </span>
-        </button>
-        <p id={`${s.id}-meaning`} className="sample-meaning">
-          {s.meaning}
-        </p>
-      </li>
-    );
   };
 
   const first = CHAPTERS[0];
@@ -140,18 +133,12 @@ export function HowToListen() {
             view, you hear it.
           </p>
 
-          <h2 className="guide-sub reveal" style={delay(0.5)}>
-            The planet’s body
-          </h2>
-          <ul className="sample-grid reveal" style={delay(0.6)}>
-            {BODY.map(card)}
-          </ul>
-
-          <h2 className="guide-sub reveal" style={delay(0.8)}>
-            Six continents, six instruments
-          </h2>
-          <div className="guide-continents reveal" style={delay(0.9)}>
-            <div className="guide-globe" aria-hidden="true">
+          <h2 className="sr-only">Six continents, six instruments</h2>
+          <p id="continents-note" className="sr-only">
+            Each instrument plays while its continent is on screen.
+          </p>
+          <div className="pins reveal" style={delay(0.5)}>
+            <div className="pins-globe" aria-hidden="true">
               <EarthGlobe
                 spinning={false}
                 focusLon={focused?.lon}
@@ -159,10 +146,74 @@ export function HowToListen() {
                 instant={reducedMotion}
               />
             </div>
-            <ul className="sample-grid">{CONTINENTS.map(card)}</ul>
+            <svg
+              className="pins-lines"
+              viewBox={`0 0 ${W} ${H}`}
+              aria-hidden="true"
+            >
+              {CONTINENTS.map((s, i) => {
+                const l = leader(i, s.id === playing);
+                return (
+                  <g
+                    key={s.id}
+                    className={s.id === playing ? "is-on" : undefined}
+                  >
+                    <line {...l} />
+                    <rect x={l.x2 - 4} y={l.y2 - 4} width={8} height={8} />
+                  </g>
+                );
+              })}
+            </svg>
+            <ul className="pins-list">
+              {CONTINENTS.map((s, i) => {
+                const on = playing === s.id;
+                return (
+                  <li
+                    key={s.id}
+                    className={`pin pin-${SLOTS[i].side}`}
+                    style={
+                      { "--y": `${(SLOTS[i].y / H) * 100}%` } as CSSProperties
+                    }
+                  >
+                    <button
+                      type="button"
+                      className="pin-button"
+                      aria-pressed={on}
+                      aria-describedby="continents-note"
+                      onClick={() => toggle(s)}
+                    >
+                      <Icon name={on ? "pause" : "play"} size={16} />
+                      <span className="pin-text">
+                        <span className="pin-title">{s.title}</span>
+                        <span className="pin-instrument">{s.instrument}</span>
+                      </span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
 
-          <div className="end-actions reveal" style={delay(1.1)}>
+          <div className="body-row reveal" style={delay(0.8)}>
+            <h2 className="guide-sub">Underneath every scene</h2>
+            {BODY.map((s) => {
+              const on = playing === s.id;
+              return (
+                <button
+                  key={s.id}
+                  type="button"
+                  className="body-button"
+                  aria-pressed={on}
+                  onClick={() => toggle(s)}
+                >
+                  <Icon name={on ? "pause" : "play"} size={16} />
+                  {s.title} <span className="body-meaning">· {s.meaning}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="end-actions reveal" style={delay(1)}>
             <SceneLink href={`/${FIRST_CHAPTER}`} className="primary">
               Next: {first.num} {first.short} <Icon name="arrow" size={18} />
             </SceneLink>
