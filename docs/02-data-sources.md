@@ -2,10 +2,11 @@
 
 ## Sources in the production web app
 
-The current web app contains two chapters:
+The current web app contains three chapters:
 
 - **The breathing planet:** NASA Scientific Visualization Studio (SVS) 5196, DYAMOND Global Carbon Dioxide, January–March 2020. The sonification follows features measured from the visualization; it is not a calibrated CO₂ dataset.
 - **The night lights:** NASA SVS 5313, Change in Night Lights 2012–2023 — EIC Version. The sonification follows image features and the on-screen sequence; it is not a calibrated radiance product.
+- **The air we share:** NASA SVS 5669, GEOS Aerosols (2025), the still map for 19 August 2025 20:00 UTC. A line scans the map west → east and the sound follows the colours measured for each aerosol type (sulfate, dust, black-carbon smoke, sea salt); it is not a calibrated aerosol optical depth or concentration.
 
 EarthPod credits NASA SVS and does not imply NASA endorsement. Other datasets and pages listed below support backend research and demos; they are not all chapters in the production web app.
 

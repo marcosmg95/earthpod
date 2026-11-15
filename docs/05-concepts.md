@@ -9,6 +9,7 @@ EarthPod turns selected NASA Earth visualizations into a guided listening experi
 - An introduction and **How to listen** guide.
 - **The breathing planet**, based on NASA SVS 5196's global CO₂ visualization.
 - **The night lights**, based on NASA SVS 5313's 2012–2023 visualization.
+- **The air we share**, based on NASA SVS 5669's GEOS aerosols still for 19 August 2025.
 - A record page and an accessibility statement.
 
 The initial concepts included GISTEMP and a Barcelona-region climate comparison. Those remain in the backend's PoC scripts and are not part of the production web app. Additional concepts such as a touch-the-map explorer and a larger curated playlist were not included in the shipped chapter list.

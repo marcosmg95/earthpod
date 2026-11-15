@@ -14,8 +14,9 @@ Start with **How to listen**, which introduces the sounds and controls. Then exp
 | --- | --- | --- |
 | The breathing planet | NASA SVS 5196, global CO₂ model visualization, 14 January–2 March 2020 | A layered heart-and-lungs metaphor follows patterns measured from the visualization. |
 | The night lights | NASA SVS 5313, Earth at night, 2012–2023 | A musical journey through the yearly maps and the visualization’s purple/orange change map. |
+| The air we share | NASA SVS 5669, GEOS aerosols model still, 19 August 2025 | A line scans the map west to east; sulfate, dust, smoke and sea salt each have their own sound, with a chime at the largest plumes. |
 
-These sonifications describe patterns in the source imagery; they are not direct readings of calibrated CO₂ concentrations or night-light radiance. EarthPod also includes a record of the project and an accessibility statement in the app.
+These sonifications describe patterns in the source imagery; they are not direct readings of calibrated CO₂ concentrations, night-light radiance or aerosol amounts. EarthPod also includes a record of the project and an accessibility statement in the app.
 
 ## Run locally
 
@@ -47,7 +48,7 @@ The Playwright end-to-end suite builds and serves the production app before runn
 | `docs/` | Research, data-source, accessibility, delivery, and AI-use notes |
 | `infra/` and `config/deploy.yml` | Production image and Kamal deployment configuration |
 
-The backend's GISTEMP scripts are retained for reproducibility and experimentation. They are separate from the two chapters in the production web app. See [backend/README.md](backend/README.md) for backend setup, data reproduction, and limitations.
+The backend's GISTEMP scripts are retained for reproducibility and experimentation. They are separate from the three chapters in the production web app. See [backend/README.md](backend/README.md) for backend setup, data reproduction, and limitations.
 
 ## Backend checks
 
@@ -68,7 +69,7 @@ The Docker image builds `frontend/web/` and serves its static output with nginx.
 
 The app's [accessibility statement](https://earthpod.earth/#/accessibility) describes the implemented controls, the checks performed, and known limitations. The app was built for keyboard and assistive-technology use, but has not had an independent accessibility audit.
 
-Imagery: NASA Scientific Visualization Studio (SVS 5196 and SVS 5313). Data and visualizations remain credited to their sources. EarthPod is not endorsed by NASA. See [docs/02-data-sources.md](docs/02-data-sources.md) for source details and [docs/ai-use-log.md](docs/ai-use-log.md) for AI-use disclosure.
+Imagery: NASA Scientific Visualization Studio (SVS 5196, SVS 5313 and SVS 5669). Data and visualizations remain credited to their sources. EarthPod is not endorsed by NASA. See [docs/02-data-sources.md](docs/02-data-sources.md) for source details and [docs/ai-use-log.md](docs/ai-use-log.md) for AI-use disclosure.
 
 ## License
 

@@ -20,13 +20,14 @@ settings to the folder you open).
 
 ## The experience
 
-`#/` intro film → `#/listen` 00 How to listen → `#/co2` 01 → `#/nightlights` 02 → `#/record` · `#/accessibility`
+`#/` intro film → `#/listen` 00 How to listen → `#/co2` 01 → `#/nightlights` 02 → `#/aerosols` 03 → `#/record` · `#/accessibility`
 
 - **Intro**: the Earth tells its story (narration with captions). Begin needs a click, because browsers block sound
   until then. Escape or "Skip intro" goes straight to 00.
-- **00 How to listen**: the instruments of chapter 01. Each continent's button sits around the globe, and the globe
-  turns to that continent while its sample plays.
-- **Chapters**: title card → scenes → end card. Each scene plays a muted video kept in step with its sound, with a
+- **00 How to listen**: the sounds of each chapter. For 01, each continent's button sits around the globe, and the
+  globe turns to that continent while its sample plays; 02 and 03 have a list of samples made from their own data.
+- **Chapters**: title card → scenes → end card. Each scene plays a muted video kept in step with its sound (03 is a
+  still map, SVS 5669, shown as a video of a line scanning it west → east), with a
   sound chart you can drag, captions, an Options panel (speed, Describe, chart key, transcript) and NASA's own
   text about the visualization.
 - **Accessibility**: the accessibility statement.
@@ -73,6 +74,7 @@ scripts/
      source: "NASA SVS 5313",
      about: "nightlights/svs5313_nasa_description", // NASA's text, without .txt (optional)
      start: "2012-01-01", end: "2023-12-31",  // dates for the timeline (optional; otherwise minutes:seconds)
+     // scan: { from: -180, to: 180 },        // still scenes: the timeline shows the scan line's longitude instead
    }
    ```
 

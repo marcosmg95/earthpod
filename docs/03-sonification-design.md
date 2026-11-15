@@ -14,6 +14,10 @@ The chapter uses NASA SVS 5196's global CO₂ visualization. Its sound follows p
 
 The chapter uses NASA SVS 5313's 2012–2023 Earth-at-night visualization. It moves through the yearly maps and change map, where the source visualization uses purple for new lights and orange for lights that dimmed. Sound follows image features and the visualization's sequence; the measurements are not calibrated radiance values or city-level measurements.
 
+### The air we share
+
+The chapter uses NASA SVS 5669's GEOS aerosols still for 19 August 2025. A line scans the map from west to east in 48 seconds. Every aerosol type follows the same rule: one note per 10° latitude band, loudness = how much of that type is in the band compared with that band's usual level, and timbre = type (sulfate hum, sea-salt surf, dust grains, smoke crackle). A chime marks the largest plumes, found automatically in the measured grid. The amounts come from the picture's colours, so they are visual indices of the model output, not calibrated aerosol measurements.
+
 The center label, legends, map details, transitions, and zooms can affect image-derived features. They should be understood as visual indices with the limitations described in [the backend guide](../backend/README.md), not as independent measurements of Earth-system variables.
 
 ## Interpretability and accessibility
@@ -29,4 +33,4 @@ The repository also contains GISTEMP-based sonification work and exploratory scr
 
 ## Credits
 
-The source visualizations are credited to NASA Scientific Visualization Studio (SVS 5196 and SVS 5313). EarthPod is not endorsed by NASA. See [data sources](02-data-sources.md) for citations and source limitations.
+The source visualizations are credited to NASA Scientific Visualization Studio (SVS 5196, SVS 5313 and SVS 5669). EarthPod is not endorsed by NASA. See [data sources](02-data-sources.md) for citations and source limitations.

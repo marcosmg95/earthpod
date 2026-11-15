@@ -5,7 +5,7 @@ The original event schedule and task assignments are no longer an active project
 ## Delivered
 
 - Production web app: [earthpod.earth](https://earthpod.earth)
-- Introduction, listening guide, two chapters, record page, and accessibility statement.
+- Introduction, listening guide, three chapters, record page, and accessibility statement.
 - Backend data-preparation and sonification tools, with tests and reproducibility notes.
 - Source credits and AI-use disclosure in the project documentation.
 

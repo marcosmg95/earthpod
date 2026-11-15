@@ -5,7 +5,7 @@ Use this as a final human check before a public presentation or submission. Repo
 ## Product and access
 
 - [x] Open [earthpod.earth](https://earthpod.earth) on the presentation device.
-- [x] Play both chapters; verify audio/video synchronization, captions, and controls.
+- [x] Play all three chapters; verify audio/video synchronization, captions, and controls.
 - [x] Confirm audio starts only after user input.
 - [x] Check keyboard navigation and the relevant screen-reader experience.
 - [x] Confirm the app's accessibility statement and known limitations are accessible.
