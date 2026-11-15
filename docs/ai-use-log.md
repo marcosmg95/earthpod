@@ -29,6 +29,8 @@ Space Apps requires disclosing where and how AI tools were used. Commit-by-commi
   the Playwright + axe end-to-end tests, the waveform script, the app icon, and the Dockerfile/nginx/CI changes.
   It also made the UI mockups on design canvases and reviewed the repo, the live site (axe scans, 400% zoom and
   text-spacing checks) and the texts against the NASA SVS 5196 and 5313 pages.
+  For the SVS 5669 aerosols scene, Claude Code also drafted the scene descriptions (`.vtt`) from the measured
+  data and the NASA page, and exported the scan-line video and audio with `backend/scripts/export_still_scene.py`.
 - Kokoro-82M (open-weight text-to-speech, Apache-2.0): the synthetic voice of the intro narration, generated with
   `scripts/make_narration_kokoro.py` (lower pitch and room reverb with ffmpeg). The words are the team's own.
 - The CCLab team directed the work: chose the concept, the cinematic flow, the palette, font and layouts (picking

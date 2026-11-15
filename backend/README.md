@@ -18,6 +18,7 @@ This directory contains research and data-reproduction tools. The production web
 | — | `apps/svs_explorer.py` | internet | Streamlit: type any SVS id → metadata, filterable media list, movie/image previews, datasets, linked pages, raw JSON; **Sonify** tab plays a data sonification locked to a movie |
 | — | `scripts/fetch_arcade_images.py` | internet | ~34 public-domain NASA images → `frontend/arcade/images` |
 | — | `scripts/make_voice.py` | Windows TTS | Arcade voice-over clips → `frontend/arcade/voice` |
+| — | `scripts/export_still_scene.py svs5669/aerosols_bands --chapter aerosols` | `data/raw/svs5669/` (`python -m jukebox.measure 5669`) | A still page's sonification as a web scene: full-mix WAV + scan-line MP4 → `frontend/web/public/data/<chapter>/` (write the `.vtt` by hand, then `frontend/web/scripts/make_peaks.py`) |
 
 ## Quick start (Windows, from `backend/`)
 ```powershell
