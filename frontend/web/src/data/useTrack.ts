@@ -42,7 +42,7 @@ async function fetchMedia(ref: TrackRef): Promise<LoadedTrack> {
 
   const [cues, about] = await Promise.all([
     fetchVtt(`${base}${ref.dir}.vtt`),
-    fetchText(`${base}${ref.dir}.txt`),
+    fetchText(`${base}${ref.about ?? ref.dir}.txt`),
   ]);
 
   return {

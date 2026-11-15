@@ -129,13 +129,14 @@ export function HowToListen() {
             Meet the instruments
           </h1>
           <p className="lede reveal" style={delay(0.3)}>
-            Each part of the world has its own instrument. When it comes into
-            view, you hear it.
+            In chapter 01, each part of the world has its own instrument. When
+            it comes into view, you hear it.
           </p>
 
           <h2 className="sr-only">Six continents, six instruments</h2>
           <p id="continents-note" className="sr-only">
-            Each instrument plays while its continent is on screen.
+            Each instrument plays while its continent is on screen. Higher notes
+            mean more dense CO₂ there.
           </p>
           <div className="pins reveal" style={delay(0.5)}>
             <div className="pins-globe" aria-hidden="true">
@@ -195,7 +196,7 @@ export function HowToListen() {
           </div>
 
           <div className="body-row reveal" style={delay(0.8)}>
-            <h2 className="guide-sub">Underneath every scene</h2>
+            <h2 className="guide-sub">Underneath chapter 01</h2>
             {BODY.map((s) => {
               const on = playing === s.id;
               return (
@@ -212,6 +213,10 @@ export function HowToListen() {
               );
             })}
           </div>
+          <p className="guide-note reveal" style={delay(0.9)}>
+            Chapter 02 has its own sounds: soft plucks for city lights, and
+            bells where places grew brighter.
+          </p>
 
           <div className="end-actions reveal" style={delay(1)}>
             <SceneLink href={`/${FIRST_CHAPTER}`} className="primary">

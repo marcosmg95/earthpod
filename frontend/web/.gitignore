@@ -30,3 +30,6 @@ originals/
 scripts/__pycache__/
 .DS_Store
 .vscode
+
+test-results/
+playwright-report/

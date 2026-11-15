@@ -10,7 +10,14 @@ import tseslint from "typescript-eslint";
 const AUDIO_MSG = "Audio lives in src/engine. Use the engine store instead.";
 
 export default defineConfig([
-  globalIgnores(["dist", ".venv-tts", "originals", "node_modules"]),
+  globalIgnores([
+    "dist",
+    ".venv-tts",
+    "originals",
+    "node_modules",
+    "test-results/",
+    "playwright-report/",
+  ]),
 
   // every file: base rules (formatting is Prettier's job)
   {

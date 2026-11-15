@@ -208,9 +208,9 @@ export function ChapterPage({
   }
 
   if (phase === "end") {
-    const sources = [...new Set(chapter.tracks.map((t) => t.source))].join(
-      ", ",
-    );
+    const sources = [
+      ...new Set(chapter.tracks.map((t) => t.source.replace(/^NASA /, ""))),
+    ].join(", ");
     return (
       <section className="end-card" aria-labelledby="end-heading">
         <h1
@@ -232,7 +232,8 @@ export function ChapterPage({
           </button>
         </div>
         <p className="credits reveal" style={delay(0.9)}>
-          Images: {sources}. Sound: CCLab. Not endorsed by NASA.
+          Images: NASA’s Scientific Visualization Studio ({sources}). Sound:
+          CCLab. Not endorsed by NASA.
         </p>
       </section>
     );
@@ -257,17 +258,6 @@ export function ChapterPage({
           </button>
         </div>
       )}
-      {loaded?.about && (
-        <section
-          className="scene-controls scene-about"
-          aria-labelledby="about-heading"
-        >
-          <h2 id="about-heading">About this scene</h2>
-          {loaded.about.split(/\n\s*\n/).map((p, i) => (
-            <p key={i}>{p}</p>
-          ))}
-        </section>
-      )}
       {!error && !loaded && (
         <p role="status" className="notice scene-controls">
           Loading {view.label}…
@@ -289,6 +279,14 @@ export function ChapterPage({
               <Transcript track={loaded} />
             </Player>
           </div>
+          {loaded.about && (
+            <details className="scene-controls scene-about">
+              <summary>About this visualization, from NASA</summary>
+              {loaded.about.split(/\n+/).map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
+            </details>
+          )}
         </>
       )}
     </section>

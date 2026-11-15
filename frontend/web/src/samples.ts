@@ -10,21 +10,20 @@ export type Sample = {
 
 const base = "data/samples/";
 
-// TODO: confirm both meanings with the data team
 export const BODY: Sample[] = [
   {
     id: "breath",
     file: `${base}sample_00_breath.wav`,
     title: "Breath",
     instrument: "Breath",
-    meaning: "The planet breathing: the slow rise and fall under every scene.",
+    meaning: "louder when there is more CO₂ haze on screen",
   },
   {
     id: "heart",
     file: `${base}sample_01_heart.wav`,
     title: "Heart",
     instrument: "Heartbeat",
-    meaning: "A heartbeat that keeps time as the days go by.",
+    meaning: "one beat per day, from the densest CO₂",
   },
 ];
 

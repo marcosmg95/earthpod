@@ -1,6 +1,5 @@
 import { engine } from "../engine/store";
 import { useSettings, type MotionPref } from "../settings/context";
-import { Icon } from "./Icon";
 
 const SPEEDS = [0.5, 0.75, 1];
 const MOTION: readonly { value: MotionPref; label: string }[] = [
@@ -14,10 +13,7 @@ export function SettingsPanel() {
   const pct = Math.round(settings.volume * 100);
   return (
     <details className="settings">
-      <summary className="icon">
-        <Icon name="sliders" />
-        <span className="sr-only">Settings</span>
-      </summary>
+      <summary className="ghost">Settings</summary>
       <div className="settings-body">
         <h2>Settings</h2>
         <label className="check">

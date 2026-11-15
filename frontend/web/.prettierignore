@@ -1,3 +1,5 @@
 dist
 .venv-tts
 originals
+test-results/
+playwright-report/

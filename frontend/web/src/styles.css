@@ -420,6 +420,10 @@ legend {
   display: none;
 }
 
+.settings > summary.ghost {
+  cursor: pointer;
+}
+
 .settings-body {
   position: absolute;
   right: 0;
@@ -958,6 +962,11 @@ legend {
   margin: 0 1rem 0 0;
 }
 
+.guide-note {
+  margin-top: 1.5rem;
+  color: var(--muted);
+}
+
 .body-button {
   min-height: 3rem;
 }
@@ -1106,6 +1115,14 @@ legend {
   max-width: 65ch;
   margin: 0;
   color: var(--muted);
+  margin-top: 0.75rem;
+}
+
+.scene-about summary {
+  min-height: 2.75rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 
 .hud {

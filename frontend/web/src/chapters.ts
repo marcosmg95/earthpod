@@ -7,6 +7,7 @@ export interface TrackRef {
   start?: string;
   end?: string;
   manifest?: boolean;
+  about?: string;
 }
 
 export interface Chapter {
@@ -19,8 +20,16 @@ export interface Chapter {
   tracks: readonly TrackRef[];
 }
 
-const CO2 = { source: "NASA SVS 5196", start: "2020-01-01", end: "2020-03-31" };
-const NIGHT = { source: "NASA SVS 5313" };
+const CO2 = {
+  source: "NASA SVS 5196",
+  start: "2020-01-14",
+  end: "2020-03-02",
+  about: "co2/svs5196_nasa_description",
+};
+const NIGHT = {
+  source: "NASA SVS 5313",
+  about: "nightlights/svs5313_nasa_description",
+};
 
 export const CHAPTERS: readonly Chapter[] = [
   {
@@ -45,12 +54,13 @@ export const CHAPTERS: readonly Chapter[] = [
     num: "02",
     short: "Night lights",
     title: "The night lights",
-    kicker: "",
-    logline: "",
+    kicker: "Night lights · 2012–2023 · VIIRS satellite",
+    logline:
+      "Twelve yearly maps of the Earth at night, 2012 to 2023, then what changed: purple where lights grew, orange where they dimmed.",
     tracks: [
       {
         id: "three-acts",
-        label: "Three acts",
+        label: "Change in night lights, 2012–2023",
         dir: "nightlights/svs5313_nightlights_three_acts",
         ...NIGHT,
       },

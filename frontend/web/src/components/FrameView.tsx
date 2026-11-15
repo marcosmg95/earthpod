@@ -48,8 +48,8 @@ function VideoPicture({ track }: { track: LoadedTrack }) {
         </p>
       )}
       <p className="sr-only">
-        Moving picture: {track.title}. "About this scene", under the player,
-        describes it.
+        Moving picture: {track.title}. Its key moments are announced as it plays
+        and listed in the transcript, under Options.
       </p>
       <div className="hud" aria-hidden="true">
         <span>

@@ -13,15 +13,15 @@ with a screen reader, a keyboard, captions and reduced motion, not as an afterth
 ## How it works
 
 1. **Data team (`backend/`)**: turns NASA SVS visualizations into sound. Every region of the Earth has its own
-   instrument; when it comes into view, you hear it. Output: a `.mp4` + `.wav` (+ `.vtt` descriptions) per scene.
+   instrument; when it comes into view, you hear it. Output: a `.mp4` + `.wav` (+ .vtt descriptions; NASA’s page text as .txt) per scene.
 2. **Web app (`frontend/web/`)**: plays them in sync as cinematic chapters, with a sound chart, captions,
    a transcript and spoken descriptions.
 
-| Chapter                 | Data                                                    |
-| ----------------------- | ------------------------------------------------------- |
-| 00 How to listen        | The instrument samples                                  |
-| 01 The breathing planet | NASA SVS 5196: global CO₂ (DYAMOND model), Jan–Mar 2020 |
-| 02 Night lights         | NASA SVS 5313: Black Marble night lights                |
+| Chapter                 | Data                                                                   |
+| ----------------------- | -----------------------------------------------------------------------|
+| 00 How to listen        | The instrument samples                                                 |
+| 01 The breathing planet | NASA SVS 5196: global CO₂ (GEOS / DYAMOND model), Jan–Mar 2020         |
+| 02 Night lights         | NASA SVS 5313: Black Marble night lights (Suomi NPP VIIRS), 2012–2023  |
 
 ## Repository layout
 
@@ -49,7 +49,7 @@ uv run python -m unittest discover -s tests -v
 
 ## Deploy (CI/CD)
 
-Every push and PR runs `.github/workflows/ci.yml`: backend tests, plus lint, format check and build of the web app.
+Every push and PR runs backend tests, plus lint, format check, build and end-to-end accessibility tests (Playwright + axe) of the web app.
 A push to `main` that passes both deploys to **https://earthpod.earth** with Kamal: `infra/Dockerfile` builds
 `frontend/web` and serves it with nginx (`infra/nginx.conf`); the image goes to ghcr.io and kamal-proxy handles TLS.
 Repo secret needed: `VPS8_SSH_KEY`.
