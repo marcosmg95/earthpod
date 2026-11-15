@@ -8,6 +8,7 @@
   --yellow: #eeaa11;
   --berry: #bb3381;
   --orchid: #3f1d50;
+  --berry-text: #e05aa6; /* text: 5.4:1 */
   --line: rgba(231, 228, 222, 0.14);
   --line-strong: rgba(231, 228, 222, 0.28);
   --panel: rgba(63, 29, 80, 0.32);
@@ -327,6 +328,9 @@ legend {
   font-size: 0.875rem;
   letter-spacing: 0.36em;
   text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
 }
 
 .menu {
@@ -1280,6 +1284,24 @@ legend {
   outline-offset: 4px;
 }
 
+.sound-chart {
+  --ink-playhead: var(--berry);
+}
+
+.slate span,
+.kicker,
+.menu-list a[aria-current="page"],
+.menu-list a[aria-current="page"] .num {
+  color: var(--berry-text);
+}
+
+.captions span {
+  border-top: 2px solid var(-berry);
+}
+
+.title-card:has(.title-num) [data-chapter="nightlights"] {
+}
+
 .ends {
   display: flex;
   justify-content: space-between;
@@ -1749,6 +1771,16 @@ legend {
 .statement-date {
   color: var(--dim);
   font-size: 0.875rem;
+}
+
+.statement a {
+  overflow-wrap: anywhere;
+}
+
+.statement > p:last-child a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
 }
 
 /* ---------- footer ---------- */

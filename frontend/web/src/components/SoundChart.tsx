@@ -60,7 +60,7 @@ export function SoundChart({ track, descriptionId, children }: Props) {
       css.getPropertyValue(name).trim() || fallback;
     const teal = toRgb(ctx, v("--teal", "#4fb3b3"), "#4fb3b3");
     const yellow = toRgb(ctx, v("--yellow", "#eeaa11"), "#eeaa11");
-    const ink = v("--ink", "#e7e4de");
+    const ink = v("--berry", "#bb3381"); 
     const berry = v("--berry", "#bb3381");
     const colors = peaks
       ? Array.from(peaks.bright, (b) => mix(teal, yellow, b))
