@@ -49,9 +49,9 @@ export const CHAPTERS: readonly Chapter[] = [
     logline: "",
     tracks: [
       {
-        id: "nervous-system",
-        label: "Nervous system",
-        dir: "nightlights/svs5313_nightlights_nervous_system",
+        id: "three-acts",
+        label: "Three acts",
+        dir: "nightlights/svs5313_nightlights_three_acts",
         ...NIGHT,
       },
     ],
