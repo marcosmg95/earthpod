@@ -43,6 +43,7 @@ const NIGHT = {
 const AIR = {
   source: "NASA SVS 5669",
   about: "aerosols/svs5669_nasa_description",
+  scan: { from: -180, to: 180 },
   mapping:
     "A line scans the map from west to east, and the sound moves from left to right with it. Each 10° band of latitude has its own note, higher further north.\n" +
     "Each kind of particle has its own sound: sulfate hums, dust sounds like sand grains, smoke crackles and sea salt sounds like surf. Louder means more than usual for that band. A glass chime marks the largest plumes, a soft wind is all the haze together, and a tick sounds every 30° of longitude, deeper at Greenwich.\n" +
