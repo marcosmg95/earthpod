@@ -54,4 +54,4 @@ export const CONTINENTS: Sample[] = [
   continent("02", "asia", "Asia", "Oboe", 90, 40),
   continent("05", "africa", "Africa", "Marimba", 20, 5),
   continent("03", "oceania", "Oceania", "Harp", 135, -25),
-]
+];
