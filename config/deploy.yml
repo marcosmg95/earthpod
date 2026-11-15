@@ -1,5 +1,7 @@
+# The service keeps its old name: renaming it would make kamal-proxy see a second service
+# claiming earthpod.earth (run `kamal remove` for the old one first if you ever rename it).
 service: nasa-arcade
-image: marcosmg95/nasa-arcade
+image: marcosmg95/earthpod
 
 servers:
   web:
